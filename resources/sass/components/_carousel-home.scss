@@ -1,0 +1,42 @@
+#carouselHomeIndicators {
+    .carousel-indicators {
+        bottom: 10%;
+        left: 60%;
+    }
+}
+.carousel-item {
+    height: 65vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    .carousel-caption {
+        text-align: left;
+        // bottom: 15%;
+    }
+}
+@media (max-width: 992px) {
+    .carousel-item {
+        height: 350px;
+    }
+    .navbar {
+        .navbar-brand {
+            font-size: 0.8rem;
+        }
+    }
+}
+// Medium devices (tablets, 768px and down)
+@media (max-width: 768px) {
+    .mx-sm-auto {
+        margin: 0 auto;
+    }
+    .w-sm-100 {
+        width: 100%;
+    }
+    .px-sm-0 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
