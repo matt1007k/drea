@@ -3,9 +3,13 @@
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
-// @import "../vendor/mdb/css/mdb.css";
+@import "../vendor/mdb/scss/mdb.scss";
 // @import "~mdbootstrap/scss/mdb-free";
+
+// @import "./admin/sidebar";
+
 @import "./components/carousel-home";
+@import "./components/carousel-partner";
 
 .navbar {
     .navbar-brand {
@@ -14,7 +18,7 @@
 }
 
 .options-landing {
-    position: absolute;
+    // position: absolute;
     margin-top: -30px;
     margin-left: 10%;
     margin-right: 10%;

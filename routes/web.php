@@ -11,10 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::namespace('Pages')->group(function () {
+    Route::get('/', 'InicioController@index')->name('pages.inicio');
+    Route::get('/nosotros', 'NosotrosController@index')->name('pages.nosotros');
+    Route::get('/organigrama', 'OrganigramaController@index')->name('pages.organigrama');
+    Route::get('/directorio-institucional', 'DirectorioInstitucionalController@index')->name('pages.directorio');
+    Route::get('/superior', 'SuperiorController@index')->name('pages.superior');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::namespace('Admin')->group(function () {
+    // Controllers Within The 'App\Http\Controllers\Admin' Namespace
+    Route::get('/admin', 'DashboardController@index')->name('admin.index');
+});

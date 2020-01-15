@@ -19,22 +19,26 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}"> --}}
 </head>
 
 <body>
     <div id="app">
-        @include('partials.cliente._header')
-        @include('partials.cliente._nav')
+        @include('partials.pages._header')
+        @include('partials.pages._nav')
         <main>
             @yield('content')
         </main>
+        @include('partials.pages._footer')
     </div>
     <!-- Scripts -->
     <script src="{{ asset('/js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- MDB core JavaScript -->
     <script src="{{ asset('js/mdb.min.js') }}"></script>
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script> --}}
+    @stack('scripts')
 </body>
 
 </html>
