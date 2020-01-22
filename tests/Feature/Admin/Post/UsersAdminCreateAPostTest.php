@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\Admin\Post;
 
+use Tests\TestCase;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UsersAdminCreateAPostTest extends TestCase
 {
@@ -47,7 +48,7 @@ class UsersAdminCreateAPostTest extends TestCase
     /**
      * @test
      */
-    public function users_admin_can_create_a_create_post()
+    public function users_admin_can_create_a_post()
     {
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
@@ -61,11 +62,65 @@ class UsersAdminCreateAPostTest extends TestCase
             ->assertSessionHas('msg', 'Registro completado');
     }
 
+    /** @test */
+    public function the_titulo_is_required()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user)
+            ->post(route('admin.posts.store'), $this->formData([
+                'titulo' => ''
+            ]))->assertSessionHasErrors(['titulo']);
+    }
+
+    /** @test */
+    public function the_titulo_must_be_a_string()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user)
+            ->post(route('admin.posts.store'), $this->formData([
+                'titulo' => 121
+            ]))->assertSessionHasErrors(['titulo']);
+    }
+
+    /** @test */
+    public function the_titulo_may_not_be_greater_than_100_characters()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)
+            ->post(route('admin.posts.store'), $this->formData([
+                'titulo' => Str::random(101)
+            ]));
+
+        $response->assertSessionHasErrors(['titulo']);
+    }
+
+    /** @test */
+    public function the_contenido_is_required()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user)
+            ->post(route('admin.posts.store'), $this->formData([
+                'contenido' => ''
+            ]))->assertSessionHasErrors(['contenido']);
+    }
+
+    /** @test */
+    public function the_fecha_is_required()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user)
+            ->post(route('admin.posts.store'), $this->formData([
+                'fecha' => ''
+            ]))->assertSessionHasErrors(['fecha']);
+    }
+
     /** data send for user */
     public function formData($override = [])
     {
         return array_merge([
-            'titulo' => 'Mi primer documento',
+            'slug' => 'mi-primer-aviso',
+            'titulo' => 'Mi primer aviso',
             'contenido' => '<h1>Mi primer descripcion</h1>',
             // 'fecha_submit' => '31/12/2019',
             'fecha' => '2019-12-31 00:00:00'

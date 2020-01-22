@@ -19,7 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}">
 </head>
 
 <body>
@@ -32,8 +32,8 @@
         @include('partials.pages._footer')
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('/js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('/js/jquery-3.4.1.min.js') }}"></script> --}}
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- MDB core JavaScript -->
     <script src="{{ asset('js/mdb.min.js') }}"></script>
 

@@ -30,6 +30,10 @@ Route::namespace('Admin')->group(function () {
     Route::get('/admin/documentos/create', 'DocumentosController@create')->name('admin.documents.create')->middleware('auth');
     Route::post('/admin/documentos', 'DocumentosController@store')->name('admin.documents.store')->middleware('auth');
 
+    Route::get('/admin/tipos/create', 'TypeDocumentsController@create')->name('admin.types.create')->middleware('auth');
+    Route::post('/admin/tipos', 'TypeDocumentsController@store')->name('admin.types.store')->middleware('auth');
+
+
     Route::get('/admin/avisos/create', 'PostsController@create')->name('admin.posts.create')->middleware('auth');
     Route::post('/admin/avisos', 'PostsController@store')->name('admin.posts.store')->middleware('auth');
 });

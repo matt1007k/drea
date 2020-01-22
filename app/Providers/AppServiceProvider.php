@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
+use App\Observers\PostObserver;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -47,5 +49,7 @@ class AppServiceProvider extends ServiceProvider
                 ]
             );
         });
+        // Register observer post
+        Post::observe(PostObserver::class);
     }
 }

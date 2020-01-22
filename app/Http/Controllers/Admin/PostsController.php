@@ -17,7 +17,11 @@ class PostsController extends Controller
 
     public function store()
     {
-        // return Carbon::parse(request('fecha'));
+        request()->validate([
+            'titulo' => 'required|string|max:100',
+            'contenido' => 'required',
+            'fecha' => 'required'
+        ]);
         Post::create([
             'titulo' => request('titulo'),
             'contenido' => request('contenido'),

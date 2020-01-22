@@ -12,86 +12,11 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid mb-4">
+
   <section>
 
-    <!-- Top Table UI -->
-    <div class="card p-2 mb-5">
-
-      <!-- Grid row -->
-      <div class="row">
-
-        <!-- Grid column -->
-        <div class="col-lg-3 col-md-12">
-
-          <!-- Name -->
-          <div>
-            <select class="mdb-select colorful-select dropdown-primary mx-2 md-form mt-3 md-dropdown initialized">
-              <option value="" disabled="" selected="">Bulk actions</option>
-              <option value="1">Delate</option>
-              <option value="2">Export</option>
-              <option value="3">Change segment</option>
-            </select>
-          </div>
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-lg-3 col-md-6">
-
-          <!-- Blue select -->
-          <div>
-            <select class="mdb-select colorful-select dropdown-primary mx-2 md-form mt-3 md-dropdown initialized">
-              <option value="" disabled="" selected="">Show only</option>
-              <option value="1">All (2000)</option>
-              <option value="2">Never opened (200)</option>
-              <option value="3">Opened but unanswered (1800)</option>
-              <option value="4">Answered (200)</option>
-              <option value="5">Unsunscribed (50)</option>
-            </select>
-          </div>
-          <!-- /Blue select -->
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-lg-3 col-md-6">
-
-          <!-- Blue select -->
-          <div>
-            <select class="mdb-select colorful-select dropdown-primary mx-2 md-form mt-3 md-dropdown initialized">
-              <option value="" disabled="" selected="">Filter segments</option>
-              <option value="1">Contacts in no segments (100)</option>
-              <option value="1">Segment 1 (2000)</option>
-              <option value="2">Segment 2 (1000)</option>
-              <option value="3">Segment 3 (4000)</option>
-            </select>
-          </div>
-          <!-- /Blue select -->
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-lg-3 col-md-6">
-
-          <form class="form-inline md-form mt-2 ml-2">
-            <input class="form-control mt-2" type="text" placeholder="Search" style="max-width: 150px;">
-            <button class="btn btn-sm btn-primary ml-2 px-1 waves-effect waves-light"><i class="fas fa-search"></i>
-            </button>
-          </form>
-
-        </div>
-        <!-- Grid column -->
-
-      </div>
-      <!-- Grid row -->
-
-    </div>
-    <!-- Top Table UI -->
-
+    @include('admin.documents.partials._form-search')
     <div class="card card-cascade narrower z-depth-1">
 
       <!-- Card image -->
@@ -104,7 +29,7 @@
           <a href="{{ route('admin.documents.create') }}"
             class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light" data-toggle="tooltip"
             data-placement="bottom" title="Registrar documento">
-            <i class="fas fa-info-circle mt-0"></i>
+            <i class="fas fa-plus mt-0"></i>
           </a>
         </div>
 
@@ -113,9 +38,9 @@
 
       <div class="px-4">
 
-        <div class="table-responsive">
+        <div class="">
           <!-- Table -->
-          <table id="dtOrderExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+          <table id="documentsTable" class="table-responsive table table-striped table-bordered table-sm" width="100%">
 
             <!-- Table head -->
             <thead>
@@ -165,20 +90,42 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="{{ asset('/css/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/css/datatables-select.min.css') }}">
 @endpush
 
 @push('scripts')
 <script src="{{ asset('/js/datatables.min.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-{{-- <script src="{{ asset('/js/datatables-select.min.js') }}"></script> --}}
+<script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
-  $(document).ready(function () {
-    $('#dtOrderExample').DataTable({
-    "order": [[ 1, "desc" ]],
-    select: true
-    });
-    $('.dataTables_length').addClass('bs-select');
-    });
+  $('#documentsTable').DataTable({
+    "sort": [ 1 : "desc"]
+    "searching": false,
+    language: {
+        "sProcessing":     "Procesando...",
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+        "sZeroRecords":    "No se encontraron resultados",
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+        "sInfoPostFix":    "",
+        "sSearch":         "Buscar:",
+        "sUrl":            "",
+        "sInfoThousands":  ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":     "Último",
+            "sNext":     "Siguiente",
+            "sPrevious": "Anterior"
+        },
+        "oAria": {
+            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+  });
+  $('.dataTables_length').addClass('bs-select');
 </script>
 @endpush

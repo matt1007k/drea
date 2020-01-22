@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAvisosTable extends Migration
+class CreateTipoDocumentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateAvisosTable extends Migration
      */
     public function up()
     {
-        Schema::create('avisos', function (Blueprint $table) {
+        Schema::create('tipo_documentos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug')->unique();
-            $table->string('titulo', 100);
-            $table->text('contenido');
-            $table->timestamp('fecha');
+            $table->string('nombre', 50);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateAvisosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('avisos');
+        Schema::dropIfExists('tipo_documentos');
     }
 }

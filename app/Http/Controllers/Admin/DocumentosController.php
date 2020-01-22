@@ -10,8 +10,11 @@ class DocumentosController extends Controller
 {
     public function index()
     {
+        $tipo = request('tipo') ? request('tipo') : 'todos';
+        $search = request('search') ? request('search') : '';
+
         $documents = Document::latest()->get();
-        return view('admin.documents.index', compact('documents'));
+        return view('admin.documents.index', compact('documents', 'tipo', 'search'));
     }
 
     public function create()
