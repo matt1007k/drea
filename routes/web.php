@@ -24,5 +24,12 @@ Auth::routes();
 
 Route::namespace('Admin')->group(function () {
     // Controllers Within The 'App\Http\Controllers\Admin' Namespace
-    Route::get('/admin', 'DashboardController@index')->name('admin.index');
+    Route::get('/admin', 'DashboardController@index')->name('admin.index')->middleware('auth');
+
+    Route::get('/admin/documentos', 'DocumentosController@index')->name('admin.documents.index')->middleware('auth');
+    Route::get('/admin/documentos/create', 'DocumentosController@create')->name('admin.documents.create')->middleware('auth');
+    Route::post('/admin/documentos', 'DocumentosController@store')->name('admin.documents.store')->middleware('auth');
+
+    Route::get('/admin/avisos/create', 'PostsController@create')->name('admin.posts.create')->middleware('auth');
+    Route::post('/admin/avisos', 'PostsController@store')->name('admin.posts.store')->middleware('auth');
 });

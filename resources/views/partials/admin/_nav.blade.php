@@ -46,8 +46,7 @@
                 <a class="nav-link dropdown-toggle waves-effect" href="#" id="userDropdown" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" v-pre>
                     <i class="fas fa-user d-xl-none d-sm-inline-block"></i><span
-                        class="clearfix d-none d-sm-inline-block">Max
-                        Meza</span>
+                        class="clearfix d-none d-sm-inline-block">{{ Auth::user()->name}} </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="#">Perfil</a>

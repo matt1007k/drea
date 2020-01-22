@@ -2,13 +2,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="h3">Comunicados y Avisos</div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="h5">
-                        Test title comunicados
-                    </div>
-                </div>
-            </div>
+            @include('pages.inicio.partials._avisos')
         </div>
         <div class="col-md mb-2">
             <div class="h4 text-custom-primary">Siguenos en Facebook</div>

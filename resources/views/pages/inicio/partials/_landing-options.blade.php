@@ -60,7 +60,7 @@
         <!-- Grid column -->
 
         <!-- Grid column -->
-        <div class="col-xl-3 col-md-6 mb-0 pl-0">
+        <div class="col-xl-3 col-md-6 mb-0 pl-0 pr-xl-0">
             <!-- Card -->
             <div class="card bg-warning text-white card-cascade cascading-admin-card">
                 <!-- Card content -->

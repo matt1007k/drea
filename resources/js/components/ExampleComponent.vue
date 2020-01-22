@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">Example Component</div>
 
-          <div class="card-body">{{ text }}</div>
+          <div class="card-body">{{ text.id }}</div>
         </div>
       </div>
     </div>

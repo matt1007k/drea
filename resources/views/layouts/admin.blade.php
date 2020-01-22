@@ -20,6 +20,7 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   {{-- <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}"> --}}
+  @stack('styles')
 </head>
 
 <body class="fixed-sn white-skin">
@@ -27,6 +28,7 @@
     @include('partials.admin._header')
 
     <main>
+      @yield('breadcrumb')
       @yield('content')
     </main>
   </div>
@@ -44,9 +46,6 @@
       wheelPropagation: true,
       minScrollbarLength: 20
     });
-
-    // Data Picker Initialization
-    $('.datepicker').pickadate();
 
     // Material Select Initialization
     $(document).ready(function () {
@@ -79,8 +78,15 @@
 
         $('.notifications-nav .dropdown-menu .dropdown-footer a').toggleClass('btn-dark').toggleClass('btn-white');
       });
+     
     });
   </script>
+  <script>
+    @if(session('msg')) 
+        toastr.success('{{session('msg')}}');
+    @endif
+  </script>
+
   @stack('scripts')
 </body>
 

@@ -37337,7 +37337,7 @@ var render = function() {
             _vm._v("Example Component")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [_vm._v(_vm._s(_vm.text))])
+          _c("div", { staticClass: "card-body" }, [_vm._v(_vm._s(_vm.text.id))])
         ])
       ])
     ])

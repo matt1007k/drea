@@ -16,7 +16,7 @@ mix.js("resources/js/app.js", "public/js").sass(
     "public/css"
 );
 
-mix.styles(["resources/vendor/mdb/css/mdb.min.css"], "public/css/mdb.min.css");
+// mix.styles(["resources/vendor/mdb/css/mdb.min.css"], "public/css/mdb.min.css");
 // .js("resources/vendor/mdb/js/mdb.min.js", "public/js");
 
 mix.browserSync({
