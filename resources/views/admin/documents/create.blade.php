@@ -22,6 +22,26 @@
           <form action="{{ route('admin.documents.store') }}" method="POST">
             @csrf
 
+
+            <div class="md-form">
+              <select name="tipo_id"
+                class="mdb-select colorful-select dropdown-primary md-dropdown @error('titulo') is-invalid @enderror"
+                id="tipo_id" required>
+                <option value="" disabled selected>Seleccionar tipo</option>
+
+                @foreach ($tipos as $type)
+                <option value="{{$type->id}}" dusk="tipo-option">{{ $type->nombre }}</option>
+                @endforeach
+
+              </select>
+
+              @error('tipo_id')
+              <div class="invalid-feedback" dusk="error-tipo">
+                {{ $message }}
+              </div>
+              @enderror
+            </div>
+
             <div class="md-form">
               <label for="titulo">Titulo</label>
               <input type="text" name="titulo" id="titulo" class="form-control @error('titulo') is-invalid @enderror "

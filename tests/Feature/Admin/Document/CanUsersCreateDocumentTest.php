@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin\Document;
 
 use App\Models\Document;
+use App\Models\TypeDocument;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -31,7 +32,10 @@ class CanUsersCreateDocumentTest extends TestCase
 
         $this->actingAs($user)
             ->get(route('admin.documents.create'))
-            ->assertViewHas('document', new Document)
+            ->assertViewHasAll([
+                'document',
+                'tipos'
+            ])
             ->assertViewIs('admin.documents.create');
     }
 
@@ -40,13 +44,7 @@ class CanUsersCreateDocumentTest extends TestCase
      */
     public function guest_users_cannot_create_a_document()
     {
-
-        $document = [
-            'titulo' => 'Mi primer documento',
-            'descripcion' => 'Mi primer descripcion',
-            'url' => 'document.pdf'
-        ];
-        $this->post(route('admin.documents.store'), $document)
+        $this->post(route('admin.documents.store'), $this->formData())
             ->assertRedirect('/login');
     }
 
@@ -56,6 +54,7 @@ class CanUsersCreateDocumentTest extends TestCase
     public function users_can_create_a_document()
     {
         $user = factory(User::class)->create();
+        factory(TypeDocument::class)->create();
 
         $response = $this->actingAs($user)
             ->post(route('admin.documents.store'), $this->formData());
@@ -77,6 +76,19 @@ class CanUsersCreateDocumentTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors(['titulo']);
+    }
+
+    /** @test */
+    public function the_tipo_is_required()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)
+            ->post(route('admin.documents.store'), $this->formData([
+                'tipo_id' => ''
+            ]));
+
+        $response->assertSessionHasErrors(['tipo_id']);
     }
 
     /** @test */
@@ -163,7 +175,8 @@ class CanUsersCreateDocumentTest extends TestCase
         return array_merge([
             'titulo' => 'Mi primer documento',
             'descripcion' => 'Mi primer descripcion',
-            'url' => 'document.pdf'
+            'url' => 'document.pdf',
+            'tipo_id' => 1,
         ], $override);
     }
 }

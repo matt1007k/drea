@@ -15,6 +15,21 @@ class CreateATypeDocumentTest extends DuskTestCase
      * @test
      * @throws \Throwable
      */
+    public function users_can_visit_create_a_type_document()
+    {
+        $user = factory(User::class)->create();
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
+                ->visit(route('admin.documents.index'))
+                ->press('@btn-create-type')
+                ->assertUrlIs(route('admin.types.create'));
+        });
+    }
+
+    /**
+     * @test
+     * @throws \Throwable
+     */
     public function users_authenticated_can_create_a_type_document()
     {
         $user = factory(User::class)->create();

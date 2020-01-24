@@ -17,7 +17,12 @@ class CreateDocumentosTable extends Migration
             $table->bigIncrements('id');
             $table->string('titulo', 100);
             $table->text('descripcion', 300);
-            $table->string('url', 100);
+            $table->string('url');
+
+            $table->unsignedBigInteger('tipo_id');
+            $table->foreign('tipo_id')
+                ->references('id')->on('tipo_documentos')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

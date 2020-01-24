@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Document;
+use App\Models\TypeDocument;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +15,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::truncate();
+        TypeDocument::truncate();
+        Document::truncate();
 
         User::create([
             'name' => 'Admin',

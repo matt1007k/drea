@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Admin\Products;
 
+use App\Models\TypeDocument;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
@@ -18,13 +19,22 @@ class UsersCanCreateADocumentTest extends DuskTestCase
     public function users_authenticated_can_create_a_document()
     {
         $user = factory(User::class)->create();
-        $this->browse(function (Browser $browser) use ($user) {
-            $browser->loginAs($user)
+        $tipo = factory(TypeDocument::class)->create();
+        $this->browse(function (Browser $browser) use ($user, $tipo) {
+            $elemento = $browser->loginAs($user)
                 ->visit(route('admin.documents.create'))
                 ->assertSee('Registrar documento')
+                ->element('.select-wrapper.mdb-select.colorful-select.dropdown-primary.md-dropdown');
+            $elemento->click();
+
+            $browser
+                ->waitFor('.dropdown-content.select-dropdown')
+                ->click('.dropdown-content.select-dropdown > li.')
+                ->select('tipo_id')
                 ->type('titulo', 'Mi primer documento')
                 ->type('descripcion', 'Mi primer descripcion')
                 ->type('url', 'documento.pdf')
+
                 ->press('@btn-registrar')
                 ->assertUrlIs(route('admin.documents.index'));
         });

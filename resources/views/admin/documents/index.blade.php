@@ -46,10 +46,11 @@
             <thead>
               <tr>
                 <th class="th-lg">#</th>
+                <th class="th-lg">Tipo</th>
                 <th class="th-lg">Titulo</th>
                 <th class="th-lg">Url</th>
                 <th class="th-lg">Descripción</th>
-                <th class="th-lg"></th>
+                <th class="th-lg disabled-sorting text-right"></th>
               </tr>
             </thead>
             <!-- Table head -->
@@ -59,6 +60,7 @@
               @foreach ($documents as $document)
               <tr>
                 <td>{{ $document->id }}</td>
+                <td>{{ $document->tipo->nombre }}</td>
                 <td>{{ $document->titulo }}</td>
                 <td><a href="{{ $document->url }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a></td>
                 <td>{{ $document->descripcion }}</td>
@@ -99,7 +101,7 @@
 <script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
   $('#documentsTable').DataTable({
-    "sort": [ 1 : "desc"]
+    "sort":  {1 : "desc"},
     "searching": false,
     language: {
         "sProcessing":     "Procesando...",

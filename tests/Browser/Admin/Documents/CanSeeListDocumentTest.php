@@ -3,6 +3,7 @@
 namespace Tests\Browser\Admin\Products;
 
 use App\Models\Document;
+use App\Models\TypeDocument;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
@@ -19,13 +20,16 @@ class CanSeeListDocumentTest extends DuskTestCase
     public function users_can_see_list_document()
     {
         $user = factory(User::class)->create();
-        $documents = factory(Document::class, 2)->create();
+        $tipo = factory(TypeDocument::class)->create();
+        $documents = factory(Document::class, 2)->create(['tipo_id' => $tipo->id]);
+
         $this->browse(function (Browser $browser) use ($user, $documents) {
             $browser->loginAs($user)
                 ->visit(route('admin.documents.index'));
 
             foreach ($documents as $document) {
-                $browser->assertSee($document->titulo)
+                $browser->assertSee($document->tipo->nombre)
+                    ->assertSee($document->titulo)
                     ->assertSee($document->descripcion)
                     ->assertPresent("@url-$document->id");
             }

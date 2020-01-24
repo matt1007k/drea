@@ -177,5 +177,6 @@ return [
         'objectivo_id' => 'objetivo',
         'indicador_id' => 'indicador',
         'dato_id' => 'dato',
+        'tipo_id' => 'tipo',
     ],
 ];
