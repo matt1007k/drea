@@ -1,10 +1,10 @@
 <div class="container mt-2">
     <div class="row">
-        <div class="col-md-8">
-            <div class="h3">Comunicados y Avisos</div>
+        <div class="col-md-8 col-sm-12">
             @include('pages.inicio.partials._avisos')
+            @include('pages.inicio.partials._documentos')
         </div>
-        <div class="col-md mb-2">
+        <div class="col-md col-sm-12 mb-2">
             <div class="h4 text-custom-primary">Siguenos en Facebook</div>
             <div class="card">
                 <div class="card-body">
@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="h4 text-custom-primary mt-3">Avisos</div>
+            <div class="h4 text-custom-primary mt-3">Anuncios</div>
             <div class="card">
                 <div class="card-body">
                     <img src="http://www.dreayacucho.gob.pe/ckeditor_assets/pictures/596/content_etico.jpg" alt="etico"

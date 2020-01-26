@@ -5,6 +5,7 @@
 @import "~bootstrap/scss/bootstrap";
 // @import "../vendor/mdb/scss/mdb.scss";
 // @import "~mdbootstrap/scss/mdb-free";
+@import "~sweetalert2/src/sweetalert2";
 
 // @import "./admin/datatable";
 
@@ -12,7 +13,7 @@
 @import "./components/carousel-partner";
 
 .navbar {
-    .navbar-brand {
+    .navbar-brand span #id {
         font-size: 1em;
     }
 }

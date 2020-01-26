@@ -62,7 +62,7 @@ class CanUsersCreateDocumentTest extends TestCase
         $this->assertDatabaseHas('documentos', $this->formData());
 
         $response->assertRedirect(route('admin.documents.index'))
-            ->assertSessionHas('msg', 'Registro completado');
+            ->assertSessionHas('msg', 'El registro se guardó correctamente');
     }
 
     /** @test */

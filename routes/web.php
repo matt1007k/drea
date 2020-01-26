@@ -29,6 +29,10 @@ Route::namespace('Admin')->group(function () {
     Route::get('/admin/documentos', 'DocumentosController@index')->name('admin.documents.index')->middleware('auth');
     Route::get('/admin/documentos/create', 'DocumentosController@create')->name('admin.documents.create')->middleware('auth');
     Route::post('/admin/documentos', 'DocumentosController@store')->name('admin.documents.store')->middleware('auth');
+    Route::get('/admin/documentos/{document}/edit', 'DocumentosController@edit')->name('admin.documents.edit')->middleware('auth');
+    Route::put('/admin/documentos/{document}', 'DocumentosController@update')->name('admin.documents.update')->middleware('auth');
+    Route::delete('/admin/documentos/{document}', 'DocumentosController@destroy')->name('admin.documents.destroy')->middleware('auth');
+
 
     Route::get('/admin/tipos/create', 'TypeDocumentsController@create')->name('admin.types.create')->middleware('auth');
     Route::post('/admin/tipos', 'TypeDocumentsController@store')->name('admin.types.store')->middleware('auth');
@@ -36,4 +40,5 @@ Route::namespace('Admin')->group(function () {
 
     Route::get('/admin/avisos/create', 'PostsController@create')->name('admin.posts.create')->middleware('auth');
     Route::post('/admin/avisos', 'PostsController@store')->name('admin.posts.store')->middleware('auth');
+    Route::get('/admin/avisos/{post}', 'PostsController@show')->name('admin.posts.show')->middleware('auth');
 });

@@ -9,6 +9,8 @@
                     <small class="font-weight-bold">
                         <p class="mb-0">Teléfono: 066 311395 (Central)</p>
                         <p class="mb-0">Horario: Lunes a Viernes de 8:00 a.m. - 5:30 p.m.</p>
+                        <p class="mb-0">Jr. 28 de Julio N° 383 ::
+                            Ayacucho - Huamanga - Ayacucho</p>
                     </small>
                 </div>
                 <a class="btn d-flex align-items-center w-sm-100"

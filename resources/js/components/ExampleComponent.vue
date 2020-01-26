@@ -16,11 +16,19 @@
 export default {
   data() {
     return {
-      text: ""
+      text: "",
+      list: {
+        name: ""
+      }
     };
   },
   mounted() {
     console.log("Component mounted.");
+  },
+  methods: {
+    name() {
+      this.list.name = "sdfdsf";
+    }
   }
 };
 </script>

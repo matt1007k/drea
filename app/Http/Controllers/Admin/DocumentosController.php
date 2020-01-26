@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\DocumentUpdatedRequest;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Http\Controllers\Controller;
@@ -60,6 +61,33 @@ class DocumentosController extends Controller
         ]);
 
         return redirect()->route('admin.documents.index')
-            ->with('msg', 'Registro completado');
+            ->with('msg', 'El registro se guardó correctamente');
+    }
+
+    public function edit(Document $document)
+    {
+        $tipos = TypeDocument::orderBy('nombre', 'ASC')->get();
+        return view('admin.documents.edit', compact('document', 'tipos'));
+    }
+
+    public function update(Document $document, DocumentUpdatedRequest $request)
+    {
+        $document->update([
+            'titulo' => request('titulo'),
+            'descripcion' => request('descripcion'),
+            'url' => request('url'),
+            'tipo_id' => request('tipo_id'),
+        ]);
+
+        return redirect()->route('admin.documents.index')
+            ->with('msg', 'El registro se editó correctamente');
+    }
+
+    public function destroy(Document $document)
+    {
+        $document->delete();
+
+        return redirect()->route('admin.documents.index')
+            ->with('msg', 'El registro se eliminó correctamente');
     }
 }

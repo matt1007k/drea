@@ -11,4 +11,19 @@ class Post extends Model
     protected $dates = [
         'fecha'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function pathPage()
+    {
+        return url('/avisos/' . $this->slug);
+    }
+
+    public function pathAdmin()
+    {
+        return route('admin.posts.show', $this->slug);
+    }
 }

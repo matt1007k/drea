@@ -65,14 +65,19 @@
                 <td><a href="{{ $document->url }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a></td>
                 <td>{{ $document->descripcion }}</td>
                 <td>
-                  <button type="button" class="btn btn-outline-info btn-rounded btn-sm px-2" data-toggle="tooltip"
-                    data-placement="bottom" title="Editar">
+                  <a href="{{ route('admin.documents.edit', $document) }}" class="btn btn-outline-info btn-rounded btn-sm px-2" data-toggle="tooltip"
+                    data-placement="bottom" title="Editar registro">
                     <i class="fas fa-pencil-alt mt-0"></i>
-                  </button>
-                  <button type="button" class="btn btn-outline-danger btn-rounded btn-sm px-2" data-toggle="tooltip"
-                    data-placement="bottom" title="Eliminar">
+                  </a>
+                  <button type="button" onclick="onDelete({{ $document->id }})" class="btn btn-outline-danger btn-rounded btn-sm px-2" data-toggle="tooltip"
+                    data-placement="bottom" title="Eliminar registro">
                     <i class="fas fa-eraser mt-0"></i>
                   </button>
+                    <form action="{{ route('admin.documents.destroy', $document) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" id="btn-delete-{{ $document->id }}"></button>
+                    </form>
                 </td>
               </tr>
               @endforeach
@@ -101,7 +106,7 @@
 <script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
   $('#documentsTable').DataTable({
-    "sort":  {1 : "desc"},
+    "sort":  [[ 3, "asc" ]],
     "searching": false,
     language: {
         "sProcessing":     "Procesando...",
@@ -129,5 +134,24 @@
     }
   });
   $('.dataTables_length').addClass('bs-select');
+
+  function onDelete(id) {
+      Swal.fire({
+          title: 'Estás seguro de eliminar el registro?',
+          icon: 'warning',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          focusConfirm: false,
+          confirmButtonText: '<i class="fa fa-check"></i> Si, eliminar',
+          cancelButtonText: '<i class="fa fa-ban"></i> Cancelar',
+      }).then((result) => {
+          if (result.value) {
+              $("#btn-delete-"+ id).click();
+
+          }
+      })
+  }
 </script>
 @endpush

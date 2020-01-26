@@ -8,7 +8,7 @@ use App\Http\Requests\RoleUpdatedRequest;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class RolesController extends Controller
 {
     public function __construct()
     {
@@ -57,7 +57,8 @@ class RoleController extends Controller
         $role->slug = $request->identificador;
         $role->description = $request->descripcion;
         if ($role->save()) {
-            // $role->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());
+            // $role->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());// $role->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());
+
             return response()->json([
                 'updated' => true,
             ], 200);
