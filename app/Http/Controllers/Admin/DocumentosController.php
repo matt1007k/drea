@@ -44,6 +44,11 @@ class DocumentosController extends Controller
         );
     }
 
+    public function show(Document $document)
+    {
+        return view('admin.documents.show', compact('document'));
+    }
+
     public function create()
     {
         $document = new Document();

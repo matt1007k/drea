@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de documentos')
+@section('title', 'Lista de menús')
 
 @section('breadcrumb')
 <nav aria-label="breadcrumb" class="mb-2">
   <ol class="px-2 py-2 bg-white breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Lista de documentos</li>
+    <li class="breadcrumb-item active" aria-current="page">Lista de menús</li>
   </ol>
 </nav>
 @endsection
@@ -16,19 +16,19 @@
 
   <section>
 
-    @include('admin.documents.partials._form-search')
+    @include('admin.menus.partials._form-search')
     <div class="card card-cascade narrower z-depth-1">
 
       <!-- Card image -->
       <div
         class="py-2 mx-4 mb-3 view view-cascade gradient-card-header blue-gradient narrower d-flex justify-content-between align-items-center">
 
-        <div class="mx-3 h4 white-text">Lista de documentos</div>
+        <div class="mx-3 h4 white-text">Lista de menús</div>
 
         <div>
-          <a href="{{ route('admin.documents.create') }}"
+          <a href="{{ route('admin.menus.create') }}"
             class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"
-            data-placement="bottom" title="Registrar documento">
+            data-placement="bottom" title="Registrar menú">
             <i class="mt-0 fas fa-plus"></i>
           </a>
         </div>
@@ -40,16 +40,16 @@
 
         <div class="">
           <!-- Table -->
-          <table id="documentsTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
+          <table id="menusTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
 
             <!-- Table head -->
             <thead>
               <tr>
-                <th class="th-lg">#</th>
-                <th class="th-lg">Tipo</th>
-                <th class="th-lg">Titulo</th>
-                <th class="th-lg">Url</th>
-                <th class="th-lg">Descripción</th>
+                <th class="th-lg text-center">#</th>
+                <th class="th-lg text-center w-100">Titulo</th>
+                <th class="th-lg text-center">Ruta</th>
+                <th class="th-lg text-center">Orden</th>
+                <th class="th-lg text-center">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -57,31 +57,34 @@
 
             <!-- Table body -->
             <tbody>
-              @foreach ($documents as $document)
+              @foreach ($menus as $menu)
               <tr>
-                <td>{{ $document->id }}</td>
-                <td>{{ $document->tipo->nombre }}</td>
-                <td>{{ $document->titulo }}</td>
-                <td><a href="{{ $document->url }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a></td>
-                <td>{{ $document->descripcion }}</td>
+                <td>{{ $menu->id }}</td>
+                <td>{{ $menu->titulo }}</td>
+                <td>{{ $menu->ruta }}</td>
+                <td class="text-center font-weight-bold">{{ $menu->orden }}</td>
+                <td class="text-center">
+                  @include('admin.menus.partials._publicado')
+                </td>
                 <td>
-                  <a href="{{ route('admin.documents.show', $document) }}" class="px-2 btn btn-outline-dark btn-rounded btn-sm" data-toggle="tooltip"
-                    data-placement="bottom" title="Ver registro">
+                  <a href="{{ route('admin.menus.show', $menu) }}" class="px-2 btn btn-outline-dark btn-rounded
+                  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('admin.documents.edit', $document) }}" class="px-2 btn btn-outline-info btn-rounded btn-sm" data-toggle="tooltip"
-                    data-placement="bottom" title="Editar registro">
+                  <a href="{{ route('admin.menus.edit', $menu) }}" class="px-2 btn btn-outline-info btn-rounded btn-sm"
+                    data-toggle="tooltip" data-placement="bottom" title="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  <button type="button" onclick="onDelete({{ $document->id }})" class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip"
-                    data-placement="bottom" title="Eliminar registro">
+                  <button type="button" onclick="onDelete({{ $menu->id }})"
+                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
+                    title="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
-                    <form action="{{ route('admin.documents.destroy', $document) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" id="btn-delete-{{ $document->id }}"></button>
-                    </form>
+                  <form action="{{ route('admin.menus.destroy', $menu) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" id="btn-delete-{{ $menu->id }}"></button>
+                  </form>
                 </td>
               </tr>
               @endforeach
@@ -109,7 +112,7 @@
 <script src="{{ asset('/js/datatables.min.js') }}"></script>
 <script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
-  $('#documentsTable').DataTable({
+  $('#menusTable').DataTable({
     "sort":  [[ 3, "asc" ]],
     "searching": false,
     language: {

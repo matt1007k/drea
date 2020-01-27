@@ -22,23 +22,25 @@ Route::namespace('Pages')->group(function () {
 
 Auth::routes();
 
-Route::namespace('Admin')->group(function () {
-    // Controllers Within The 'App\Http\Controllers\Admin' Namespace
-    Route::get('/admin', 'DashboardController@index')->name('admin.index')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::namespace('Admin')->group(function () {
 
-    Route::get('/admin/documentos', 'DocumentosController@index')->name('admin.documents.index')->middleware('auth');
-    Route::get('/admin/documentos/create', 'DocumentosController@create')->name('admin.documents.create')->middleware('auth');
-    Route::post('/admin/documentos', 'DocumentosController@store')->name('admin.documents.store')->middleware('auth');
-    Route::get('/admin/documentos/{document}/edit', 'DocumentosController@edit')->name('admin.documents.edit')->middleware('auth');
-    Route::put('/admin/documentos/{document}', 'DocumentosController@update')->name('admin.documents.update')->middleware('auth');
-    Route::delete('/admin/documentos/{document}', 'DocumentosController@destroy')->name('admin.documents.destroy')->middleware('auth');
+        Route::prefix('admin')->group(function () {
+
+            Route::name('admin.')->group(function () {
+                Route::get('/', 'DashboardController@index')->name('index');
+
+                Route::resource('documents', 'DocumentosController');
+                Route::resource('menus', 'MenusController');
+
+                Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
+                Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');
 
 
-    Route::get('/admin/tipos/create', 'TypeDocumentsController@create')->name('admin.types.create')->middleware('auth');
-    Route::post('/admin/tipos', 'TypeDocumentsController@store')->name('admin.types.store')->middleware('auth');
-
-
-    Route::get('/admin/avisos/create', 'PostsController@create')->name('admin.posts.create')->middleware('auth');
-    Route::post('/admin/avisos', 'PostsController@store')->name('admin.posts.store')->middleware('auth');
-    Route::get('/admin/avisos/{post}', 'PostsController@show')->name('admin.posts.show')->middleware('auth');
+                Route::get('/avisos/create', 'PostsController@create')->name('posts.create');
+                Route::post('/avisos', 'PostsController@store')->name('posts.store');
+                Route::get('/avisos/{post}', 'PostsController@show')->name('posts.show');
+            });
+        });
+    });
 });

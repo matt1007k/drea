@@ -57,7 +57,7 @@ class UsersCanSeeListDocumentTest extends TestCase
         $document2 = factory(Document::class)->create(['tipo_id' => $tipo->id]);
 
         $response = $this->actingAs($user)
-            ->get("/admin/documentos?tipo={$tipo->nombre}");
+            ->get("/admin/documents?tipo={$tipo->nombre}");
 
         $response->assertViewHas(
             'tipo',
@@ -79,7 +79,7 @@ class UsersCanSeeListDocumentTest extends TestCase
         $document2 = factory(Document::class)->create(['titulo' => 'Documento', 'tipo_id' => $tipo->id]);
 
         $response = $this->actingAs($user)
-            ->get("/admin/documentos?tipo={$tipo->nombre}&search={$document2->titulo}");
+            ->get("/admin/documents?tipo={$tipo->nombre}&search={$document2->titulo}");
 
         $response->assertViewHas(
             'tipo',
