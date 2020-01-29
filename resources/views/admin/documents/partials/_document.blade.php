@@ -10,12 +10,12 @@
       <a href="{{ $document->url }}" target="_blank" class="h5">
         {{ $document->titulo }}
       </a>
+      <div class="text-muted mb-2">
+        {{ $document->created_at->format('d M yy') }}
+      </div>
       <p class="text-justify">
         {{ $document->descripcion}}
       </p>
-      <div class="text-muted">
-        {{ $document->created_at->format('d M yy') }}
-      </div>
     </div>
   </div>
 

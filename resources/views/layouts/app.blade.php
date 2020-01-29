@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Dirección Regional de Educación Ayacucho - @yield('title')</title>
+    <meta name="description" content="DREA, DREAYAC, DREAYACUCHO, Dirección Regional de Educación de Ayacucho, Dirección Regional de Educación, Educación" />
     <!-- MDB icon -->
     <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
 

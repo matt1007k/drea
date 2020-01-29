@@ -20,8 +20,7 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
-                @guest
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                 </li>
@@ -32,51 +31,33 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownInst">
-                        <a class="dropdown-item" href="{{ route('pages.nosotros') }}">
+                        <a class="dropdown-item" href="{{ url('/nosotros') }}">
                             Nosotros
                         </a>
-                        <a class="dropdown-item" href="{{ route('pages.organigrama') }}">
+                        <a class="dropdown-item" href="{{ url('/organigrama') }}">
                             Organigrama
                         </a>
-                        <a class="dropdown-item" href="{{ route('pages.directorio') }}">
+                        <a class="dropdown-item" href="{{ url('/directorio-institucional') }}">
                             Directorio Institucional
                         </a>
-                        <a class="dropdown-item" href="{{ route('pages.superior') }}">
+                        <a class="dropdown-item" href="{{ url('/superior') }}">
                             Superior
                         </a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Unidades de Gestión</a>
+                    <a class="nav-link" href="{{ url('/unidades-gestion') }}">Unidades de Gestión</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Documentos</a>
+                    <a class="nav-link" href="{{ url('/documentos') }}">Documentos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contratación Docente</a>
+                    <a class="nav-link" href="{{ url('/contratacion-docentes') }}">Contratación Docente</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Galeria de Fotos</a>
+                    <a class="nav-link" href="{{ url('/galeria-fotos') }}">Galeria de Fotos</a>
                 </li>
-                @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
-                    </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-                @endguest
             </ul>
         </div>
     </div>

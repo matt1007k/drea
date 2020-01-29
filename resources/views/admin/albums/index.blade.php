@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de documentos')
+@section('title', 'Lista de álbumes')
 
 @section('breadcrumb')
 <nav aria-label="breadcrumb" class="mb-2">
   <ol class="px-2 py-2 bg-white breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Lista de documentos</li>
+    <li class="breadcrumb-item active" aria-current="page">Lista de álbumes</li>
   </ol>
 </nav>
 @endsection
@@ -16,21 +16,21 @@
 
   <section>
 
-    @include('admin.documents.partials._form-search')
+    @include('admin.albums.partials._form-search')
     <div class="card card-cascade narrower z-depth-1">
 
       <!-- Card image -->
       <div
         class="py-2 mx-4 mb-3 view view-cascade gradient-card-header blue-gradient narrower d-flex justify-content-between align-items-center">
 
-        <div class="mx-3 h4 white-text">Lista de documentos</div>
+        <div class="mx-3 h4 white-text">Lista de álbumes</div>
 
         <div>
-          <a href="{{ route('admin.documents.create') }}"
-            class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"
-            data-placement="bottom" title="Registrar documento">
-            <i class="mt-0 fas fa-plus"></i>
-          </a>
+          {{--          <a href="{{ route('admin.albums.create') }}"--}}
+          {{--            class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"--}}
+          {{--            data-placement="bottom" title="Registrar aviso">--}}
+          {{--            <i class="mt-0 fas fa-plus"></i>--}}
+          {{--          </a>--}}
         </div>
 
       </div>
@@ -40,16 +40,17 @@
 
         <div class="">
           <!-- Table -->
-          <table id="documentsTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
+          <table id="albumsTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
 
             <!-- Table head -->
             <thead>
               <tr>
                 <th class="th-lg text-center font-weight-bold">#</th>
-                <th class="th-lg text-center font-weight-bold">Tipo</th>
+                <th class="th-lg text-center font-weight-bold">Imagen</th>
                 <th class="th-lg text-center font-weight-bold">Titulo</th>
-                <th class="th-lg text-center font-weight-bold">Url</th>
                 <th class="th-lg text-center font-weight-bold">Descripción</th>
+                <th class="th-lg text-center font-weight-bold">Fecha</th>
+                <th class="th-lg text-center font-weight-bold">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -57,34 +58,37 @@
 
             <!-- Table body -->
             <tbody>
-              @foreach ($documents as $document)
+              @foreach ($albums as $album)
               <tr>
-                <td class="text-center font-weight-bold">{{ $document->id }}</td>
-                <td>{{ $document->tipo->nombre }}</td>
-                <td>{{ $document->titulo }}</td>
-                <td><a href="{{ $document->url }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a></td>
-                <td>{{ $document->descripcion }}</td>
+                <td class="text-center font-weight-bold">{{ $album->id }}</td>
+                <td><img src="{{ Storage::url($album->imagen) }}" alt="{{ $album->titulo }}" width="100"></td>
+                <td>{{ $album->titulo }}</td>
+                <td>{{ $album->descripcion }}</td>
+                <td>{{ $album->fecha_format }}</td>
+                <td class="text-center">
+                  @include('admin.albums.partials._publicado')
+                </td>
                 <td>
-                  <a href="{{ route('admin.documents.show', $document) }}"
-                    class="px-2 btn btn-outline-dark btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Ver registro">
-                    <i class="mt-0 fas fa-eye"></i>
-                  </a>
-                  <a href="{{ route('admin.documents.edit', $document) }}"
-                    class="px-2 btn btn-outline-info btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
+                  {{--                  <a href="{{ route('admin.albumes.show', $album) }}" class="px-2 btn
+                  btn-outline-dark btn-rounded--}}
+                  {{--                  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ver registro">--}}
+                  {{--                    <i class="mt-0 fas fa-eye"></i>--}}
+                  {{--                  </a>--}}
+                  <a href="{{ route('admin.albumes.edit', $album) }}" class="px-2 btn
+                  btn-outline-info btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
                     title="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  <button type="button" onclick="onDelete({{ $document->id }})"
-                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Eliminar registro">
-                    <i class="mt-0 fas fa-eraser"></i>
-                  </button>
-                  <form action="{{ route('admin.documents.destroy', $document) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" id="btn-delete-{{ $document->id }}"></button>
-                  </form>
+                  {{--                  <button type="button" onclick="onDelete({{ $album->id }})"--}}
+                  {{--                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"--}}
+                  {{--                    title="Eliminar registro">--}}
+                  {{--                    <i class="mt-0 fas fa-eraser"></i>--}}
+                  {{--                  </button>--}}
+                  {{--                  <form action="{{ route('admin.albumes.destroy', $album) }}" method="album">--}}
+                  {{--                    @csrf--}}
+                  {{--                    @method('DELETE')--}}
+                  {{--                    <button type="submit" id="btn-delete-{{ $album->id }}"></button>--}}
+                  {{--                  </form>--}}
                 </td>
               </tr>
               @endforeach
@@ -112,7 +116,7 @@
 <script src="{{ asset('/js/datatables.min.js') }}"></script>
 <script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
-  $('#documentsTable').DataTable({
+  $('#albumsTable').DataTable({
     "sort":  [[ 3, "asc" ]],
     "searching": false,
     language: {
@@ -123,7 +127,7 @@
         "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
         "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
+        "sInfoalbumFix":    "",
         "sSearch":         "Buscar:",
         "sUrl":            "",
         "sInfoThousands":  ",",

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UsersAdminCreateAPostTest extends TestCase
+class UsersCanCreateAPostTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -58,8 +58,8 @@ class UsersAdminCreateAPostTest extends TestCase
 
         $this->assertDatabaseHas('avisos', $this->formData());
 
-        $response->assertRedirect(route('admin.index'))
-            ->assertSessionHas('msg', 'Registro completado');
+        $response->assertRedirect(route('admin.posts.index'))
+            ->assertSessionHas('msg', 'El registro se guardó correctamente');
     }
 
     /** @test */

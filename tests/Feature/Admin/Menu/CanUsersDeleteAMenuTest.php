@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CanUsersDeleteMenuTest extends TestCase
+class UsersCanDeleteAMenuTest extends TestCase
 {
     use RefreshDatabase;
 

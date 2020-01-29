@@ -38,4 +38,17 @@ class PostTest extends TestCase
 
         $this->assertEquals(route('admin.posts.show', $post), $post->pathAdmin());
     }
+
+    /** @test */
+    public function a_post_return_a_collection_by_search()
+    {
+        $post1 = factory(Post::class)->create(['created_at' => now()->subDays(1)]);
+        $post2 = factory(Post::class)->create();
+
+        $this->assertEquals(
+            $post2->titulo,
+            Post::search($post2->titulo)
+                ->orderBy('fecha', 'DESC')->get()->first()->titulo
+        );
+    }
 }

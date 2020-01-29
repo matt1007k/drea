@@ -8,7 +8,7 @@ use App\Models\Menu;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UsersCanSeeListmenuTest extends TestCase
+class UsersCanSeeListMenuTest extends TestCase
 {
     use RefreshDatabase;
 

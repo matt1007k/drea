@@ -31,7 +31,7 @@
   </div>
   @enderror
 </div>
-{{ $menu->publicado }}
+
 <h6 class="mb-0">Publicado</h6>
 <div class="md-form mt-0">
   <div class="switch">

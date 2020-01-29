@@ -3,14 +3,12 @@
 namespace Tests\Feature\Admin\Document;
 
 use App\Models\Document;
-use App\Models\TypeDocument;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CanUsersDeleteDocumentTest extends TestCase
+class UsersCanDeleteADocumentTest extends TestCase
 {
     use RefreshDatabase;
 

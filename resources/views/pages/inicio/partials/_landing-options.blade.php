@@ -26,10 +26,11 @@
             <!-- Card -->
             <div class="card bg-success text-white card-cascade cascading-admin-card">
                 <!-- Card content -->
-                <a href="#" class="d-flex justify-content-between card-body card-body-cascade text-white">
+                <a href="{{ url('/avisos') }}"
+                    class="d-flex justify-content-between card-body card-body-cascade text-white">
                     <div>
                         <h4>Publicaciones</h4>
-                        <p class="card-text text-white">Informate con documentos, avisos y comunicados oficiales.</p>
+                        <p class="card-text text-white">Informate con avisos, noticias y comunicados oficiales.</p>
                     </div>
                     <div>
                         <img src="{{ asset('/img/icons/blogging.png') }}" alt="Computer" srcset="">
@@ -45,7 +46,8 @@
             <!-- Card -->
             <div class="card bg-info text-white card-cascade cascading-admin-card">
                 <!-- Card content -->
-                <a href="#" class="d-flex justify-content-between card-body card-body-cascade text-white">
+                <a href="{{ url('/videos') }}"
+                    class="d-flex justify-content-between card-body card-body-cascade text-white">
                     <div class="pr-1">
                         <h4>Videos</h4>
                         <p class="card-text text-white">Mira nuestros materiales audiovisuales elaborado por la DREA</p>
@@ -64,10 +66,12 @@
             <!-- Card -->
             <div class="card bg-warning text-white card-cascade cascading-admin-card">
                 <!-- Card content -->
-                <a href="#" class="d-flex justify-content-between card-body card-body-cascade text-white">
+                <a href="{{ url('/documentos') }}"
+                    class="d-flex justify-content-between card-body card-body-cascade text-white">
                     <div>
                         <h4>Documentos</h4>
-                        <p class="card-text text-white">Documentos oficiales elaborados por la DREA</p>
+                        <p class="card-text text-white">Buscar y consulta los documentos oficiales subidos por la
+                            DREA</p>
                     </div>
                     <div>
                         <img src="{{ asset('/img/icons/document.png') }}" alt="Computer" srcset="">

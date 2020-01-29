@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CanUsersShowMenuTest extends TestCase
+class UsersCanShowAMenuTest extends TestCase
 {
     use RefreshDatabase;
 

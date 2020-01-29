@@ -22,29 +22,70 @@
 
         <li>
           <a href="{{ route('admin.index') }}"
-            class="collapsible-header waves-effect  {{ Request::path() ? 'active' : '' }}">
+            class="collapsible-header waves-effect  @if(request()->is('admin')) active @endif">
             <i class="w-fa fas fa-tachometer-alt"></i>Tablero de resumen
           </a>
         </li>
-        <li>
-          <a class="collapsible-header waves-effect arrow-r">
-            <i class="w-fa fas fa-list"></i>Articulos<i class="fas fa-angle-down rotate-icon"></i>
+
+        <li class="@if(request()->is('admin/avisos*')) active @endif">
+          <a class="collapsible-header waves-effect arrow-r @if(request()->is('admin/avisos*')) active @endif">
+            <i class="w-fa fas fa-list"></i>Avisos<i class="fas fa-angle-down rotate-icon"></i>
           </a>
           <div class="collapsible-body">
             <ul>
               <li>
-                <a href="#" class="waves-effect">Tipos de articulos</a>
+                <a href="{{ route('admin.posts.index') }}" class="waves-effect @if(request()->is('admin/avisos')) active @endif
+                  ">Lista de avisos</a>
               </li>
+              <li>
+                <a href="{{ route('admin.posts.create') }}" class="waves-effect @if(request()->is('admin/avisos/create')) active @endif
+                  ">Registrar un articulo</a>
+              </li>
+            </ul>
+          </div>
+        </li>
 
+        <li class="@if(request()->is('admin/menus*')) active @endif">
+          <a class="collapsible-header waves-effect arrow-r @if(request()->is('admin/menus*')) active @endif">
+            <i class="w-fa fas fa-bars"></i>Menus<i class="fas fa-angle-down rotate-icon"></i>
+          </a>
+          <div class="collapsible-body">
+            <ul>
+              <li>
+                <a href="{{ route('admin.menus.index') }}" class="waves-effect @if(request()->is('admin/menus')) active @endif
+                  ">Lista de menús</a>
+              </li>
+              <li>
+                <a href="{{ route('admin.menus.create') }}" class="waves-effect @if(request()->is('admin/menus/create')) active @endif
+                  ">Registrar un menú</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="@if(request()->is('admin/documents*')) active @endif">
+          <a class="collapsible-header waves-effect arrow-r @if(request()->is('admin/documents*')) active @endif">
+            <i class="w-fa fas fa-copy"></i>Documentos<i class="fas fa-angle-down rotate-icon"></i>
+          </a>
+          <div class="collapsible-body">
+            <ul>
+              <li>
+                <a href="{{ route('admin.documents.index') }}" class="waves-effect @if(request()->is('admin/documents')) active @endif
+                  ">Lista de documentos</a>
+              </li>
+              <li>
+                <a href="{{ route('admin.documents.create') }}" class="waves-effect @if(request()->is('admin/documents/create')) active @endif
+                  ">Registrar un documento</a>
+              </li>
             </ul>
           </div>
         </li>
 
         <!-- Simple link -->
-        <li>
+        {{-- <li>
           <a href="../alerts/alerts.html" class="collapsible-header waves-effect"><i
               class="w-fa far fa-bell"></i>Alerts</a>
-        </li>
+        </li> --}}
 
       </ul>
     </li>

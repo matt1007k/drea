@@ -14,10 +14,14 @@
 
 Route::namespace('Pages')->group(function () {
     Route::get('/', 'InicioController@index')->name('pages.inicio');
+    // Route::get('/{tipo}', 'PaginasController@index')->name('pages.index');
     Route::get('/nosotros', 'NosotrosController@index')->name('pages.nosotros');
     Route::get('/organigrama', 'OrganigramaController@index')->name('pages.organigrama');
     Route::get('/directorio-institucional', 'DirectorioInstitucionalController@index')->name('pages.directorio');
     Route::get('/superior', 'SuperiorController@index')->name('pages.superior');
+    Route::get('/documentos', 'DocumentosController@index')->name('pages.documentos.index');
+    Route::get('/avisos', 'AvisosController@index')->name('pages.avisos.index');
+    Route::get('/avisos/{aviso}', 'AvisosController@show')->name('pages.avisos.show');
 });
 
 Auth::routes();
@@ -32,14 +36,19 @@ Route::middleware(['auth'])->group(function () {
 
                 Route::resource('documents', 'DocumentosController');
                 Route::resource('menus', 'MenusController');
+                Route::resource('albumes', 'AlbumesController');
 
                 Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
                 Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');
 
 
+                Route::get('/avisos', 'PostsController@index')->name('posts.index');
                 Route::get('/avisos/create', 'PostsController@create')->name('posts.create');
                 Route::post('/avisos', 'PostsController@store')->name('posts.store');
                 Route::get('/avisos/{post}', 'PostsController@show')->name('posts.show');
+                Route::get('/avisos/{post}/edit', 'PostsController@edit')->name('posts.edit');
+                Route::put('/avisos/{post}', 'PostsController@update')->name('posts.update');
+                Route::delete('/avisos/{post}', 'PostsController@destroy')->name('posts.destroy');
             });
         });
     });

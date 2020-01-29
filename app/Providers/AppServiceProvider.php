@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Album;
 use App\Models\Post;
+use App\Observers\AlbumObserver;
 use App\Observers\PostObserver;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
@@ -51,5 +53,8 @@ class AppServiceProvider extends ServiceProvider
         });
         // Register observer post
         Post::observe(PostObserver::class);
+
+        // Register observer album
+        Album::observe(AlbumObserver::class);
     }
 }

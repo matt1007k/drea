@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 
-class UsersAdminCreateATypeDocumentTest extends TestCase
+class UsersCanCreateATypeDocumentTest extends TestCase
 {
     use RefreshDatabase;
 

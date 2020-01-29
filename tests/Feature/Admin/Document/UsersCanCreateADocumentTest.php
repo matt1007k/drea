@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\Admin\Document;
 
+use Tests\TestCase;
 use App\Models\Document;
 use App\Models\TypeDocument;
-use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CanUsersCreateDocumentTest extends TestCase
+class UsersCanCreateADocumentTest extends TestCase
 {
     use RefreshDatabase;
 

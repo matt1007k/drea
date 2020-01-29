@@ -45,11 +45,11 @@
             <!-- Table head -->
             <thead>
               <tr>
-                <th class="th-lg text-center">#</th>
-                <th class="th-lg text-center w-100">Titulo</th>
-                <th class="th-lg text-center">Ruta</th>
-                <th class="th-lg text-center">Orden</th>
-                <th class="th-lg text-center">Publicado</th>
+                <th class="th-lg text-center font-weight-bold">#</th>
+                <th class="th-lg text-center font-weight-bold w-100">Titulo</th>
+                <th class="th-lg text-center font-weight-bold">Ruta</th>
+                <th class="th-lg text-center font-weight-bold">Orden</th>
+                <th class="th-lg text-center font-weight-bold">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -59,7 +59,7 @@
             <tbody>
               @foreach ($menus as $menu)
               <tr>
-                <td>{{ $menu->id }}</td>
+                <td class="text-center font-weight-bold">{{ $menu->id }}</td>
                 <td>{{ $menu->titulo }}</td>
                 <td>{{ $menu->ruta }}</td>
                 <td class="text-center font-weight-bold">{{ $menu->orden }}</td>

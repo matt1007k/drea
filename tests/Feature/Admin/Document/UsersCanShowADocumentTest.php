@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CanUsersShowDocumentTest extends TestCase
+class UsersCanShowADocumentTest extends TestCase
 {
     use RefreshDatabase;
 

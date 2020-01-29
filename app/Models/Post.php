@@ -26,4 +26,10 @@ class Post extends Model
     {
         return route('admin.posts.show', $this->slug);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('titulo', 'LIKE', "%$search%")
+            ->orWhere('fecha', 'LIKE', "%$search%");
+    }
 }

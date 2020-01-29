@@ -1,5 +1,5 @@
 <div class="documentos">
-  <div class="h3">Documentos</div>
+  <div class="h3">Últimos documentos</div>
   <div class="card mb-2">
     <div class="card-body">
       <div class="h4 text-custom-primary mb-4">Documentos de interés</div>
