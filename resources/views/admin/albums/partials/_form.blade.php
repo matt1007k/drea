@@ -14,7 +14,7 @@
 <div class="form-group">
   <label for="descripcion">Descripcion</label>
   <textarea rows="3" id="descripcion" name="descripcion" class="form-control @error('descripcion') is-invalid @enderror"
-    value="" autocomplete="descripcion" autofocus>{!! old('descripcion', $album->descripcion) !!}</textarea>
+    value="" autocomplete="descripcion" autofocus>{{ old('descripcion', $album->descripcion) }}</textarea>
   @error('descripcion')
   <div class="invalid-feedback" dusk="error-descripcion">
     {{ $message }}
@@ -23,8 +23,12 @@
 </div>
 
 <div class="form-group">
-  <label for="imagen">Imagen</label>
-  <input type="file" id="imagen" name="imagen" class="form-control @error('imagen') is-invalid @enderror">
+  <label for="imagen">Imagen</label><br>
+  @if ($album->imagen)
+  <img src="{{ Storage::url($album->imagen) }}" alt="imagen" width="200">
+  @endif
+  <input type="file" id="imagen" name="imagen" class="form-control @error('imagen') is-invalid @enderror"
+    value="{{ old('imagen', $album->imagen) }}">
   @error('imagen')
   <div class="invalid-feedback" dusk="error-imagen">
     {{ $message }}
@@ -33,9 +37,9 @@
 </div>
 
 <div class="md-form">
-  <input placeholder="Seleccionar fecha" type="date" id="fecha" name="fecha" class="form-control"
-    value="{{ old('fecha', $album->fecha) }}" autocomplete="fecha" autofocus>
-  <label for="fecha">Fecha y hora de publicación</label>
+  <p class="mb-0">Fecha y hora de publicación</p>
+  <input type="datetime-local" id="fecha" name="fecha" class="form-control @error('fecha') is-invalid @enderror"
+    value="{{ old('fecha', $album->fecha) }}">
   @error('fecha')
   <div class="text-danger text-sm" dusk="error-fecha">
     {{ $message }}
@@ -69,7 +73,7 @@
     {{ $btnText }}
     <i class="fa fa-check ml-1"></i>
   </button>
-  <a href="{{ route('admin.albumes.index') }} " class="btn btn-danger">
+  <a href="{{ route('admin.albums.index') }} " class="btn btn-danger">
     Cancelar
     <i class="fa fa-ban ml-1"></i>
   </a>

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\AlbumCreatedRequest;
-use App\Http\Requests\AlbumUpdatedRequest;
-use App\Models\Album;
 use Carbon\Carbon;
+use App\Models\Album;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\AlbumCreatedRequest;
+use App\Http\Requests\AlbumUpdatedRequest;
 
 class AlbumesController extends Controller
 {
@@ -32,7 +33,7 @@ class AlbumesController extends Controller
 
     public function create()
     {
-        $album = new Album();
+        $album = new Album(['fecha' => now()]);
         return view('admin.albums.create', compact('album'));
     }
 
@@ -46,13 +47,17 @@ class AlbumesController extends Controller
             'publicado' => request('publicado') ? true : false,
         ]);
 
-        return redirect()->route('admin.albumes.index')
+        return redirect()->route('admin.albums.index')
             ->with('msg', 'El registro se guardó correctamente');
     }
 
-    public function edit(Album $albume)
+    public function show(Album $album)
     {
-        $album = $albume;
+        return view('admin.albums.show', compact('album'));
+    }
+
+    public function edit(Album $album)
+    {
         return view('admin.albums.edit', compact('album'));
     }
 
@@ -60,9 +65,9 @@ class AlbumesController extends Controller
     {
         if ($request->file('imagen')) {
             $imagen = $request->file('imagen')->store('albumes', 'public');
-            $exists = Storage::disk('albumes')->exists($album->imagen);
+            $exists = Storage::disk('public')->exists($album->imagen);
             if ($exists) {
-                Storage::disk('albumes')->delete($album->imagen);
+                Storage::disk('public')->delete($album->imagen);
             }
         } else {
             $imagen = $album->imagen;
@@ -75,7 +80,15 @@ class AlbumesController extends Controller
             'publicado' => request('publicado') ? true : false,
         ]);
 
-        return redirect()->route('admin.albumes.index')
-            ->with('msg', 'El registro se guardó correctamente');
+        return redirect()->route('admin.albums.index')
+            ->with('msg', 'El registro se editó correctamente');
+    }
+
+    public function destroy(Album $album)
+    {
+        $album->delete();
+        Storage::disk('public')->delete($album->imagen);
+        return redirect()->route('admin.albums.index')
+            ->with('msg', 'El registro se eliminó correctamente');
     }
 }

@@ -36,7 +36,7 @@ class albumTest extends TestCase
     {
         $album = factory(Album::class)->create(['titulo' => 'titulo prueba']);
 
-        $this->assertEquals(route('admin.albumes.show', $album), $album->pathAdmin());
+        $this->assertEquals(route('admin.albums.show', $album), $album->pathAdmin());
     }
 
     /** @test */

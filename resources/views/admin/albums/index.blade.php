@@ -26,11 +26,11 @@
         <div class="mx-3 h4 white-text">Lista de álbumes</div>
 
         <div>
-          {{--          <a href="{{ route('admin.albums.create') }}"--}}
-          {{--            class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"--}}
-          {{--            data-placement="bottom" title="Registrar aviso">--}}
-          {{--            <i class="mt-0 fas fa-plus"></i>--}}
-          {{--          </a>--}}
+          <a href="{{ route('admin.albums.create') }}"
+            class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"
+            data-placement="bottom" title="Registrar álbum">
+            <i class="mt-0 fas fa-plus"></i>
+          </a>
         </div>
 
       </div>
@@ -69,26 +69,26 @@
                   @include('admin.albums.partials._publicado')
                 </td>
                 <td>
-                  {{--                  <a href="{{ route('admin.albumes.show', $album) }}" class="px-2 btn
-                  btn-outline-dark btn-rounded--}}
-                  {{--                  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ver registro">--}}
-                  {{--                    <i class="mt-0 fas fa-eye"></i>--}}
-                  {{--                  </a>--}}
-                  <a href="{{ route('admin.albumes.edit', $album) }}" class="px-2 btn
+                  <a href="{{ $album->pathAdmin() }}" class="px-2 btn
+                  btn-outline-dark btn-rounded
+                                   btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                    <i class="mt-0 fas fa-eye"></i>
+                  </a>
+                  <a href="{{ route('admin.albums.edit', $album) }}" class="px-2 btn
                   btn-outline-info btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
                     title="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  {{--                  <button type="button" onclick="onDelete({{ $album->id }})"--}}
-                  {{--                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"--}}
-                  {{--                    title="Eliminar registro">--}}
-                  {{--                    <i class="mt-0 fas fa-eraser"></i>--}}
-                  {{--                  </button>--}}
-                  {{--                  <form action="{{ route('admin.albumes.destroy', $album) }}" method="album">--}}
-                  {{--                    @csrf--}}
-                  {{--                    @method('DELETE')--}}
-                  {{--                    <button type="submit" id="btn-delete-{{ $album->id }}"></button>--}}
-                  {{--                  </form>--}}
+                  <button type="button" onclick="onDelete({{ $album->id }})"
+                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
+                    title="Eliminar registro">
+                    <i class="mt-0 fas fa-eraser"></i>
+                  </button>
+                  <form action="{{ route('admin.albums.destroy', $album) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" id="btn-delete-{{ $album->id }}"></button>
+                  </form>
                 </td>
               </tr>
               @endforeach

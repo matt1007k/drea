@@ -15,7 +15,7 @@ class UsersCanSeeListAlbumTest extends TestCase
     /** @test */
     public function guest_users_cannot_see_list_album()
     {
-        $this->get(route('admin.albumes.index'))
+        $this->get(route('admin.albums.index'))
             ->assertRedirect('/login');
     }
 
@@ -30,7 +30,7 @@ class UsersCanSeeListAlbumTest extends TestCase
         $album2 = factory(Album::class)->create();
 
         $response = $this->actingAs($user)
-            ->get(route('admin.albumes.index'));
+            ->get(route('admin.albums.index'));
 
         $response->assertViewHasAll([
             'albums',
@@ -50,7 +50,7 @@ class UsersCanSeeListAlbumTest extends TestCase
         $album2 = factory(Album::class)->create(['titulo' => 'album']);
 
         $response = $this->actingAs($user)
-            ->get("/admin/albumes?search={$album2->titulo}");
+            ->get("/admin/albums?search={$album2->titulo}");
 
         $response->assertViewHas(
             'search',

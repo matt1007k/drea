@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
                 Route::resource('documents', 'DocumentosController');
                 Route::resource('menus', 'MenusController');
-                Route::resource('albumes', 'AlbumesController');
+                Route::resource('albums', 'AlbumesController');
 
                 Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
                 Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');

@@ -21,7 +21,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
     public function guest_users_cannot_see_page_edit_album()
     {
         $album = factory(Album::class)->create();
-        $this->get(route('admin.albumes.edit', $album))
+        $this->get(route('admin.albums.edit', $album))
             ->assertRedirect('/login');
     }
 
@@ -34,7 +34,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->get(route('admin.albumes.edit', $album))
+            ->get(route('admin.albums.edit', $album))
             ->assertViewIs('admin.albums.edit')
             ->assertViewHas('album', $album)
             ->assertSeeText('Editar álbum');
@@ -46,7 +46,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
     public function guest_users_cannot_update_an_album()
     {
         $album = factory(Album::class)->create();
-        $this->put(route('admin.albumes.update', $album))
+        $this->put(route('admin.albums.update', $album))
             ->assertRedirect('/login');
     }
 
@@ -61,27 +61,27 @@ class UsersCanUpdateAnAlbumTest extends TestCase
 
         $old_image = UploadedFile::fake()->image('imagen.png');
         $album = factory(Album::class)->create($this->formData([
-            'imagen' => 'albumes/'. $old_image->hashName()
+            'imagen' => 'albumes/' . $old_image->hashName()
         ]));
 
         $new_image = UploadedFile::fake()->image('imagen.png');
 
         $response = $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'imagen' => $new_image
             ]));
 
         // Assert the file was updated...
-        Storage::disk('public')->assertExists('albumes/'.$new_image->hashName());
+        Storage::disk('public')->assertExists('albumes/' . $new_image->hashName());
 
         // Assert a file does not exist...
-        Storage::disk('public')->assertMissing('albumes/'.$old_image->hashName());
+        Storage::disk('public')->assertMissing('albumes/' . $old_image->hashName());
 
         $this->assertDatabaseHas('albumes', $this->formData([
-            'imagen' => 'albumes/'. $new_image->hashName()
+            'imagen' => 'albumes/' . $new_image->hashName()
         ]));
 
-        $response->assertRedirect(route('admin.albumes.index'))
+        $response->assertRedirect(route('admin.albums.index'))
             ->assertSessionHas('msg', 'El registro se editó correctamente');
     }
 
@@ -92,7 +92,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'titulo' => ''
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -104,7 +104,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'titulo' => 121
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -116,7 +116,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'titulo' => Str::random(101)
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -128,7 +128,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'descripcion' => ''
             ]))->assertSessionHasErrors(['descripcion']);
     }
@@ -140,7 +140,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'descripcion' => 121
             ]))->assertSessionHasErrors(['descripcion']);
     }
@@ -152,7 +152,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'descripcion' => Str::random(251)
             ]))->assertSessionHasErrors(['descripcion']);
     }
@@ -164,7 +164,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'fecha' => ''
             ]))->assertSessionHasErrors(['fecha']);
     }
@@ -176,7 +176,7 @@ class UsersCanUpdateAnAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         $this->actingAs($user)
-            ->put(route('admin.albumes.update', $album), $this->formData([
+            ->put(route('admin.albums.update', $album), $this->formData([
                 'imagen' => ''
             ]))->assertSessionHasErrors(['imagen']);
     }

@@ -1,6 +1,6 @@
 <!-- Top Table UI -->
 <div class="card p-2 mb-5">
-  <form action="{{ route('admin.albumes.index') }}" method="GET">
+  <form action="{{ route('admin.albums.index') }}" method="GET">
 
     <!-- Grid row -->
     <div class="row">
