@@ -2,8 +2,8 @@
 <div class="md-form">
   <select name="tipo_id"
     class="mdb-select colorful-select dropdown-primary md-dropdown @error('tipo_id') is-invalid @enderror" id="tipo_id"
-    required>
-    <option value="" disabled selected>Seleccionar tipo</option>
+      required>
+      <option value="" disabled selected>Seleccionar tipo</option>
 
     @foreach ($tipos as $type)
     <option value="{{$type->id}}" dusk="tipo-option" @if($type->id === $document->tipo_id) selected @endif>{{ $type->nombre }}</option>

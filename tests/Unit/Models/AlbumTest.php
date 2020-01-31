@@ -2,9 +2,11 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Album;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\Album;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 
 class albumTest extends TestCase
 {
@@ -50,5 +52,62 @@ class albumTest extends TestCase
             album::search($album2->titulo)
                 ->orderBy('fecha', 'DESC')->get()->first()->titulo
         );
+    }
+
+    /** @test */
+    public function a_album_return_a_new_imagen()
+    {
+        $image = UploadedFile::fake()->image('image.jpg');
+        $url_image = 'albumes/' . $image->hashName();
+
+        $album1 = factory(Album::class)->create();
+        $album2 = factory(Album::class)->create([
+            'imagen' => $url_image
+        ]);
+
+        $this->assertEquals($album1->imagen, $album1->getImagenUpdated());
+        $this->assertEquals($album2->imagen, $album2->getImagenUpdated());
+    }
+
+    /** @test */
+    public function a_album_can_delete_storage_image_old()
+    {
+        Storage::fake('albumes');
+        $image_old = UploadedFile::fake()->image('image.jpg');
+        $url_image_old = 'albumes/O' . $image_old->hashName();
+        $album = factory(Album::class)->create([
+            'imagen' => $url_image_old
+        ]);
+
+
+        $image_new = UploadedFile::fake()->image('image.png');
+        $url_image_new = 'albumes/N' . $image_new->hashName();
+
+        $album->deleteStorageImage();
+
+        $album->update([
+            'imagen' => $url_image_new
+        ]);
+
+        $this->assertEquals($url_image_new, $album->fresh()->imagen);
+        Storage::disk('public')->assertMissing($url_image_old);
+    }
+
+    /** @test */
+    public function a_album_is_deleted()
+    {
+        Storage::fake('albumes');
+        $image = UploadedFile::fake()->image('image.jpg');
+        $url_image = 'albumes/' . $image->hashName();
+        $album = factory(Album::class)->create([
+            'imagen' => $url_image
+        ]);
+
+        $this->assertEquals(Album::count(), 1);
+
+        $album->deleteAlbum();
+
+        $this->assertEquals(Album::count(), 0);
+        Storage::disk('public')->assertMissing($url_image);
     }
 }

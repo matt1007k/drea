@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Album extends Model
 {
@@ -22,6 +23,16 @@ class Album extends Model
         return $this->fecha->format('d M yy');
     }
 
+    public function getImagenUpdated()
+    {
+        if (request()->file('imagen')) {
+            $this->deleteStorageImage();
+            return request()->file('imagen')->store('albumes', 'public');
+        } else {
+            return $this->imagen;
+        }
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('titulo', 'LIKE', "%$search%")
@@ -36,5 +47,18 @@ class Album extends Model
     public function pathAdmin()
     {
         return route('admin.albums.show', $this->slug);
+    }
+
+    public function deleteStorageImage()
+    {
+        if (Storage::disk('public')->exists($this->imagen)) {
+            Storage::disk('public')->delete($this->imagen);
+        }
+    }
+
+    public function deleteAlbum()
+    {
+        $this->delete();
+        $this->deleteStorageImage();
     }
 }

@@ -63,19 +63,10 @@ class AlbumesController extends Controller
 
     public function update(AlbumUpdatedRequest $request, Album $album)
     {
-        if ($request->file('imagen')) {
-            $imagen = $request->file('imagen')->store('albumes', 'public');
-            $exists = Storage::disk('public')->exists($album->imagen);
-            if ($exists) {
-                Storage::disk('public')->delete($album->imagen);
-            }
-        } else {
-            $imagen = $album->imagen;
-        }
         $album->update([
             'titulo' => request('titulo'),
             'descripcion' => request('descripcion'),
-            'imagen' => $imagen,
+            'imagen' => $album->getImagenUpdated(),
             'fecha' => Carbon::parse(request('fecha')),
             'publicado' => request('publicado') ? true : false,
         ]);
@@ -86,8 +77,8 @@ class AlbumesController extends Controller
 
     public function destroy(Album $album)
     {
-        $album->delete();
-        Storage::disk('public')->delete($album->imagen);
+        $album->deleteAlbum();
+
         return redirect()->route('admin.albums.index')
             ->with('msg', 'El registro se eliminó correctamente');
     }
