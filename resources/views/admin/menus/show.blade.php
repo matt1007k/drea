@@ -6,7 +6,7 @@
 <nav aria-label="breadcrumb" class="mb-5">
   <ol class="px-2 py-2 bg-white breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('admin.documents.index') }}">Lista de menús</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.menus.index') }}">Lista de menús</a></li>
     <li class="breadcrumb-item active" aria-current="page">Detalle del menú</li>
   </ol>
 </nav>

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 
-class albumTest extends TestCase
+class AlbumTest extends TestCase
 {
     use RefreshDatabase;
     /**
