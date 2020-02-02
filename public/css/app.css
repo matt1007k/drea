@@ -13312,7 +13312,7 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   display: none;
 }
 
-.navbar .navbar-brand span #id {
+.navbar .navbar-brand {
   font-size: 1em;
 }
 

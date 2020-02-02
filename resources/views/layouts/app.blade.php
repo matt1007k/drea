@@ -10,7 +10,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Dirección Regional de Educación Ayacucho - @yield('title')</title>
-    <meta name="description" content="DREA, DREAYAC, DREAYACUCHO, Dirección Regional de Educación de Ayacucho, Dirección Regional de Educación, Educación" />
+    <meta name="description"
+        content="DREA, DREAYAC, DREAYACUCHO, Dirección Regional de Educación de Ayacucho, Dirección Regional de Educación, Educación" />
     <!-- MDB icon -->
     <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
 
@@ -21,6 +22,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}">
+    @stack('styles')
 </head>
 
 <body>
@@ -38,8 +40,15 @@
     <!-- MDB core JavaScript -->
     <script src="{{ asset('js/mdb.min.js') }}"></script>
 
+    <script>
+        $(document).ready(function () {
+      $('.mdb-select').material_select();
+    });
+    </script>
+
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script> --}}
     @stack('scripts')
+
 </body>
 
 </html>

@@ -33,10 +33,27 @@ class Album extends Model
         }
     }
 
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('publicado', true);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('titulo', 'LIKE', "%$search%")
             ->orWhere('descripcion', 'LIKE', "%$search%");
+    }
+
+    public function pathImage()
+    {
+        return Storage::disk('public')->exists($this->imagen)
+            ? Storage::url($this->imagen)
+            : "";
     }
 
     public function pathPage()

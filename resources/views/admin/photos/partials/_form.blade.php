@@ -6,7 +6,7 @@
             required>
         <option value="" selected disabled>Seleccionar un álbum</option>
         @foreach($albums as $album)
-            <option value="{{ $album->id }}" @if($album->id === old('album_id', $photo->album_id)) selected @endif>{{ $album->titulo }}</option>
+            <option value="{{ $album->id }}" @if($album->id == old('album_id', $photo->album_id)) selected @endif>{{ $album->titulo }}</option>
         @endforeach
     </select>
     @error('album_id')

@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Album;
+use App\Models\Photo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -11,6 +12,16 @@ use Illuminate\Http\UploadedFile;
 class AlbumTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function an_album_has_many_photos()
+    {
+        $album = factory(Album::class)->create();
+        factory(Photo::class, 2)->create(['album_id' => $album->id]);
+
+        $this->assertInstanceOf(Photo::class, $album->photos->first());
+    }
+
     /**
      * @test
      */

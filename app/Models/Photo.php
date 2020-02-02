@@ -43,8 +43,13 @@ class Photo extends Model
     public function scopeByAlbum($query, $album)
     {
         return $query->whereHas('album', function ($q) use ($album) {
-            $q->where('titulo', 'LIKE', "%$album%");
+            $q->where('titulo', 'LIKE', "%$album%")
+                ->orWhere('slug', 'LIKE', "%$album%");
         });
+    }
+
+    public function scopePublished($query){
+        return $query->where('publicado', true);
     }
 
     public function scopeSearch($query, $search)
