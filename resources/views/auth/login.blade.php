@@ -1,14 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title', 'Iniciar sesión')
 
 @section('content')
-<div class="container mt-3 mb-3">
+<div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-5">
 
-            <div class="card card-signup z-depth-1">
+            <div class="card">
 
                 <div class="card-body">
-                    <div class="text-center">
+                    <div class="text-center mb-4">
                         <img src="{{ asset('/img/drea/logo.png')}} " class="logo" width="100">
                         <h3 class="card-title my-2">Iniciar sesión</h3>
                         <p class="slogan">Ingresa para realizar alguna operación</p>
@@ -17,31 +19,33 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="md-form md-outline">
-                            <label for="email" class="">Correo Electrónico</label>
-                            <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}" name="email" required autocomplete="email" autofocus>
+                        <div class="form-group">
+                            <div class="mi-input @error('email') mi-error @enderror">
+                                <label for="email" class="mi-input-label">Correo Electrónico</label>
+                                <input type="email" id="email" class="form-control" value="{{ old('email') }}"
+                                    name="email" required autocomplete="email" autofocus>
+                            </div>
                             @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <label id="email-error" class="error" for="email">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="md-form md-outline">
-                            <label for="password">Contraseña</label>
-                            <input type="password" id="password"
-                                class="form-control @error('password') is-invalid @enderror"
-                                value="{{ old('password') }}" name="password" required autocomplete="password"
-                                autofocus>
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                        <div class="form-group mb-4">
+                            <div class="mi-input">
+                                <label for="password" class="mi-input-label">Contraseña</label>
+                                <input type="password" id="password"
+                                    class="form-control @error('password') mi-error @enderror"
+                                    value="{{ old('password') }}" name="password" required autocomplete="password"
+                                    autofocus>
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div class="md-form">
+                        <div class="form-group mb-4">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                 {{ old('remember') ? 'checked' : '' }}>
 
@@ -50,8 +54,8 @@
                             </label>
                         </div>
 
-                        <div class="card-footer justify-content-between">
-                            <button type="submit" class="btn btn-primary btn-rounded" dusk="btn-login">
+                        <div class="mx-3 d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary waves-effect" dusk="btn-login">
                                 Ingresar
                             </button>
                             @if (Route::has('password.request'))
@@ -62,7 +66,7 @@
                         </div>
 
                 </div>
-                <div class="card-footer text-center">
+                <div class="mx-3 text-center">
 
                     @if (Route::has('register'))
                     <a class="btn btn-link" href="{{ route('register') }}">

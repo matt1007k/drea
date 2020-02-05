@@ -2,23 +2,30 @@
 
 @section('title', 'Registrar documento')
 
-@section('breadcrumb')
-<nav aria-label="breadcrumb" class="mb-5">
-  <ol class="breadcrumb bg-white py-2 px-2">
+@section('content-header')
+<div class="mi-content-header">
+  <div class="mi-card m-b-0">
+    <div class="mi-card-header bg-green">
+      <div class="mi-title">
+        <i class="mi mi-icon_add"></i>
+        <span>Registrar documento</span>
+      </div>
+    </div>
+  </div>
+  <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
     <li class="breadcrumb-item"><a href="{{ route('admin.documents.index') }}">Lista de documentos</a></li>
     <li class="breadcrumb-item active" aria-current="page">Registrar documento</li>
   </ol>
-</nav>
+</div>
 @endsection
 
 @section('content')
 <div class="container">
-  <div class="row">
-    <div class="col-md-6 mx-auto">
-      <div class="card">
-        <div class="card-body">
-          <div class="h3 form-header bg-custom-primary text-white text-center">Registrar documento</div>
+  <div class="row flex justify-center">
+    <div class="col-md-8">
+      <div class="mi-card">
+        <div class="mi-card-content">
           <form action="{{ route('admin.documents.store') }}" method="POST">
             @include('admin.documents.partials._form', ['btnText' => 'Guardar'])
           </form>

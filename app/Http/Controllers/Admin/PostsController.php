@@ -31,7 +31,9 @@ class PostsController extends Controller
 
     public function create()
     {
-        $post = new Post();
+        $post = new Post([
+            'fecha' => Carbon::now()
+        ]);
         return view('admin.posts.create', compact('post'));
     }
 
@@ -62,7 +64,7 @@ class PostsController extends Controller
         $post->update([
             'titulo' => request('titulo'),
             'contenido' => request('contenido'),
-            'fecha' => Carbon::parse(request('fecha')),
+            'fecha' => Carbon::parse((string) request('fecha')),
         ]);
         return redirect()->route('admin.posts.index')
             ->with('msg', 'El registro se editó correctamente');

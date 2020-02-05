@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Album;
-use App\Models\Photo;
 use Illuminate\Http\Request;
 
 class GaleriaController extends Controller

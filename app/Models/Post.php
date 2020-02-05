@@ -19,7 +19,7 @@ class Post extends Model
 
     public function pathPage()
     {
-        return url('/avisos/' . $this->slug);
+        return route('pages.avisos.show', $this->slug);
     }
 
     public function pathAdmin()

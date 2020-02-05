@@ -9,11 +9,20 @@
       @include('admin.posts.partials._aviso')
       <div class="card border-top-0">
         <div class="card-body">
-          <div class="sharethis-inline-share-buttons"></div>
 
-          <div id="fb-root"></div>
-          <div class="fb-comments" data-href="{{ route('pages.avisos.show', $aviso) }}" data-width="100%"
-            data-order-by="reverse_time"></div>
+          <div>
+            <p class="font-weight-bold text-center">¡Comparte está publicación con tus amigos!</p>
+            <div class="sharethis-inline-share-buttons"></div>
+          </div>
+
+
+          <div class="mt-3">
+            <div class="h5">Comentarios</div>
+            <div id="fb-root"></div>
+            <div class="fb-comments" data-href="{{ route('pages.avisos.show', $aviso) }}" data-width="100%"
+              data-order-by="reverse_time"></div>
+          </div>
+
         </div>
       </div>
     </div>

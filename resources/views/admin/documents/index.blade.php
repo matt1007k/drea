@@ -2,34 +2,40 @@
 
 @section('title', 'Lista de documentos')
 
-@section('breadcrumb')
-<nav aria-label="breadcrumb" class="mb-2">
-  <ol class="px-2 py-2 bg-white breadcrumb">
+@section('content-header')
+<div class="mi-content-header">
+  <div class="mi-card m-b-0">
+    <div class="mi-card-header bg-green">
+      <div class="mi-title">
+        <i class="mi mi-icon_list"></i>
+        <span>Lista de documentos</span>
+      </div>
+    </div>
+  </div>
+  <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
     <li class="breadcrumb-item active" aria-current="page">Lista de documentos</li>
   </ol>
-</nav>
+</div>
 @endsection
 
 @section('content')
-<div class="mb-4 container-fluid">
+<div class="mb-4">
 
   <section>
 
     @include('admin.documents.partials._form-search')
-    <div class="card card-cascade narrower z-depth-1">
+    <div class="mi-card">
 
       <!-- Card image -->
-      <div
-        class="py-2 mx-4 mb-3 view view-cascade gradient-card-header blue-gradient narrower d-flex justify-content-between align-items-center">
+      <div class="flex justify-between align-center">
 
-        <div class="mx-3 h4 white-text">Lista de documentos</div>
+        {{-- <div class="mx-3 h4 white-text">Lista de documentos</div> --}}
 
-        <div>
-          <a href="{{ route('admin.documents.create') }}"
-            class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"
-            data-placement="bottom" title="Registrar documento">
+        <div class="p-6">
+          <a href="{{ route('admin.documents.create') }}" class="btn btn-success text-uppercase waves-effect">
             <i class="mt-0 fas fa-plus"></i>
+            Registrar documento
           </a>
         </div>
 
@@ -65,19 +71,16 @@
                 <td><a href="{{ $document->url }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a></td>
                 <td>{{ $document->descripcion }}</td>
                 <td>
-                  <a href="{{ route('admin.documents.show', $document) }}"
-                    class="px-2 btn btn-outline-dark btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Ver registro">
+                  <a href="{{ route('admin.documents.show', $document) }}" class="px-2 btn btn-dark btn-sm"
+                    data-toggle="tooltip" data-placement="bottom" title="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('admin.documents.edit', $document) }}"
-                    class="px-2 btn btn-outline-info btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Editar registro">
+                  <a href="{{ route('admin.documents.edit', $document) }}" class="px-2 btn btn-info btn-sm"
+                    data-toggle="tooltip" data-placement="bottom" title="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  <button type="button" onclick="onDelete({{ $document->id }})"
-                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Eliminar registro">
+                  <button type="button" onclick="onDelete({{ $document->id }})" class="px-2 btn btn-danger btn-sm"
+                    data-toggle="tooltip" data-placement="bottom" title="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
                   <form action="{{ route('admin.documents.destroy', $document) }}" method="POST">
@@ -143,9 +146,9 @@
   $('.dataTables_length').addClass('bs-select');
 
   function onDelete(id) {
-      Swal.fire({
+      swal({
           title: 'Estás seguro de eliminar el registro?',
-          icon: 'warning',
+          type: 'warning',
           showCloseButton: true,
           showCancelButton: true,
           confirmButtonColor: "#3085d6",

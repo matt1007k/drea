@@ -47,7 +47,7 @@
               <tr>
                 <th class="th-lg text-center font-weight-bold">#</th>
                 <th class="th-lg text-center font-weight-bold">Video</th>
-                <th class="th-lg text-center font-weight-bold">Titulo</th>
+                <th class="th-lg text-center font-weight-bold w-100">Titulo</th>
                 <th class="th-lg text-center font-weight-bold">Fecha</th>
                 <th class="th-lg text-center font-weight-bold">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>

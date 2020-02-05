@@ -21,8 +21,9 @@ Route::namespace('Pages')->group(function () {
     Route::get('/superior', 'SuperiorController@index')->name('pages.superior');
     Route::get('/documentos', 'DocumentosController@index')->name('pages.documentos.index');
     Route::get('/avisos', 'AvisosController@index')->name('pages.avisos.index');
-    Route::get('/avisos', 'AvisosController@index')->name('pages.avisos.show');
+    Route::get('/avisos/{aviso}', 'AvisosController@show')->name('pages.avisos.show');
     Route::get('/galeria', 'GaleriaController@index')->name('pages.galeria.index');
+    Route::get('/videos', 'VideoController@index')->name('pages.videos.index');
 });
 
 Auth::routes();

@@ -19,4 +19,9 @@ class Video extends Model
     {
         return $query->where('titulo', 'LIKE', "%$search%");
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('publicado', true);
+    }
 }

@@ -1,4 +1,5 @@
 const mix = require("laravel-mix");
+const tailwindcss = require("tailwindcss");
 
 /*
  |--------------------------------------------------------------------------
@@ -18,6 +19,11 @@ mix.js("resources/js/app.js", "public/js").sass(
 
 // mix.styles(["resources/vendor/mdb/css/mdb.min.css"], "public/css/mdb.min.css");
 // .js("resources/vendor/mdb/js/mdb.min.js", "public/js");
+
+mix.sass("resources/sass/main.scss", "public/css").options({
+    processCssUrls: false,
+    postCss: [tailwindcss("./tailwind.config.js")]
+});
 
 mix.browserSync({
     proxy: "http://localhost:8000",

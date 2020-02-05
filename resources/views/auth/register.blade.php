@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title', 'Crear una cuenta')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card card-signup z-depth-1">
+        <div class="col-md-5">
+            <div class="card">
 
                 <div class="card-body">
-                    <div class="text-center">
+                    <div class="text-center mb-4">
                         <img src="{{ asset('/img/drea/logo.png')}} " class="logo" width="100">
                         <h3 class="card-title my-2">Crear una cuenta</h3>
                         <p class="slogan">Registrate para realizar alguna operación</p>
@@ -15,54 +17,53 @@
 
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-                        <div class="md-form md-outline">
-                            <label for="name" class="">Nombre de Usuario</label>
-                            <input type="text" id="name" class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}" name="name" required autocomplete="name" autofocus>
+                        <div class="form-group">
+                            <div class="mi-input @error('name') mi-error @enderror">
+                                <label for="name" class="mi-input-label">Nombre de Usuario</label>
+                                <input type="text" id="name" class="form-control" value="{{ old('name') }}" name="name"
+                                    required autocomplete="name" autofocus>
+                            </div>
                             @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <label id="name-error" class="error" for="name">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="md-form md-outline">
-                            <label for="email" class="">Correo Electrónico</label>
-                            <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}" name="email" required autocomplete="email" autofocus>
+                        <div class="form-group">
+                            <div class="mi-input @error('email') mi-error @enderror">
+                                <label for="email" class="mi-input-label">Correo Electrónico</label>
+                                <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
+                                    value="{{ old('email') }}" name="email" required autocomplete="email" autofocus>
+                            </div>
                             @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <label id="email-error" class="error" for="email">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="md-form md-outline">
-                            <label for="password">Contraseña</label>
-                            <input type="password" id="password"
-                                class="form-control @error('password') is-invalid @enderror"
-                                value="{{ old('password') }}" name="password" required autocomplete="password"
-                                autofocus>
+                        <div class="form-group">
+                            <div class="mi-input @error('password') mi-error @enderror">
+                                <label for="password" class="mi-input-label">Contraseña</label>
+                                <input type="password" id="password" class="form-control" value="{{ old('password') }}"
+                                    name="password" required autocomplete="password" autofocus>
+                            </div>
                             @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <label id="password-error" class="error" for="password">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="md-form md-outline">
-                            <label for="password_confirmation">Confirmar Contraseña</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation"
-                                class="form-control @error('password_confirmation') is-invalid @enderror">
+                        <div class="form-group">
+                            <div class="mi-input @error('password_confirmation') mi-error @enderror">
+                                <label for="password_confirmation" class="mi-input-label">Confirmar Contraseña</label>
+                                <input type="password" id="password_confirmation" name="password_confirmation"
+                                    class="form-control">
+                            </div>
                             @error('password_confirmation')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <label id="password_confirmation-error" class="error"
+                                for="password_confirmation">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="card-footer justify-content-between">
-                            <button type="submit" class="btn btn-primary btn-rounded" dusk="btn-register">
+                        <div class="mt-4 d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary waves-effect" dusk="btn-register">
                                 Registrarse
                             </button>
                             @if (Route::has('login'))
