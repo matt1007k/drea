@@ -13,4 +13,9 @@ class AnnouncementGroup extends Model
         return $query->where('nombre', 'LIKE', "%$search%")
             ->orWhere('anio', 'LIKE', "%$search%");
     }
+
+    public function convocatorias()
+    {
+        return $this->hasMany(Announcement::class, 'grupo_id');
+    }
 }

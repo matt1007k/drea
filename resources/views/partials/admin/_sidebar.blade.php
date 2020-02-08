@@ -97,18 +97,18 @@
           </li>
         </ul>
       </li>
-      <li class="header">APPLICATIONS</li>
-      <li data-mi-color="col-indigo">
-        <a href="apps/calendar_app.html"><i class="mi mi-icon_date_range "></i><span>Calendar App</span></a>
-      </li>
+      <li class="header">CONVOCATORIAS</li>
       <li class="mi-menu-toggle" data-mi-color="col-teal">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_chat"></i>
-          <span>Chat App</span>
+          <span>Convocatorias</span>
         </a>
         <ul class="mi-menu-sub">
-          <li>
-            <a href="apps/chatapp/chat_box.html">Chat Box</a>
+          <li class="{{ request()->is('admin/announcements') ? 'active' : '' }}">
+            <a href="{{ route('admin.announcements.index') }}">Lista de convocatorias</a>
+          </li>
+          <li class="{{ request()->is('admin/announcements/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.announcements.create') }}">Registrar convocatoria</a>
           </li>
 
         </ul>

@@ -12,6 +12,10 @@ class Post extends Model
         'fecha'
     ];
 
+    public function getFechaFormatAttribute(){
+      return $this->fecha->format('d M yy');
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

@@ -17,6 +17,7 @@ class CreateAnnouncementGroupsTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre', 50);
             $table->string('anio', 4);
+            $table->text('introduccion');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mb-3 mt-2">
-    <div class="w-25 bg-white rounded py-2 px-2">
+    <div class="w-25 w-sm-100 bg-white rounded py-2 px-2">
         <label for="album">Filtar por Galeria</label>
         <select name="album" id="album" class="mdb-select colorful-select dropdown-primary md-dropdown">
             @forelse($albums as $albumf)
@@ -17,7 +17,7 @@
     </div>
     <div class=" row mt-2">
 
-        <div class="col-md-3">
+        <div class="col-md-3 mb-sm-2">
             <div class="card">
                 <div class="card-body">
                     <div class="h4">Galería</div>

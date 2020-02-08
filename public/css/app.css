@@ -12811,11 +12811,11 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
 
 @media (max-width: 768px) {
   .mx-sm-auto {
-    margin: 0 auto;
+    margin: 0 auto !important;
   }
 
   .w-sm-100 {
-    width: 100%;
+    width: 100% !important;
   }
 
   .px-sm-0 {

@@ -23,6 +23,19 @@
 </div>
 
 
+<div class="form-group mb-5">
+  <label for="introduccion">Introducción</label>
+  <textarea style="min-height:300px" rows="10" id="introduccion" name="introduccion"
+    class="form-control @error('introduccion') is-invalid @enderror" value="" autocomplete="introduccion"
+    autofocus>{!! old('introduccion', $announcement_group->introduccion) !!}</textarea>
+  @error('introduccion')
+  <div id="fecha-error" class="text-danger">
+    {{ $message }}
+  </div>
+  @enderror
+</div>
+
+
 <div class="d-flex justify-content-between mt-4">
   <button class="btn btn-success" dusk="btn-registrar">
     {{ $btnText }}
@@ -33,3 +46,16 @@
     <i class="fa fa-ban ml-1"></i>
   </a>
 </div>
+
+@push('scripts')
+<script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace( 'introduccion' );
+  CKEDITOR.editorConfig = function( config ) {
+    config.language = 'es';
+    config.uiColor = '#F7B42C';
+    config.height = 300;
+    config.toolbarCanCollapse = true;
+  };
+</script>
+@endpush

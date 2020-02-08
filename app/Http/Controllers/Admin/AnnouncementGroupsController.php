@@ -43,6 +43,7 @@ class AnnouncementGroupsController extends Controller
     {
         AnnouncementGroup::create([
             'nombre' => request('nombre'),
+            'introduccion' => request('introduccion'),
             'anio' => request('anio')
         ]);
 
@@ -59,6 +60,7 @@ class AnnouncementGroupsController extends Controller
     {
         $announcement_group->update([
             'nombre' => request('nombre'),
+            'introduccion' => request('introduccion'),
             'anio' => request('anio')
         ]);
 

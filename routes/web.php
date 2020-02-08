@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::resource('videos', 'VideosController');
                 Route::resource('external_links', 'ExternalLinksController');
                 Route::resource('announcement_groups', 'AnnouncementGroupsController');
+                Route::resource('announcements', 'AnnouncementsController');
 
                 Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
                 Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');

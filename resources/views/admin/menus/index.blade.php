@@ -20,7 +20,7 @@
 @endsection
 
 @section('content')
-<div class="mb-4 container">
+<div class="container mb-4">
 
   <section>
 
@@ -51,11 +51,11 @@
             <!-- Table head -->
             <thead>
               <tr>
-                <th class="th-lg text-center font-weight-bold">#</th>
-                <th class="th-lg text-center font-weight-bold w-100">Titulo</th>
-                <th class="th-lg text-center font-weight-bold">Ruta</th>
-                <th class="th-lg text-center font-weight-bold">Orden</th>
-                <th class="th-lg text-center font-weight-bold">Publicado</th>
+                <th class="text-center th-lg font-weight-bold">#</th>
+                <th class="text-center th-lg font-weight-bold w-100">Titulo</th>
+                <th class="text-center th-lg font-weight-bold">Ruta</th>
+                <th class="text-center th-lg font-weight-bold">Orden</th>
+                <th class="text-center th-lg font-weight-bold">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -73,16 +73,15 @@
                   @include('admin.menus.partials._publicado')
                 </td>
                 <td>
-                  <a href="{{ route('admin.menus.show', $menu) }}" class="px-2 btn btn-light
-                  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                  <a href="{{ route('admin.menus.show', $menu) }}" class="px-2 btn btn-light btn-sm" data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
                   <a href="{{ route('admin.menus.edit', $menu) }}" class="px-2 btn btn-info btn-sm"
-                    data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                    data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
                   <button type="button" onclick="onDelete({{ $menu->id }})" class="px-2 btn btn-danger btn-sm"
-                    data-toggle="tooltip" data-placement="bottom" title="Eliminar registro">
+                    data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
                   <form action="{{ route('admin.menus.destroy', $menu) }}" method="POST">

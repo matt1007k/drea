@@ -25,6 +25,7 @@
   <link href="{{ asset('vendors/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/materionic.css') }}" rel="stylesheet">
   <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/balloon.css') }}" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 
@@ -71,7 +72,7 @@
                 </a>
                 <a href="javascript:void(0)" class="waves-effect m-r-5"
                   onclick="$('#mi_sidebar_menu_chat_input').parent().toggle(200)">
-                  <i class="mi  mi-icon_search col-teal"></i>
+                  <i class="mi mi-icon_search col-teal"></i>
                 </a>
               </div>
             </div>
@@ -97,7 +98,7 @@
                   </div>
                   <div class="media-right">
                     <span>10:25</span>
-                    <span class="badge bg-green-400 pull-right">4</span>
+                    <span class="bg-green-400 badge pull-right">4</span>
                   </div>
                 </div>
               </div>
@@ -152,7 +153,7 @@
                   </div>
                   <div class="media-right">
                     <span>07:16</span>
-                    <span class="badge bg-green-400 pull-right">1</span>
+                    <span class="bg-green-400 badge pull-right">1</span>
                   </div>
                 </div>
               </div>
@@ -188,7 +189,7 @@
                   </div>
                   <div class="media-right">
                     <span>Monday</span>
-                    <span class="badge bg-green-400 pull-right">8</span>
+                    <span class="bg-green-400 badge pull-right">8</span>
                   </div>
                 </div>
               </div>
@@ -259,7 +260,7 @@
                   </div>
                   <div class="media-right">
                     <span>Monday</span>
-                    <span class="badge bg-green-400 pull-right">5</span>
+                    <span class="bg-green-400 badge pull-right">5</span>
                   </div>
                 </div>
               </div>
@@ -278,7 +279,7 @@
                   </div>
                   <div class="media-right">
                     <span>Saturday</span>
-                    <span class="badge bg-green-400 pull-right">2</span>
+                    <span class="bg-green-400 badge pull-right">2</span>
                   </div>
                 </div>
               </div>
@@ -297,7 +298,7 @@
                   </div>
                   <div class="media-right">
                     <span>Friday</span>
-                    <span class="badge bg-green-400 pull-right">4</span>
+                    <span class="bg-green-400 badge pull-right">4</span>
                   </div>
                 </div>
               </div>
@@ -413,7 +414,7 @@
                   12:00
                 </div>
                 <div class="mi-basic-timeline-content">
-                  <div class="mi-basic-timeline-title font-bold">
+                  <div class="font-bold mi-basic-timeline-title">
                     Donec sed odio dui.
                   </div>
                 </div>
@@ -472,7 +473,7 @@
                   12:00
                 </div>
                 <div class="mi-basic-timeline-content">
-                  <div class="mi-basic-timeline-title font-bold">
+                  <div class="font-bold mi-basic-timeline-title">
                     Donec sed odio dui.
                   </div>
                 </div>
@@ -622,7 +623,7 @@
         </div>
       </div>
     </div>
-    <div class="mi-chat-box bg-blue animate fadeIn hidden" id="mi_chat_box">
+    <div class="hidden mi-chat-box bg-blue animate fadeIn" id="mi_chat_box">
       <div class="mi-chat-box-title">
         <h1>John Doe</h1>
         <div class="mi-chat-box-avatar">
@@ -664,7 +665,7 @@
   <!-- ============================================================== -->
   <!-- #Begin# Footer -->
   <!-- ============================================================== -->
-  {{-- <footer class="mi-footer clearfix mi-footer-fixed padding-5">
+  {{-- <footer class="clearfix mi-footer mi-footer-fixed padding-5">
     <div class="col-md-11 m-t-10">
       &copy; {{ date('Y') }} <a href="https://creativemarket.com/ercanayhan?u=ercanayhan"><b
       class="col-light-blue-900">Ercan

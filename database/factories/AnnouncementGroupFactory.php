@@ -9,6 +9,7 @@ $factory->define(AnnouncementGroup::class, function (Faker $faker) {
     $anio = rand(2015, 2020);
     return [
         'nombre' => 'CAS ' . $anio,
-        'anio' => $anio
+        'anio' => $anio,
+        'introduccion' => '<p>introduccion test</p>'
     ];
 });

@@ -51,11 +51,11 @@
             <!-- Table head -->
             <thead>
               <tr>
-                <th class="th-lg text-center font-weight-bold">#</th>
-                <th class="th-lg text-center font-weight-bold">Tipo</th>
-                <th class="th-lg text-center font-weight-bold">Titulo</th>
-                <th class="th-lg text-center font-weight-bold">Url</th>
-                <th class="th-lg text-center font-weight-bold">Descripción</th>
+                <th class="text-center th-lg font-weight-bold">#</th>
+                <th class="text-center th-lg font-weight-bold">Tipo</th>
+                <th class="text-center th-lg font-weight-bold">Titulo</th>
+                <th class="text-center th-lg font-weight-bold">Url</th>
+                <th class="text-center th-lg font-weight-bold">Descripción</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -72,15 +72,15 @@
                 <td>{{ $document->descripcion }}</td>
                 <td>
                   <a href="{{ route('admin.documents.show', $document) }}" class="px-2 btn btn-dark btn-sm"
-                    data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                    data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
                   <a href="{{ route('admin.documents.edit', $document) }}" class="px-2 btn btn-info btn-sm"
-                    data-toggle="tooltip" data-placement="bottom" title="Editar registro">
+                    data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
                   <button type="button" onclick="onDelete({{ $document->id }})" class="px-2 btn btn-danger btn-sm"
-                    data-toggle="tooltip" data-placement="bottom" title="Eliminar registro">
+                    data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
                   <form action="{{ route('admin.documents.destroy', $document) }}" method="POST">

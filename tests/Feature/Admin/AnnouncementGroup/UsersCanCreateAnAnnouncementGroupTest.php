@@ -124,12 +124,24 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
             ]))->assertSessionHasErrors(['anio']);
     }
 
+    /** @test */
+    public function the_introduccion_is_required()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user)
+            ->post(route('admin.announcement_groups.store'), $this->formData([
+                'introduccion' => ''
+            ]))->assertSessionHasErrors(['introduccion']);
+    }
+
+
     /** data send for user */
     public function formData($override = [])
     {
         return array_merge([
             'nombre' => 'Mi primer CAS',
-            'anio' => 2019
+            'anio' => 2019,
+            'introduccion' => '<p>introduccion</p>'
         ], $override);
     }
 }

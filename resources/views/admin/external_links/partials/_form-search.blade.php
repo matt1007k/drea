@@ -9,7 +9,7 @@
       <div class="col-lg col-md-12">
 
         <div class="d-flex md-form mt-2 ml-2">
-          <input class="form-control mt-2" type="text" name="search" placeholder="Buscar"
+          <input class="form-control" type="text" name="search" placeholder="Buscar"
             value="{{ $search ? $search : old('search') }}">
           <button type="submit" class="btn btn-sm btn-primary ml-2 px-2 waves-effect waves-light"><i
               class="fas fa-search"></i>

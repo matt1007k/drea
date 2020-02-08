@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de avisos')
+@section('title', 'Lista de convocatorias')
 
 @section('content-header')
 <div class="mi-content-header">
@@ -8,13 +8,13 @@
     <div class="mi-card-header bg-green">
       <div class="mi-title">
         <i class="mi mi-icon_list"></i>
-        <span>Lista de avisos</span>
+        <span>Lista de convocatorias</span>
       </div>
     </div>
   </div>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Lista de avisos</li>
+    <li class="breadcrumb-item active" aria-current="page">Lista de convocatorias</li>
   </ol>
 </div>
 @endsection
@@ -24,18 +24,18 @@
 
   <section>
 
-    @include('admin.posts.partials._form-search')
+    @include('admin.announcements.partials._form-search')
     <div class="mi-card">
 
       <!-- Card image -->
-      <div class="flex justify-between mi-card-content align-center">
+      <div class="flex justify-between align-center">
 
-        {{-- <div class="mx-3 h4 white-text">Lista de avisos</div> --}}
+        {{-- <div class="mx-3 h4 white-text">Lista de convocatorias</div> --}}
 
-        <div>
-          <a href="{{ route('admin.posts.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
-            <i class="mr-2 fas fa-plus"></i>
-            Registrar aviso
+        <div class="p-6">
+          <a href="{{ route('admin.announcements.create') }}" class="btn btn-success text-uppercase waves-effect">
+            <i class="mt-0 fas fa-plus"></i>
+            Registrar convocatoria
           </a>
         </div>
 
@@ -46,15 +46,18 @@
 
         <div class="">
           <!-- Table -->
-          <table id="postsTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
+          <table id="announcementsTable" class="table table-responsive table-striped table-bordered table-sm"
+            width="100%">
 
             <!-- Table head -->
             <thead>
               <tr>
                 <th class="text-center th-lg font-weight-bold">#</th>
+                <th class="text-center th-lg font-weight-bold">Grupo</th>
                 <th class="text-center th-lg font-weight-bold">Titulo</th>
+                <th class="text-center th-lg font-weight-bold">Número</th>
                 <th class="text-center th-lg font-weight-bold">Fecha</th>
-                <th class="text-center th-lg font-weight-bold">Publicado</th>
+                <th class="text-center th-lg font-weight-bold">Estado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -62,29 +65,33 @@
 
             <!-- Table body -->
             <tbody>
-              @foreach ($posts as $post)
+              @foreach ($announcements as $announcement)
               <tr>
-                <td class="text-center font-weight-bold">{{ $post->id }}</td>
-                <td>{{ $post->titulo }}</td>
-                <td>{{ $post->fecha_format }}</td>
-                <td></td>
+                <td class="text-center font-weight-bold">{{ $announcement->id }}</td>
+                <td>{{ $announcement->grupo->nombre }}</td>
+                <td>{{ $announcement->titulo }}</td>
+                <td>{{ $announcement->numero }}</td>
+                <td>{{ $announcement->fecha_format }}</td>
+                <td class="text-center">
+                  @include('admin.announcements.partials._estado')
+                </td>
                 <td>
-                  <a href="{{ route('admin.posts.show', $post) }}" class="px-2 btn btn-light btn-sm"
-                     data-balloon-pos="down" aria-label="Ver registro">
+                  <a href="{{ route('admin.announcements.show', $announcement) }}" class="px-2 btn btn-dark btn-sm"
+                    data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('admin.posts.edit', $post) }}" class="px-2 btn btn-info btn-sm"
-                     data-balloon-pos="down" aria-label="Editar registro">
+                  <a href="{{ route('admin.announcements.edit', $announcement) }}" class="px-2 btn btn-info btn-sm"
+                    data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  <button type="button" onclick="onDelete({{ $post->id }})" class="px-2 btn btn-danger btn-sm"
-                     data-balloon-pos="down" aria-label="Eliminar registro">
+                  <button type="button" onclick="onDelete({{ $announcement->id }})" class="px-2 btn btn-danger btn-sm"
+                    data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
-                  <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
+                  <form action="{{ route('admin.announcements.destroy', $announcement) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="none" id="btn-delete-{{ $post->id }}"></button>
+                    <button type="submit" id="btn-delete-{{ $announcement->id }}"></button>
                   </form>
                 </td>
               </tr>
@@ -107,14 +114,13 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('/css/datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/datatables-select.min.css') }}">
-
 @endpush
 
 @push('scripts')
 <script src="{{ asset('/js/datatables.min.js') }}"></script>
 <script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
-  $('#postsTable').DataTable({
+  $('#announcementsTable').DataTable({
     "sort":  [[ 3, "asc" ]],
     "searching": false,
     language: {
@@ -142,8 +148,8 @@
         }
     }
   });
-  
-   
+  $('.dataTables_length').addClass('bs-select');
+
   function onDelete(id) {
       swal({
           title: 'Estás seguro de eliminar el registro?',
