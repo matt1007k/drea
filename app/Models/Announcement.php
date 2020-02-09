@@ -19,6 +19,11 @@ class Announcement extends Model
         return $this->belongsTo(AnnouncementGroup::class);
     }
 
+    public function links()
+    {
+        return $this->hasMany(AnnouncementLink::class);
+    }
+
     public function scopeByGroup($query, $group)
     {
         return $query->whereHas('grupo', function ($q) use ($group) {
