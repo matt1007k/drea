@@ -11,12 +11,13 @@ use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UsersCanCreateAnAnnouncementLinkTest extends TestCase
+class UsersCanUpdateAnAnnouncementLinkTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $user;
     protected $announcement;
+    protected $announcement_link;
 
     protected function setUp(): void
     {
@@ -24,62 +25,63 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
         $this->user = factory(User::class)->create();
         $announcement_group = factory(AnnouncementGroup::class)->create();
         $this->announcement = factory(Announcement::class)->create(['grupo_id' => $announcement_group->id]);
+        $this->announcement_link = factory(AnnouncementLink::class)->create(['announcement_id' => $this->announcement->id]);
     }
 
     /**
      * @test
      */
-    public function guest_users_cannot_see_form_for_create_an_announcement_link()
+    public function guest_users_cannot_see_form_for_edit_an_announcement_link()
     {
-        $this->get(route('admin.announcements.links.create', $this->announcement))
+        $this->get(route('admin.announcements.links.edit', [$this->announcement, $this->announcement_link]))
             ->assertRedirect('/login');
     }
 
     /**
      * @test
      */
-    public function users_can_see_form_for_create_an_announcement_link()
+    public function users_can_see_form_for_edit_an_announcement_link()
     {
         $this->actingAs($this->user)
-            ->get(route('admin.announcements.links.create', $this->announcement))
+            ->get(route('admin.announcements.links.edit', [$this->announcement, $this->announcement_link]))
             ->assertViewHas(
                 'link',
-                new AnnouncementLink()
+                $this->announcement_link
             )->assertViewHas(
                 'announcement',
                 $this->announcement
             )
-            ->assertViewIs('admin.announcement_links.create');
+            ->assertViewIs('admin.announcement_links.edit');
     }
 
     /**
      * @test
      */
-    public function guest_users_cannot_create_an_announcement_link()
+    public function guest_users_cannot_update_an_announcement_link()
     {
-        $this->post(route('admin.announcements.links.store', $this->announcement), $this->formData())
+        $this->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData())
             ->assertRedirect('/login');
     }
 
     /**
      * @test
      */
-    public function users_can_create_an_announcement_link()
+    public function users_can_update_an_announcement_link()
     {
         $response = $this->actingAs($this->user)
-            ->post(route('admin.announcements.links.store', $this->announcement), $this->formData());
+            ->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData());
 
         $this->assertDatabaseHas('announcement_links', $this->formData());
 
         $response->assertRedirect(route('admin.announcements.show', $this->announcement))
-            ->assertSessionHas('msg', 'El registro se guardó correctamente');
+            ->assertSessionHas('msg', 'El registro se editó correctamente');
     }
 
     /** @test */
     public function the_titulo_is_required()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.announcements.links.store', $this->announcement), $this->formData([
+            ->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData([
                 'titulo' => ''
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -88,7 +90,7 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
     public function the_titulo_must_be_a_string()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.announcements.links.store', $this->announcement), $this->formData([
+            ->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData([
                 'titulo' => 1212
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -97,7 +99,7 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
     public function the_titulo_may_not_be_greater_than_200_characters()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.announcements.links.store', $this->announcement), $this->formData([
+            ->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData([
                 'titulo' => Str::random(201)
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -106,7 +108,7 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
     public function the_url_is_required()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.announcements.links.store', $this->announcement), $this->formData([
+            ->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData([
                 'url' => ''
             ]))->assertSessionHasErrors(['url']);
     }
@@ -115,7 +117,7 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
     public function the_url_must_be_a_string()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.announcements.links.store', $this->announcement), $this->formData([
+            ->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData([
                 'url' => 1212
             ]))->assertSessionHasErrors(['url']);
     }
@@ -124,7 +126,7 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
     public function the_fecha_is_required()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.announcements.links.store', $this->announcement), $this->formData([
+            ->put(route('admin.announcements.links.update', [$this->announcement, $this->announcement_link]), $this->formData([
                 'fecha' => ''
             ]))->assertSessionHasErrors(['fecha']);
     }

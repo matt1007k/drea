@@ -42,7 +42,7 @@
 
       @forelse ($announcement->links as $link)
       @include('admin.announcement_links.partials._announcement_link', ['column_class' => 'pt-3 col-md-4 rounded-lg
-      bg-white'])
+      bg-white md:ml-3'])
       @empty
       <div class="text-lg text-gray-800">Sin enlaces</div>
       @endforelse

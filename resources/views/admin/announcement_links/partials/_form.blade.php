@@ -3,8 +3,8 @@
 <div class="form-group">
   <div class="mi-input @error('titulo') mi-error @enderror">
     <label for="titulo" class="mi-input-label">Titulo</label>
-    <input type="text" name="titulo" id="titulo" class="form-control"
-      value="{{ old('titulo', $announcement_link->titulo) }}" required autocomplete="titulo" autofocus>
+    <input type="text" name="titulo" id="titulo" class="form-control" value="{{ old('titulo', $link->titulo) }}"
+      required autocomplete="titulo" autofocus>
   </div>
   @error('titulo')
   <div class="error" dusk="error-titulo">
@@ -16,8 +16,8 @@
 <div class="form-group">
   <div class="mi-input @error('url') mi-error @enderror">
     <label for="url" class="mi-input-label">URL</label>
-    <input type="text" id="url" name="url" class="form-control" value="{{ old('url', $announcement_link->url) }}"
-      required autocomplete="url" autofocus>
+    <input type="text" id="url" name="url" class="form-control" value="{{ old('url', $link->url) }}" required
+      autocomplete="url" autofocus>
   </div>
   @error('url')
   <div class="error" dusk="error-url">
@@ -30,7 +30,7 @@
   <div class="mi-input @error('fecha') mi-error @enderror">
     <div class="font-weigth-bold">Fecha y hora</div>
     <input placeholder="Seleccionar fecha" type="text" id="fecha" name="fecha" class="form-control"
-      value="{{ old('fecha', $announcement_link->fecha) }}" autocomplete="fecha" autofocus>
+      value="{{ old('fecha', $link->fecha) }}" autocomplete="fecha" autofocus>
   </div>
   @error('fecha')
   <div id="fecha-error" class="text-danger">
@@ -59,12 +59,12 @@
       timeFormat: "HH:mm",
       format: "dd-MM-yyyy HH:mm tt",
       value: new Date(
-        {{$announcement_link->fecha->format('Y')}}, 
-        {{$announcement_link->fecha->format('m') - 1 }}, 
-        {{$announcement_link->fecha->format('d')}}, 
-        {{$announcement_link->fecha->format('h')}}, 
-        {{$announcement_link->fecha->format('i')}}, 
-        {{$announcement_link->fecha->format('s')}}
+        {{$link->fecha->format('Y')}}, 
+        {{$link->fecha->format('m') - 1 }}, 
+        {{$link->fecha->format('d')}}, 
+        {{$link->fecha->format('h')}}, 
+        {{$link->fecha->format('i')}}, 
+        {{$link->fecha->format('s')}}
       ),
       min: new Date(2010, 1, 1, 8, 0, 0),
       // max: new Date()
