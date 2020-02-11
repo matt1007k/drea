@@ -100,6 +100,21 @@
       <li class="header">CONVOCATORIAS</li>
       <li class="mi-menu-toggle" data-mi-color="col-teal">
         <a href="javascript:void(0);">
+          <i class="mi mi-icon_view_column"></i>
+          <span>Grupo de convocatorias</span>
+        </a>
+        <ul class="mi-menu-sub">
+          <li class="{{ request()->is('admin/announcement_groups') ? 'active' : '' }}">
+            <a href="{{ route('admin.announcement_groups.index') }}">Lista de grupos de convocatorias</a>
+          </li>
+          <li class="{{ request()->is('admin/announcement_groups/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.announcement_groups.create') }}">Registrar grupos de convocatoria</a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="mi-menu-toggle" data-mi-color="col-teal">
+        <a href="javascript:void(0);">
           <i class="mi mi-icon_chat"></i>
           <span>Convocatorias</span>
         </a>
@@ -113,62 +128,61 @@
 
         </ul>
       </li>
+      <li class="header">BIBLIOTECA</li>
       <li class="mi-menu-toggle" data-mi-color="col-pink">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_contacts"></i>
-          <span>Contacts App</span>
+          <span>Albumes</span>
         </a>
         <ul class="mi-menu-sub">
-          <li>
-            <a href="apps/contactsapp/listed.html">Listed</a>
+          <li class="{{ request()->is('admin/albums') ? 'active' : '' }}">
+            <a href="{{ route('admin.albums.index') }}">Lista de álbumes</a>
           </li>
-
+          <li class="{{ request()->is('admin/albums/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.albums.create') }}">Registrar álbum</a>
+          </li>
         </ul>
       </li>
       <li class="mi-menu-toggle" data-mi-color="col-light-blue">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_mail"></i>
-          <span>Email App</span>
+          <span>Fotos</span>
         </a>
         <ul class="mi-menu-sub">
-          <li>
-            <a href="apps/emailapp/email_app.html">
-              <i class="mi mi-icon_inbox"></i>
-              <span>Inbox</span>
-            </a>
+          <li class="{{ request()->is('admin/photos') ? 'active' : '' }}">
+            <a href="{{ route('admin.photos.index') }}">Lista de fotos</a>
           </li>
-
+          <li class="{{ request()->is('admin/photos/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.photos.create') }}">Registrar fotos</a>
+          </li>
         </ul>
       </li>
       <li class="mi-menu-toggle" data-mi-color="col-pink">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_assignment_turned_in"></i>
-          <span>Task App</span>
+          <span>Videos</span>
         </a>
         <ul class="mi-menu-sub">
-          <li>
-            <a href="apps/taskapp/my_task_board.html">
-              <i class="mi mi-icon_assignment_ind"></i>
-              <span>My Task Board</span>
-            </a>
+          <li class="{{ request()->is('admin/videos') ? 'active' : '' }}">
+            <a href="{{ route('admin.videos.index') }}">Lista de vídeos</a>
           </li>
-          <li>
-            <a href="apps/taskapp/task_tracking.html">
-              <i class="mi mi-icon_assignment"></i>
-              <span>Task Tracking</span>
-            </a>
+          <li class="{{ request()->is('admin/videos/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.videos.create') }}">Registrar vídeo</a>
           </li>
         </ul>
       </li>
-      <li class="header">USER INTERFACE</li>
+      <li class="header">INTERFAZ DE USUARIO</li>
       <li class="mi-menu-toggle" data-mi-color="col-indigo">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_settings_input_component"></i>
-          <span>UI Elements</span>
+          <span>Slideshows</span>
         </a>
         <ul class="mi-menu-sub">
-          <li>
-            <a href="ui_elements/autocomplete.html">AutoComplete</a>
+          <li class="{{ request()->is('admin/slideshows') ? 'active' : '' }}">
+            <a href="{{ route('admin.slideshows.index') }}">Lista de slideshows</a>
+          </li>
+          <li class="{{ request()->is('admin/slideshows/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.slideshows.create') }}">Registrar slideshow</a>
           </li>
 
         </ul>
@@ -176,13 +190,15 @@
       <li class="mi-menu-toggle" data-mi-color="col-pink">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_view_list"></i>
-          <span>Tables</span>
+          <span>Enlaces externos</span>
         </a>
         <ul class="mi-menu-sub">
-          <li>
-            <a href="tables/normal_usage.html">Normal Tables</a>
+          <li class="{{ request()->is('admin/external_links') ? 'active' : '' }}">
+            <a href="{{ route('admin.external_links.index') }}">Lista de enlaces externos</a>
           </li>
-
+          <li class="{{ request()->is('admin/external_links/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.external_links.create') }}">Registrar enlace externo</a>
+          </li>
         </ul>
       </li>
       <li class="mi-menu-toggle" data-mi-color="col-light-blue">
@@ -291,15 +307,15 @@
           <span>Google Maps</span>
         </a>
       </li>
-      <li class="header">SNIPPETS</li>
+      <li class="header">SEGURIDAD</li>
       <li class="mi-menu-toggle" data-mi-color="col-purple">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_security"></i>
-          <span>Authentication</span>
+          <span>Roles</span>
         </a>
         <ul class="mi-menu-sub">
           <li>
-            <a href="snippets/login.html">Login</a>
+            <a href="snippets/login.html">Lista de roles</a>
           </li>
 
         </ul>

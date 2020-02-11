@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de menús')
+@section('title', 'Lista de slideshows')
 
 @section('content-header')
 <div class="mi-content-header">
@@ -8,34 +8,35 @@
     <div class="mi-card-header bg-green">
       <div class="mi-title">
         <i class="mi mi-icon_list"></i>
-        <span>Lista de menús</span>
+        <span>Lista de slideshows</span>
       </div>
     </div>
   </div>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Lista de menús</li>
+    <li class="breadcrumb-item active" aria-current="page">Lista de slideshows</li>
   </ol>
 </div>
 @endsection
 
 @section('content')
-<div class="container mb-4">
+<div class="mb-4 container">
 
   <section>
 
-    @include('admin.menus.partials._form-search')
+    @include('admin.slideshows.partials._form-search')
     <div class="mi-card">
 
       <!-- Card image -->
-      <div class="mi-card-content d-flex justify-content-between align-items-center">
+      <div
+        class="py-2 mx-4 mb-3 view view-cascade gradient-card-header blue-gradient narrower d-flex justify-content-between align-items-center">
 
-        {{-- <div class="mx-3 h4 white-text">Lista de menús</div> --}}
+        {{-- <div class="mx-3 h4 white-text">Lista de slideshowes</div> --}}
 
-        <div>
-          <a href="{{ route('admin.menus.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
-            <i class="ml-2 fas fa-plus"></i>
-            Registrar menú
+        <div class="py-3">
+          <a href="{{ route('admin.slideshows.create') }}" class="btn btn-success btn-sm waves-effect text-uppercase">
+            <i class="mt-0 fas fa-plus"></i>
+            Registrar slideshow
           </a>
         </div>
 
@@ -46,16 +47,17 @@
 
         <div class="">
           <!-- Table -->
-          <table id="menusTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
+          <table id="slideshowsTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
 
             <!-- Table head -->
             <thead>
               <tr>
-                <th class="text-center th-lg font-weight-bold">#</th>
-                <th class="text-center th-lg font-weight-bold w-100">Titulo</th>
-                <th class="text-center th-lg font-weight-bold">Ruta</th>
-                <th class="text-center th-lg font-weight-bold">Orden</th>
-                <th class="text-center th-lg font-weight-bold">Publicado</th>
+                <th class="th-lg text-center font-weight-bold">#</th>
+                <th class="th-lg text-center font-weight-bold">Imagen</th>
+                <th class="th-lg text-center font-weight-bold">Titulo</th>
+                <th class="th-lg text-center font-weight-bold">Descripción</th>
+                <th class="th-lg text-center font-weight-bold">Fecha</th>
+                <th class="th-lg text-center font-weight-bold">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -63,32 +65,33 @@
 
             <!-- Table body -->
             <tbody>
-              @foreach ($menus as $menu)
+              @foreach ($slideshows as $slideshow)
               <tr>
-                <td class="text-center font-weight-bold">{{ $menu->id }}</td>
-                <td>{{ $menu->titulo }}</td>
-                <td>{{ $menu->ruta }}</td>
-                <td class="text-center font-weight-bold">{{ $menu->orden }}</td>
+                <td class="text-center font-weight-bold">{{ $slideshow->id }}</td>
+                <td><img src="{{ $slideshow->pathImage() }}" alt="{{ $slideshow->titulo }}" width="100"></td>
+                <td>{{ $slideshow->titulo }}</td>
+                <td>{{ $slideshow->descripcion }}</td>
+                <td>{{ $slideshow->fecha_format }}</td>
                 <td class="text-center">
-                  @include('admin.menus.partials._publicado')
+                  @include('admin.slideshows.partials._publicado')
                 </td>
                 <td>
-                  <a href="{{ route('admin.menus.show', $menu) }}" class="px-2 btn btn-light btn-sm"
-                    data-balloon-pos="down" aria-label="Ver registro">
+                  <a href="{{ route('admin.slideshows.show', $slideshow) }}" class="px-2 btn
+                  btn-dark btn-sm" data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('admin.menus.edit', $menu) }}" class="px-2 btn btn-info btn-sm"
-                    data-balloon-pos="down" aria-label="Editar registro">
+                  <a href="{{ route('admin.slideshows.edit', $slideshow) }}" class="px-2 btn
+                  btn-info btn-sm" data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  <button type="button" onclick="onDelete({{ $menu->id }})" class="px-2 btn btn-danger btn-sm"
+                  <button type="button" onclick="onDelete({{ $slideshow->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
-                  <form action="{{ route('admin.menus.destroy', $menu) }}" method="POST">
+                  <form action="{{ route('admin.slideshows.destroy', $slideshow) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="none" id="btn-delete-{{ $menu->id }}"></button>
+                    <button type="submit" id="btn-delete-{{ $slideshow->id }}"></button>
                   </form>
                 </td>
               </tr>
@@ -117,7 +120,7 @@
 <script src="{{ asset('/js/datatables.min.js') }}"></script>
 <script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
-  $('#menusTable').DataTable({
+  $('#slideshowsTable').DataTable({
     "sort":  [[ 3, "asc" ]],
     "searching": false,
     language: {
@@ -128,7 +131,7 @@
         "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
         "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
+        "sInfopostFix":    "",
         "sSearch":         "Buscar:",
         "sUrl":            "",
         "sInfoThousands":  ",",

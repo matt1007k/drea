@@ -45,4 +45,12 @@ class AnnouncementLinksController extends Controller
         return redirect()->route('admin.announcements.show', $announcement)
             ->with('msg', 'El registro se editó correctamente');
     }
+
+    public function destroy(Announcement $announcement, AnnouncementLink $link)
+    {
+        $link->delete();
+
+        return redirect()->route('admin.announcements.show', $announcement)
+            ->with('msg', 'El registro se eliminó correctamente');
+    }
 }

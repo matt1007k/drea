@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::resource('external_links', 'ExternalLinksController');
                 Route::resource('announcement_groups', 'AnnouncementGroupsController');
                 Route::resource('announcements', 'AnnouncementsController');
+                Route::resource('announcements.links', 'AnnouncementLinksController')->except(['index', 'show']);
+                Route::resource('slideshows', 'SlideshowsController');
 
                 Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
                 Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');
@@ -56,10 +58,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/avisos/{post}/edit', 'PostsController@edit')->name('posts.edit');
                 Route::put('/avisos/{post}', 'PostsController@update')->name('posts.update');
                 Route::delete('/avisos/{post}', 'PostsController@destroy')->name('posts.destroy');
-
-                // Route::get('/announcements/{announcement}/links/create', 'AnnouncementLinksController@create')->name('announcement_links.create');
-                // Route::post('/announcements/{announcement}/links', 'AnnouncementLinksController@store')->name('announcement_links.store');
-                Route::resource('announcements.links', 'AnnouncementLinksController')->except(['index', 'show']);
             });
         });
     });
