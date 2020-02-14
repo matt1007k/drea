@@ -23,7 +23,7 @@ $theme-custom-colors: (
     "primary": #096986,
     "secondary": #767171
 );
-@each $name, $color in $theme-custom-colors {
+@each $name, $color in $theme-custom-colors  {
     .text-custom-#{$name} {
         color: $color;
     }

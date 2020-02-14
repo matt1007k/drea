@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\ExternalLink;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ExternalLinkCreatedRequest;
 use App\Http\Requests\ExternalLinkUpdatedRequest;
 

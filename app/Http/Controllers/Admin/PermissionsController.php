@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\PermisoCreatedRequest;
 use App\Http\Requests\PermisoUpdatedRequest;
 use Caffeinated\Shinobi\Models\Permission;

@@ -12,4 +12,9 @@ class Menu extends Model
     {
         return $query->where('titulo', 'LIKE', "%$search%");
     }
+
+    public function page()
+    {
+        return $this->morphOne(Page::class, 'pageable');
+    }
 }

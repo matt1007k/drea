@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Models\AnnouncementGroup;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnouncementGroupCreatedRequest;
 
 class AnnouncementGroupsController extends Controller

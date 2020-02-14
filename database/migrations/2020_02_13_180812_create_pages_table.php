@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSlideshowsTable extends Migration
+class CreatePagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateSlideshowsTable extends Migration
      */
     public function up()
     {
-        Schema::create('slideshows', function (Blueprint $table) {
+        Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('titulo', 100);
-            $table->string('descripcion', 250)->nullable();
-            $table->string('imagen');
-            $table->timestamp('fecha');
-            $table->boolean('publicado')->default(false);
-
+            // $table->string('slug');
+            $table->morphs('pageable');
+            $table->string('titulo');
+            $table->string('descripcion');
+            $table->text('contenido');
             $table->timestamps();
+            // $table->index('slug');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateSlideshowsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slideshows');
+        Schema::dropIfExists('pages');
     }
 }

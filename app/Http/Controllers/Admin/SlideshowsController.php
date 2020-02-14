@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\Slideshow;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\SlideshowCreatedRequest;
 use App\Http\Requests\SlideshowUpdatedRequest;
 

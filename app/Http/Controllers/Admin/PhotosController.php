@@ -7,8 +7,6 @@ use App\Http\Requests\PhotoUpdatedRequest;
 use App\Models\Album;
 use App\Models\Photo;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class PhotosController extends Controller
 {
