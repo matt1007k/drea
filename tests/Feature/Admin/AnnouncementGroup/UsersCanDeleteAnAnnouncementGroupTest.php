@@ -12,14 +12,25 @@ class UsersCanDeleteAnAnnouncementGroupTest extends TestCase
 {
   use RefreshDatabase;
 
+  protected $user;
+  protected $announcement_group;
+  protected $pathLogin;
+
+  protected function setUp(): void
+  {
+    parent::setUp();
+    $this->pathLogin = '/auth/login';
+
+    $this->user = factory(User::class)->create();
+    $this->announcement_group = factory(AnnouncementGroup::class)->create($this->formData());
+  }
   /**
    * @test
    */
   public function guest_users_cannot_delete_an_announcement_group()
   {
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-    $this->delete(route('admin.announcement_groups.destroy', $announcement_group), $this->formData())
-      ->assertRedirect('/login');
+    $this->delete(route('admin.announcement_groups.destroy', $this->announcement_group), $this->formData())
+      ->assertRedirect($this->pathLogin);
   }
 
   /**
@@ -27,11 +38,8 @@ class UsersCanDeleteAnAnnouncementGroupTest extends TestCase
    */
   public function users_admin_can_delete_an_announcement_group()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create($this->formData());
-
-    $response = $this->actingAs($user)
-      ->delete(route('admin.announcement_groups.destroy', $announcement_group), $this->formData());
+    $response = $this->actingAs($this->user)
+      ->delete(route('admin.announcement_groups.destroy', $this->announcement_group), $this->formData());
 
     $this->assertDatabaseMissing('announcement_groups', $this->formData());
 

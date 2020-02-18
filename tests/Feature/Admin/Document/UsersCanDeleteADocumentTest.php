@@ -12,14 +12,25 @@ class UsersCanDeleteADocumentTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $document;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->document = factory(Document::class)->create($this->formData());
+    }
     /**
      * @test
      */
     public function autheticated_users_cannot_destroy_a_document()
     {
-        $document = factory(Document::class)->create();
-        $this->delete(route('admin.documents.destroy', $document))
-            ->assertRedirect('/login');
+        $this->delete(route('admin.documents.destroy', $this->document))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,11 +38,8 @@ class UsersCanDeleteADocumentTest extends TestCase
      */
     public function users_can_destroy_a_document()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create($this->formData());
-
-        $this->actingAs($user)
-            ->delete(route('admin.documents.destroy', $document))
+        $this->actingAs($this->user)
+            ->delete(route('admin.documents.destroy', $this->document))
             ->assertRedirect(route('admin.documents.index'))
             ->assertSessionHas('msg', 'El registro se eliminó correctamente');
 

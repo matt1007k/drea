@@ -13,11 +13,26 @@ class UsersCanSeeListDocumentTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $tipo;
+    protected $document2;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->tipo = factory(TypeDocument::class)->create();
+        $document1 = factory(Document::class)->create(['tipo_id' => $this->tipo->id, 'created_at' => now()->subDays(1)]);
+        $this->document2 = factory(Document::class)->create(['titulo' => 'Documento', 'tipo_id' => $this->tipo->id]);
+    }
     /** @test */
     public function guest_users_cannot_see_list_document()
     {
         $this->get(route('admin.documents.index'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -25,14 +40,8 @@ class UsersCanSeeListDocumentTest extends TestCase
      */
     public function users_authenticated_can_see_list_document()
     {
-
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $tipo = factory(TypeDocument::class)->create();
-        $document1 = factory(Document::class)->create(['tipo_id' => $tipo->id, 'created_at' => now()->subDays(1)]);
-        $document2 = factory(Document::class)->create(['tipo_id' => $tipo->id]);
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('admin.documents.index'));
 
         $response->assertViewHasAll([
@@ -42,7 +51,7 @@ class UsersCanSeeListDocumentTest extends TestCase
             'search'
         ])
             ->assertViewIs('admin.documents.index')
-            ->assertSee($document2->titulo);
+            ->assertSee($this->document2->titulo);
     }
 
     /**
@@ -50,21 +59,15 @@ class UsersCanSeeListDocumentTest extends TestCase
      */
     public function users_authenticated_can_search_by_tipo_documento_on_the_list_document()
     {
-
-        $user = factory(User::class)->create();
-        $tipo = factory(TypeDocument::class)->create();
-        $document1 = factory(Document::class)->create(['tipo_id' => $tipo->id, 'created_at' => now()->subDays(1)]);
-        $document2 = factory(Document::class)->create(['tipo_id' => $tipo->id]);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/documents?tipo={$tipo->nombre}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/documents?tipo={$this->tipo->nombre}");
 
         $response->assertViewHas(
             'tipo',
-            $tipo->nombre
+            $this->tipo->nombre
         )->assertViewHas(
             'documents',
-            Document::with('tipo')->byTipo($tipo->nombre)->latest()->get()
+            Document::with('tipo')->byTipo($this->tipo->nombre)->latest()->get()
         );
     }
 
@@ -73,23 +76,18 @@ class UsersCanSeeListDocumentTest extends TestCase
      */
     public function users_authenticated_can_search_by_fields_on_the_list_document()
     {
-        $user = factory(User::class)->create();
-        $tipo = factory(TypeDocument::class)->create();
-        $document1 = factory(Document::class)->create(['tipo_id' => $tipo->id, 'created_at' => now()->subDays(1)]);
-        $document2 = factory(Document::class)->create(['titulo' => 'Documento', 'tipo_id' => $tipo->id]);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/documents?tipo={$tipo->nombre}&search={$document2->titulo}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/documents?tipo={$this->tipo->nombre}&search={$this->document2->titulo}");
 
         $response->assertViewHas(
             'tipo',
-            $tipo->nombre
+            $this->tipo->nombre
         )->assertViewHas(
             'search',
-            $document2->titulo
+            $this->document2->titulo
         )->assertViewHas(
             'documents',
-            Document::with('tipo')->search($document2->titulo)->latest()->get()
+            Document::with('tipo')->search($this->document2->titulo)->latest()->get()
         );
     }
 }

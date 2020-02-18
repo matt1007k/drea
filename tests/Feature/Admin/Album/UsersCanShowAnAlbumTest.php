@@ -15,14 +15,23 @@ class UsersCanShowAnAlbumTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $album;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user = factory(User::class)->create();
+        $this->album = factory(Album::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_page_show_album()
     {
-        $album = factory(Album::class)->create();
-        $this->get(route('admin.albums.show', $album))
-            ->assertRedirect('/login');
+        $this->get(route('admin.albums.show', $this->album))
+            ->assertRedirect('/auth/login');
     }
 
     /**
@@ -30,13 +39,10 @@ class UsersCanShowAnAlbumTest extends TestCase
      */
     public function users_admin_can_see_page_show_album()
     {
-        $user = factory(User::class)->create();
-        $album = factory(Album::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.albums.show', $album))
+        $this->actingAs($this->user)
+            ->get(route('admin.albums.show', $this->album))
             ->assertViewIs('admin.albums.show')
-            ->assertViewHas('album', $album)
-            ->assertSeeText($album->titulo);
+            ->assertViewHas('album', $this->album)
+            ->assertSeeText($this->album->titulo);
     }
 }

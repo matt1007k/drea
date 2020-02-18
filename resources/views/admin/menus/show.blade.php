@@ -33,12 +33,60 @@
           <p><strong>Publicado:</strong> @include('admin.menus.partials._publicado') </p>
         </div>
       </div>
-      <a href="{{ route('admin.menus.index')}}" class="btn btn-link">
-        <i class="fa fa-arrow-left"></i>
-        Regresar
-      </a>
+
     </div>
+  </div>
+  <div class="row">
+    <div class="rounded-lg bg-gray-500 px-3 py-4 mt-3">
+
+      <div class="h4 text-gray-800">
+        Submenús
+        <a href="{{ route('admin.menus.submenus.create', $menu) }}" class="btn btn-success" data-balloon-pos="down"
+          aria-label="Registrar submenú">
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
+
+      @forelse ($menu->submenus as $submenu)
+      @include('admin.submenus.partials._submenu', ['column_class' => 'pt-3 col-md-4 rounded-lg
+      bg-white md:ml-3'])
+      @empty
+      <div class="text-3xl text-red-800">Sin Submenús</div>
+      @endforelse
+    </div>
+
+
+  </div>
+  <div class="row">
+    <a href="{{ route('admin.menus.index')}}" class="btn btn-link">
+      <i class="fa fa-arrow-left"></i>
+      Regresar
+    </a>
   </div>
 </div>
 
 @endsection
+
+
+@push('scripts')
+<script>
+  function onDelete(id) {
+      swal({
+          title: 'Estás seguro de eliminar el registro?',
+          type: 'warning',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          focusConfirm: false,
+          confirmButtonText: '<i class="fa fa-check"></i> Si, eliminar',
+          cancelButtonText: '<i class="fa fa-ban"></i> Cancelar',
+      }).then((result) => {
+          if (result.value) {
+              $("#btn-delete-"+ id).click();
+
+          }
+      })
+  }
+</script>
+@endpush

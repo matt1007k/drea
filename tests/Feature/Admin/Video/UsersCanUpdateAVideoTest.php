@@ -13,14 +13,26 @@ class UsersCanUpdateAVideoTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $video;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->video = factory(Video::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_form_for_edit_a_video()
     {
-        $video = factory(Video::class)->create();
-        $this->get(route('admin.videos.edit', $video))
-            ->assertRedirect('/login');
+        $this->get(route('admin.videos.edit', $this->video))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,12 +40,9 @@ class UsersCanUpdateAVideoTest extends TestCase
      */
     public function users_can_see_form_for_edit_a_video()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.videos.edit', $video))
-            ->assertViewHas('video', $video)
+        $this->actingAs($this->user)
+            ->get(route('admin.videos.edit', $this->video))
+            ->assertViewHas('video', $this->video)
             ->assertViewIs('admin.videos.edit')
             ->assertSee('Editar video');
     }
@@ -43,9 +52,8 @@ class UsersCanUpdateAVideoTest extends TestCase
      */
     public function guest_users_cannot_update_a_video()
     {
-        $video = factory(Video::class)->create();
-        $this->put(route('admin.videos.update', $video), $this->formData())
-            ->assertRedirect('/login');
+        $this->put(route('admin.videos.update', $this->video), $this->formData())
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -54,11 +62,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     public function users_can_update_a_video()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData());
+        $response = $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData());
 
         $this->assertDatabaseHas('videos', $this->formData());
 
@@ -69,11 +74,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData([
                 'titulo' => ''
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -81,11 +83,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     /** @test */
     public function the_video_is_required()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData([
                 'video' => ''
             ]))->assertSessionHasErrors(['video']);
     }
@@ -93,11 +92,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData([
                 'titulo' => 1212
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -105,11 +101,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     /** @test */
     public function the_video_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData([
                 'video' => 1212
             ]))->assertSessionHasErrors(['video']);
     }
@@ -117,11 +110,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     /** @test */
     public function the_titulo_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData([
                 'titulo' => Str::random(101)
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -129,11 +119,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     /** @test */
     public function the_video_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData([
                 'video' => Str::random(101)
             ]))->assertSessionHasErrors(['video']);
     }
@@ -142,11 +129,8 @@ class UsersCanUpdateAVideoTest extends TestCase
     /** @test */
     public function the_fecha_is_required()
     {
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.videos.update', $video), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.videos.update', $this->video), $this->formData([
                 'fecha' => ''
             ]))->assertSessionHasErrors(['fecha']);
     }

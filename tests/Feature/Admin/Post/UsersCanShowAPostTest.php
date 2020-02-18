@@ -13,14 +13,26 @@ class UsersCanShowAPostTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $post;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->post = factory(Post::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_page_show_post()
     {
-        $post = factory(Post::class)->create();
-        $this->get(route('admin.posts.show', $post))
-            ->assertRedirect('/login');
+        $this->get(route('admin.posts.show', $this->post))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,12 +40,9 @@ class UsersCanShowAPostTest extends TestCase
      */
     public function users_admin_can_see_page_show_post()
     {
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.posts.show', $post))
+        $this->actingAs($this->user)
+            ->get(route('admin.posts.show', $this->post))
             ->assertViewIs('admin.posts.show')
-            ->assertSeeText($post->titulo);
+            ->assertSeeText($this->post->titulo);
     }
 }

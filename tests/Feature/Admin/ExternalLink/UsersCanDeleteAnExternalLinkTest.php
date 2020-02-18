@@ -13,14 +13,36 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanDeleteAnExternalLinkTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected $user;
+    protected $external_link;
+    protected $image_url;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+
+        Storage::fake('external_links');
+
+        $image = UploadedFile::fake()->image('imagen.png');
+        $this->image_url = 'external_links/' . $image->hashName();
+
+        $this->external_link = factory(ExternalLink::class)->create($this->formData([
+            'imagen' => $this->image_url
+        ]));
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_create_external_link()
     {
-        $external_link = factory(ExternalLink::class)->create();
-        $this->delete(route('admin.external_links.destroy', $external_link), $this->formData())
-            ->assertRedirect('/login');
+        $this->delete(route('admin.external_links.destroy', $this->external_link), $this->formData())
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,24 +50,14 @@ class UsersCanDeleteAnExternalLinkTest extends TestCase
      */
     public function users_admin_can_create_a_external_link()
     {
-        Storage::fake('external_links');
-
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-
-        $image = UploadedFile::fake()->image('imagen.png');
-        $external_link = factory(ExternalLink::class)->create($this->formData([
-            'imagen' => 'external_links/' . $image->hashName()
-        ]));
-
-        $response = $this->actingAs($user)
-            ->delete(route('admin.external_links.destroy', $external_link));
+        $response = $this->actingAs($this->user)
+            ->delete(route('admin.external_links.destroy', $this->external_link));
 
         // Assert a file does not exist...
-        Storage::disk('public')->assertMissing('external_links/' . $image->hashName());
+        Storage::disk('public')->assertMissing($this->image_url);
 
         $this->assertDatabaseMissing('external_links', $this->formData([
-            'imagen' => 'external_links/' . $image->hashName()
+            'imagen' => $this->image_url
         ]));
 
         $response->assertRedirect(route('admin.external_links.index'))

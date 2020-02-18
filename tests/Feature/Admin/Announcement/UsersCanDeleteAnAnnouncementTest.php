@@ -12,10 +12,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanDeleteAnAnnouncementTest extends TestCase
 {
     use RefreshDatabase;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
         factory(AnnouncementGroup::class)->create();
         factory(Announcement::class)->create($this->formData());
     }
@@ -25,7 +27,7 @@ class UsersCanDeleteAnAnnouncementTest extends TestCase
     public function guest_users_cannot_destroy_an_announcement()
     {
         $this->delete(route('admin.announcements.destroy', Announcement::first()), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**

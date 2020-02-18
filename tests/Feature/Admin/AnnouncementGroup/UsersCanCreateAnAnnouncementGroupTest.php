@@ -12,6 +12,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanCreateAnAnnouncementGroupTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->pathLogin = '/auth/login';
+        $this->user = factory(User::class)->create();
+    }
 
     /**
      * @test
@@ -19,7 +29,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     public function guest_users_cannot_see_page_create_announcement_group()
     {
         $this->get(route('admin.announcement_groups.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,9 +37,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
      */
     public function users_admin_can_see_page_create_announcement_group()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.announcement_groups.create'))
             ->assertViewIs('admin.announcement_groups.create')
             ->assertViewHas('announcement_group', new AnnouncementGroup)
@@ -42,7 +50,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     public function guest_users_cannot_create_an_announcement_group()
     {
         $this->post(route('admin.announcement_groups.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -51,9 +59,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     public function users_admin_can_create_an_announcement_group()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData());
 
         $this->assertDatabaseHas('announcement_groups', $this->formData());
@@ -65,8 +71,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     /** @test */
     public function the_nombre_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData([
                 'nombre' => ''
             ]))->assertSessionHasErrors(['nombre']);
@@ -75,8 +80,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     /** @test */
     public function the_nombre_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData([
                 'nombre' => 121
             ]))->assertSessionHasErrors(['nombre']);
@@ -85,9 +89,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     /** @test */
     public function the_nombre_may_not_be_greater_than_50_characters()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData([
                 'nombre' => Str::random(51)
             ]))->assertSessionHasErrors(['nombre']);
@@ -96,8 +98,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     /** @test */
     public function the_anio_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData([
                 'anio' => ''
             ]))->assertSessionHasErrors(['anio']);
@@ -106,9 +107,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     /** @test */
     public function the_anio_may_not_be_greater_than_4_characters()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData([
                 'anio' => 12345
             ]))->assertSessionHasErrors(['anio']);
@@ -117,8 +116,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     /** @test */
     public function the_anio_must_be_a_integer()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData([
                 'anio' => 'd'
             ]))->assertSessionHasErrors(['anio']);
@@ -127,8 +125,7 @@ class UsersCanCreateAnAnnouncementGroupTest extends TestCase
     /** @test */
     public function the_introduccion_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcement_groups.store'), $this->formData([
                 'introduccion' => ''
             ]))->assertSessionHasErrors(['introduccion']);

@@ -55,7 +55,7 @@
                     <a class="nav-link" href="{{ url('/contratacion-docentes') }}">Contratación Docente</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/galeria-fotos') }}">Galeria de Fotos</a>
+                    <a class="nav-link" href="{{ url('/galeria') }}">Galeria de Fotos</a>
                 </li>
 
             </ul>

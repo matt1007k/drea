@@ -11,14 +11,22 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UsersCanDeleteADeleteTest extends TestCase
+class UsersCanDeleteAPhotoTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
+    protected $user;
+    protected $photo;
+    protected $pathLogin;
+
+    public function setUp(): void
     {
         parent::setUp();
-        factory(Album::class)->create();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        factory(Album::class, 2)->create();
+        $this->photo = factory(Photo::class)->create();
     }
 
     /**
@@ -26,9 +34,8 @@ class UsersCanDeleteADeleteTest extends TestCase
      */
     public function guest_users_cannot_delete_a_photo()
     {
-        $photo = factory(Photo::class)->create();
-        $this->put(route('admin.photos.destroy', $photo))
-            ->assertRedirect('/login');
+        $this->put(route('admin.photos.destroy', $this->photo))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -38,21 +45,21 @@ class UsersCanDeleteADeleteTest extends TestCase
     {
         Storage::fake('photos');
 
-        $user = factory(User::class)->create();
-
         $old_image = UploadedFile::fake()->image('imagen.png');
+        $old_image_url = 'photos/' . $old_image->hashName();
+
         $photo = factory(Photo::class)->create($this->formData([
-            'imagen' => 'photos/' . $old_image->hashName()
+            'imagen' => $old_image_url
         ]));
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->delete(route('admin.photos.destroy', $photo));
 
         // Assert a file does not exist...
-        Storage::disk('public')->assertMissing('photos/' . $old_image->hashName());
+        Storage::disk('public')->assertMissing($old_image_url);
 
         $this->assertDatabaseMissing('fotos', $this->formData([
-            'imagen' => 'photos/' . $old_image->hashName()
+            'imagen' => $old_image_url
         ]));
 
         $response->assertRedirect(route('admin.photos.index'))

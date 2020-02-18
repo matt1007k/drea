@@ -18,10 +18,13 @@ class UsersCanDeleteAnAnnouncementLinkTest extends TestCase
     protected $user;
     protected $announcement;
     protected $announcement_link;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
+
         $this->user = factory(User::class)->create();
         $announcement_group = factory(AnnouncementGroup::class)->create();
         $this->announcement = factory(Announcement::class)->create(['grupo_id' => $announcement_group->id]);
@@ -34,7 +37,7 @@ class UsersCanDeleteAnAnnouncementLinkTest extends TestCase
     public function guest_users_cannot_delete_an_announcement_link()
     {
         $this->delete(route('admin.announcements.links.destroy', [$this->announcement, $this->announcement_link]), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**

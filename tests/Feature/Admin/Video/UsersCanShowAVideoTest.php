@@ -12,14 +12,26 @@ class UsersCanShowAVideoTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $video;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->video = factory(Video::class)->create();
+    }
+
     /**
      * @test
      */
     public function autheticated_users_cannot_show_a_video()
     {
-        $video = factory(Video::class)->create();
-        $this->get(route('admin.videos.show', $video))
-            ->assertRedirect('/login');
+        $this->get(route('admin.videos.show', $this->video))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,14 +39,10 @@ class UsersCanShowAVideoTest extends TestCase
      */
     public function users_can_show_a_video()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.videos.show', $video))
+        $this->actingAs($this->user)
+            ->get(route('admin.videos.show', $this->video))
             ->assertViewIs('admin.videos.show')
-            ->assertViewHas('video', $video)
-            ->assertSee($video->titulo);
+            ->assertViewHas('video', $this->video)
+            ->assertSee($this->video->titulo);
     }
 }

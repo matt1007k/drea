@@ -17,10 +17,12 @@ class UsersCanDeleteAnSlideshowTest extends TestCase
     protected $user;
     protected $slideshow;
     protected $image_name_old;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
 
         Storage::fake('slideshows');
         $image_old = UploadedFile::fake()->image('public/img/drea/logo.png');
@@ -37,7 +39,7 @@ class UsersCanDeleteAnSlideshowTest extends TestCase
     public function guest_users_cannot_delete_slideshow()
     {
         $this->delete(route('admin.slideshows.destroy', $this->slideshow))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**

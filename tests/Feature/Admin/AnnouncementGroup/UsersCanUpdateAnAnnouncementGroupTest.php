@@ -12,15 +12,25 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
 {
   use RefreshDatabase;
+  protected $user;
+  protected $announcement_group;
+  protected $pathLogin;
 
+  protected function setUp(): void
+  {
+    parent::setUp();
+    $this->pathLogin = '/auth/login';
+
+    $this->user = factory(User::class)->create();
+    $this->announcement_group = factory(AnnouncementGroup::class)->create();
+  }
   /**
    * @test
    */
   public function guest_users_cannot_see_page_edit_announcement_group()
   {
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-    $this->get(route('admin.announcement_groups.edit', $announcement_group))
-      ->assertRedirect('/login');
+    $this->get(route('admin.announcement_groups.edit', $this->announcement_group))
+      ->assertRedirect($this->pathLogin);
   }
 
   /**
@@ -28,13 +38,10 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
    */
   public function users_admin_can_see_page_edit_announcement_group()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->get(route('admin.announcement_groups.edit', $announcement_group))
+    $this->actingAs($this->user)
+      ->get(route('admin.announcement_groups.edit', $this->announcement_group))
       ->assertViewIs('admin.announcement_groups.edit')
-      ->assertViewHas('announcement_group', $announcement_group)
+      ->assertViewHas('announcement_group', $this->announcement_group)
       ->assertSeeText('Editar grupo de convocatoria');
   }
 
@@ -43,9 +50,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
    */
   public function guest_users_cannot_update_an_announcement_group()
   {
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-    $this->put(route('admin.announcement_groups.update', $announcement_group), $this->formData())
-      ->assertRedirect('/login');
+    $this->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData())
+      ->assertRedirect($this->pathLogin);
   }
 
   /**
@@ -53,11 +59,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
    */
   public function users_admin_can_update_an_announcement_group()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $response = $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData());
+    $response = $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData());
 
     $this->assertDatabaseHas('announcement_groups', $this->formData());
 
@@ -68,11 +71,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
   /** @test */
   public function the_nombre_is_required()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData([
+    $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData([
         'nombre' => ''
       ]))->assertSessionHasErrors(['nombre']);
   }
@@ -80,11 +80,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
   /** @test */
   public function the_nombre_must_be_a_string()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData([
+    $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData([
         'nombre' => 121
       ]))->assertSessionHasErrors(['nombre']);
   }
@@ -92,11 +89,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
   /** @test */
   public function the_nombre_may_not_be_greater_than_50_characters()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData([
+    $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData([
         'nombre' => Str::random(51)
       ]))->assertSessionHasErrors(['nombre']);
   }
@@ -104,11 +98,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
   /** @test */
   public function the_anio_is_required()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData([
+    $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData([
         'anio' => ''
       ]))->assertSessionHasErrors(['anio']);
   }
@@ -116,11 +107,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
   /** @test */
   public function the_anio_may_not_be_greater_than_4_characters()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData([
+    $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData([
         'anio' => 12345
       ]))->assertSessionHasErrors(['anio']);
   }
@@ -128,11 +116,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
   /** @test */
   public function the_anio_must_be_a_integer()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData([
+    $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData([
         'anio' => 'd'
       ]))->assertSessionHasErrors(['anio']);
   }
@@ -140,11 +125,8 @@ class UsersCanUpdateAnAnnouncementGroupTest extends TestCase
   /** @test */
   public function the_introduccion_is_required()
   {
-    $user = factory(User::class)->create();
-    $announcement_group = factory(AnnouncementGroup::class)->create();
-
-    $this->actingAs($user)
-      ->put(route('admin.announcement_groups.update', $announcement_group), $this->formData([
+    $this->actingAs($this->user)
+      ->put(route('admin.announcement_groups.update', $this->announcement_group), $this->formData([
         'introduccion' => ''
       ]))->assertSessionHasErrors(['introduccion']);
   }

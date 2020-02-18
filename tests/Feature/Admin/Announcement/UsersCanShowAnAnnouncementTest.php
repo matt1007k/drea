@@ -11,10 +11,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanShowAnAnnouncementTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
         factory(Announcement::class)->create();
     }
 
@@ -24,7 +29,7 @@ class UsersCanShowAnAnnouncementTest extends TestCase
     public function guest_users_cannot_see_show_an_announcement()
     {
         $this->get(route('admin.announcements.show', Announcement::first()))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -33,9 +38,8 @@ class UsersCanShowAnAnnouncementTest extends TestCase
     public function users_can_see_show_an_announcement()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.announcements.show', Announcement::first()))
             ->assertViewHas(
                 'announcement',

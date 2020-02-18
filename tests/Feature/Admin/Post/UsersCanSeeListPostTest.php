@@ -12,11 +12,25 @@ class UsersCanSeeListPostTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $post2;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $post1 = factory(Post::class)->create(['created_at' => now()->subDays(1)]);
+        $this->post2 = factory(Post::class)->create(['titulo' => 'posto']);
+    }
+
     /** @test */
     public function guest_users_cannot_see_list_post()
     {
         $this->get(route('admin.posts.index'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -24,13 +38,7 @@ class UsersCanSeeListPostTest extends TestCase
      */
     public function users_authenticated_can_see_list_post()
     {
-
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $post1 = factory(Post::class)->create(['created_at' => now()->subDays(1)]);
-        $post2 = factory(Post::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('admin.posts.index'));
 
         $response->assertViewHasAll([
@@ -38,7 +46,7 @@ class UsersCanSeeListPostTest extends TestCase
             'search'
         ])
             ->assertViewIs('admin.posts.index')
-            ->assertSee($post2->titulo);
+            ->assertSee($this->post2->titulo);
     }
 
     /**
@@ -46,19 +54,15 @@ class UsersCanSeeListPostTest extends TestCase
      */
     public function users_authenticated_can_search_by_fields_on_the_list_post()
     {
-        $user = factory(User::class)->create();
-        $post1 = factory(Post::class)->create(['created_at' => now()->subDays(1)]);
-        $post2 = factory(Post::class)->create(['titulo' => 'posto']);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/avisos?search={$post2->titulo}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/avisos?search={$this->post2->titulo}");
 
         $response->assertViewHas(
             'search',
-            $post2->titulo
+            $this->post2->titulo
         )->assertViewHas(
             'posts',
-            Post::search($post2->titulo)->orderBy('fecha', 'DESC')->get()
+            Post::search($this->post2->titulo)->orderBy('fecha', 'DESC')->get()
         );
     }
 }

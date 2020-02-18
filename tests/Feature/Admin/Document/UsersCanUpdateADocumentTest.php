@@ -14,14 +14,26 @@ class UsersCanUpdateADocumentTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $document;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->document = factory(Document::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_form_for_edit_a_document()
     {
-        $document = factory(Document::class)->create();
-        $this->get(route('admin.documents.edit', $document))
-            ->assertRedirect('/login');
+        $this->get(route('admin.documents.edit', $this->document))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -30,11 +42,9 @@ class UsersCanUpdateADocumentTest extends TestCase
     public function users_can_see_form_for_edit_a_document()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
 
-        $this->actingAs($user)
-            ->get(route('admin.documents.edit', $document))
+        $this->actingAs($this->user)
+            ->get(route('admin.documents.edit', $this->document))
             ->assertViewHasAll([
                 'document',
                 'tipos'
@@ -47,10 +57,8 @@ class UsersCanUpdateADocumentTest extends TestCase
      */
     public function guest_users_cannot_update_a_document()
     {
-        $document = factory(Document::class)->create();
-
-        $this->put(route('admin.documents.update', $document), $this->formData())
-            ->assertRedirect('/login');
+        $this->put(route('admin.documents.update', $this->document), $this->formData())
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -58,13 +66,10 @@ class UsersCanUpdateADocumentTest extends TestCase
      */
     public function users_can_update_a_document()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
         factory(TypeDocument::class)->create();
 
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData());
+        $response = $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData());
 
         $this->assertDatabaseHas('documentos', $this->formData());
 
@@ -75,112 +80,73 @@ class UsersCanUpdateADocumentTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'titulo' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_tipo_is_required()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'tipo_id' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['tipo_id']);
+            ]))->assertSessionHasErrors(['tipo_id']);
     }
 
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'titulo' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_titulo_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'titulo' => Str::random(101)
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_descripcion_is_required()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'descripcion' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['descripcion']);
+            ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
     public function the_descripcion_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'descripcion' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['descripcion']);
+            ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
     public function the_descripcion_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'descripcion' => Str::random(301)
-            ]));
-
-        $response->assertSessionHasErrors(['descripcion']);
+            ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
     public function the_url_is_required()
     {
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $response = $this->actingAs($user)
-            ->put(route('admin.documents.update', $document), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
                 'url' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['url']);
+            ]))->assertSessionHasErrors(['url']);
     }
 
     /** data send create for user */

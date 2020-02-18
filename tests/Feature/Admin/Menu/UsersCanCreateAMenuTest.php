@@ -13,13 +13,24 @@ class UsersCanCreateAMenuTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_form_for_create_a_menu()
     {
         $this->get(route('admin.menus.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,9 +38,7 @@ class UsersCanCreateAMenuTest extends TestCase
      */
     public function users_can_see_form_for_create_a_menu()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.menus.create'))
             ->assertViewIs('admin.menus.create')
             ->assertViewHas(
@@ -44,7 +53,7 @@ class UsersCanCreateAMenuTest extends TestCase
     public function guest_users_cannot_create_a_menu()
     {
         $this->post(route('admin.menus.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -52,9 +61,7 @@ class UsersCanCreateAMenuTest extends TestCase
      */
     public function users_can_create_a_menu()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData());
 
         $this->assertDatabaseHas('menus', $this->formData());
@@ -66,106 +73,74 @@ class UsersCanCreateAMenuTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'titulo' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
 
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'titulo' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_titulo_may_not_be_greater_than_50_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'titulo' => Str::random(51)
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_ruta_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'ruta' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['ruta']);
+            ]))->assertSessionHasErrors(['ruta']);
     }
 
     /** @test */
     public function the_ruta_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'ruta' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['ruta']);
+            ]))->assertSessionHasErrors(['ruta']);
     }
 
     /** @test */
     public function the_ruta_may_not_be_greater_than_20_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'ruta' => Str::random(21)
-            ]));
-
-        $response->assertSessionHasErrors(['ruta']);
+            ]))->assertSessionHasErrors(['ruta']);
     }
 
     /** @test */
     public function the_orden_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'orden' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['orden']);
+            ]))->assertSessionHasErrors(['orden']);
     }
 
     /** @test */
     public function the_orden_must_be_a_number()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'orden' => 'd'
-            ]));
-
-        $response->assertSessionHasErrors(['orden']);
+            ]))->assertSessionHasErrors(['orden']);
     }
 
     /** data send for user */

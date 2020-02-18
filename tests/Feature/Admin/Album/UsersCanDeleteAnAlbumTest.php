@@ -15,15 +15,28 @@ class UsersCanDeleteAnAlbumTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $album;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Storage::fake('albumes');
+        $this->user = factory(User::class)->create();
+
+        $this->old_image = UploadedFile::fake()->image('imagen.png');
+        $this->album = factory(Album::class)->create($this->formData([
+            'imagen' => 'albumes/' . $this->old_image->hashName()
+        ]));
+    }
 
     /**
      * @test
      */
     public function guest_users_cannot_delete_an_album()
     {
-        $album = factory(Album::class)->create();
-        $this->put(route('admin.albums.destroy', $album))
-            ->assertRedirect('/login');
+        $this->put(route('admin.albums.destroy', $this->album))
+            ->assertRedirect('/auth/login');
     }
 
     /**
@@ -31,23 +44,14 @@ class UsersCanDeleteAnAlbumTest extends TestCase
      */
     public function users_admin_can_delete_an_album()
     {
-        Storage::fake('albumes');
-
-        $user = factory(User::class)->create();
-
-        $old_image = UploadedFile::fake()->image('imagen.png');
-        $album = factory(Album::class)->create($this->formData([
-            'imagen' => 'albumes/' . $old_image->hashName()
-        ]));
-
-        $response = $this->actingAs($user)
-            ->delete(route('admin.albums.destroy', $album));
+        $response = $this->actingAs($this->user)
+            ->delete(route('admin.albums.destroy', $this->album));
 
         // Assert a file does not exist...
-        Storage::disk('public')->assertMissing('albumes/' . $old_image->hashName());
+        Storage::disk('public')->assertMissing('albumes/' . $this->old_image->hashName());
 
         $this->assertDatabaseMissing('albumes', $this->formData([
-            'imagen' => 'albumes/' . $old_image->hashName()
+            'imagen' => 'albumes/' . $this->old_image->hashName()
         ]));
 
         $response->assertRedirect(route('admin.albums.index'))

@@ -12,15 +12,25 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanShowAnAnnouncementGroupTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $announcement_group;
+    protected $pathLogin;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->announcement_group = factory(AnnouncementGroup::class)->create();
+    }
     /**
      * @test
      */
     public function guest_users_cannot_see_page_show_announcement_group()
     {
-        $announcement_group = factory(AnnouncementGroup::class)->create();
-        $this->get(route('admin.announcement_groups.show', $announcement_group))
-            ->assertRedirect('/login');
+        $this->get(route('admin.announcement_groups.show', $this->announcement_group))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,12 +38,9 @@ class UsersCanShowAnAnnouncementGroupTest extends TestCase
      */
     public function users_admin_can_see_page_show_announcement_group()
     {
-        $user = factory(User::class)->create();
-        $announcement_group = factory(AnnouncementGroup::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.announcement_groups.show', $announcement_group))
+        $this->actingAs($this->user)
+            ->get(route('admin.announcement_groups.show', $this->announcement_group))
             ->assertViewIs('admin.announcement_groups.show')
-            ->assertSeeText($announcement_group->nombre);
+            ->assertSeeText($this->announcement_group->nombre);
     }
 }

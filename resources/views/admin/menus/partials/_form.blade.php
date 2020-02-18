@@ -13,7 +13,7 @@
 </div>
 
 <div class="form-group">
-  <div class="mi-input @error('titulo') mi-error @enderror">
+  <div class="mi-input @error('ruta') mi-error @enderror">
     <label for="ruta" class="mi-input-label">Ruta de la página</label>
     <input type="text" id="ruta" name="ruta" class="form-control" value="{{ old('ruta', $menu->ruta) }}"
       autocomplete="ruta" autofocus>
@@ -26,7 +26,7 @@
 </div>
 
 <div class="form-group">
-  <div class="mi-input @error('titulo') mi-error @enderror">
+  <div class="mi-input @error('orden') mi-error @enderror">
     <label for="orden" class="mi-input-label">Orden</label>
     <input type="number" id="orden" name="orden" class="form-control" value="{{ old('orden', $menu->orden) }}"
       autocomplete="orden" autofocus>

@@ -12,14 +12,26 @@ class UsersCanShowADocumentTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $document;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->document = factory(Document::class)->create();
+    }
+
     /**
      * @test
      */
     public function autheticated_users_cannot_show_a_document()
     {
-        $document = factory(Document::class)->create();
-        $this->get(route('admin.documents.show', $document))
-            ->assertRedirect('/login');
+        $this->get(route('admin.documents.show', $this->document))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,14 +39,10 @@ class UsersCanShowADocumentTest extends TestCase
      */
     public function users_can_show_a_document()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.documents.show', $document))
+        $this->actingAs($this->user)
+            ->get(route('admin.documents.show', $this->document))
             ->assertViewIs('admin.documents.show')
-            ->assertViewHas('document', $document)
-            ->assertSee($document->titulo);
+            ->assertViewHas('document', $this->document)
+            ->assertSee($this->document->titulo);
     }
 }

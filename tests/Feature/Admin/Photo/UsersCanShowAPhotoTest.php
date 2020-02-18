@@ -12,14 +12,26 @@ class UsersCanShowAPhotoTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $photo;
+    protected $pathLogin;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->photo = factory(Photo::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_page_show_photo()
     {
-        $photo = factory(Photo::class)->create();
-        $this->get(route('admin.photos.show', $photo))
-            ->assertRedirect('/login');
+        $this->get(route('admin.photos.show', $this->photo))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,13 +39,10 @@ class UsersCanShowAPhotoTest extends TestCase
      */
     public function users_admin_can_see_page_show_photo()
     {
-        $user = factory(User::class)->create();
-        $photo = factory(Photo::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.photos.show', $photo))
+        $this->actingAs($this->user)
+            ->get(route('admin.photos.show', $this->photo))
             ->assertViewIs('admin.photos.show')
-            ->assertViewHas('photo', $photo)
-            ->assertSeeText($photo->titulo);
+            ->assertViewHas('photo', $this->photo)
+            ->assertSeeText($this->photo->titulo);
     }
 }

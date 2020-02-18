@@ -13,6 +13,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanCreateAnAnnouncementTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+    }
 
     /**
      * @test
@@ -20,7 +30,7 @@ class UsersCanCreateAnAnnouncementTest extends TestCase
     public function guest_users_cannot_see_form_for_create_an_announcement()
     {
         $this->get(route('admin.announcements.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -29,9 +39,8 @@ class UsersCanCreateAnAnnouncementTest extends TestCase
     public function users_can_see_form_for_create_an_announcement()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.announcements.create'))
             ->assertViewHasAll([
                 'announcement',
@@ -46,7 +55,7 @@ class UsersCanCreateAnAnnouncementTest extends TestCase
     public function guest_users_cannot_create_an_announcement()
     {
         $this->post(route('admin.announcements.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -54,11 +63,9 @@ class UsersCanCreateAnAnnouncementTest extends TestCase
      */
     public function users_can_create_an_announcement()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
         factory(AnnouncementGroup::class)->create();
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData());
 
         $this->assertDatabaseHas('announcements', $this->formData());
@@ -70,92 +77,64 @@ class UsersCanCreateAnAnnouncementTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData([
                 'titulo' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_grupo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData([
                 'grupo_id' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['grupo_id']);
+            ]))->assertSessionHasErrors(['grupo_id']);
     }
 
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData([
                 'titulo' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_titulo_may_not_be_greater_than_200_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData([
                 'titulo' => Str::random(201)
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_numero_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData([
                 'numero' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['numero']);
+            ]))->assertSessionHasErrors(['numero']);
     }
 
     /** @test */
     public function the_fecha_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData([
                 'fecha' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['fecha']);
+            ]))->assertSessionHasErrors(['fecha']);
     }
 
     /** @test */
     public function the_estado_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.announcements.store'), $this->formData([
                 'estado' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['estado']);
+            ]))->assertSessionHasErrors(['estado']);
     }
 
     /** data send for user */

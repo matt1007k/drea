@@ -13,13 +13,24 @@ class UsersCanCreateAVideoTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_form_for_create_a_video()
     {
         $this->get(route('admin.videos.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,9 +38,7 @@ class UsersCanCreateAVideoTest extends TestCase
      */
     public function users_can_see_form_for_create_a_video()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.videos.create'))
             ->assertViewHas('video', new Video())
             ->assertViewIs('admin.videos.create')
@@ -42,7 +51,7 @@ class UsersCanCreateAVideoTest extends TestCase
     public function guest_users_cannot_create_a_video()
     {
         $this->post(route('admin.videos.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -50,10 +59,7 @@ class UsersCanCreateAVideoTest extends TestCase
      */
     public function users_can_create_a_video()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData());
 
         $this->assertDatabaseHas('videos', $this->formData());
@@ -65,93 +71,65 @@ class UsersCanCreateAVideoTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData([
                 'titulo' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_video_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData([
                 'video' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['video']);
+            ]))->assertSessionHasErrors(['video']);
     }
 
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData([
                 'titulo' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_video_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData([
                 'video' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['video']);
+            ]))->assertSessionHasErrors(['video']);
     }
 
     /** @test */
     public function the_titulo_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData([
                 'titulo' => Str::random(101)
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_video_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData([
                 'video' => Str::random(101)
-            ]));
-
-        $response->assertSessionHasErrors(['video']);
+            ]))->assertSessionHasErrors(['video']);
     }
 
 
     /** @test */
     public function the_fecha_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.videos.store'), $this->formData([
                 'fecha' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['fecha']);
+            ]))->assertSessionHasErrors(['fecha']);
     }
 
     /** data send for user */

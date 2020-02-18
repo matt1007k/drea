@@ -12,14 +12,26 @@ class UsersCanShowAExternalLinkTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $external_link;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->external_link = factory(ExternalLink::class)->create();
+    }
+
     /**
      * @test
      */
     public function autheticated_users_cannot_show_a_external_link()
     {
-        $external_link = factory(ExternalLink::class)->create();
-        $this->get(route('admin.external_links.show', $external_link))
-            ->assertRedirect('/login');
+        $this->get(route('admin.external_links.show', $this->external_link))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,13 +39,9 @@ class UsersCanShowAExternalLinkTest extends TestCase
      */
     public function users_can_show_a_external_link()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $external_link = factory(ExternalLink::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.external_links.show', $external_link))
+        $this->actingAs($this->user)
+            ->get(route('admin.external_links.show', $this->external_link))
             ->assertViewIs('admin.external_links.show')
-            ->assertViewHas('external_link', $external_link);
+            ->assertViewHas('external_link', $this->external_link);
     }
 }

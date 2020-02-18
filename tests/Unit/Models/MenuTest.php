@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Menu;
+use App\Models\Submenu;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MenuTest extends TestCase
@@ -13,14 +14,13 @@ class MenuTest extends TestCase
     /**
      * @test 
      */
-    // public function a_menu_belongs_to_a_type_menu()
-    // {
-    //     $tipo = factory(Typemenu::class)->create();
-    //     $menu = factory(Menu::class)->create();
+    public function a_menu_has_many_submenus()
+    {
+        $menu = factory(Menu::class)->create();
+        factory(Submenu::class)->create(['menu_id' => $menu->id]);
 
-    //     $this->assertInstanceOf(Typemenu::class, $menu->tipo);
-    // }
-
+        $this->assertInstanceOf(Submenu::class, $menu->submenus->first());
+    }
 
     /** @test */
     public function a_menu_return_a_collection_by_search()

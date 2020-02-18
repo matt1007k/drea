@@ -11,12 +11,23 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanSeeListAlbumTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $album2;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = factory(User::class)->create();
+        $album1 = factory(Album::class)->create(['created_at' => now()->subDays(1)]);
+        $this->album2 = factory(Album::class)->create(['titulo' => 'album']);
+    }
 
     /** @test */
     public function guest_users_cannot_see_list_album()
     {
         $this->get(route('admin.albums.index'))
-            ->assertRedirect('/login');
+            ->assertRedirect('/auth/login');
     }
 
     /**
@@ -25,11 +36,8 @@ class UsersCanSeeListAlbumTest extends TestCase
     public function users_authenticated_can_see_list_album()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $album1 = factory(Album::class)->create(['created_at' => now()->subDays(1)]);
-        $album2 = factory(Album::class)->create();
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('admin.albums.index'));
 
         $response->assertViewHasAll([
@@ -37,7 +45,7 @@ class UsersCanSeeListAlbumTest extends TestCase
             'search'
         ])
             ->assertViewIs('admin.albums.index')
-            ->assertSee($album2->titulo);
+            ->assertSee($this->album2->titulo);
     }
 
     /**
@@ -45,19 +53,15 @@ class UsersCanSeeListAlbumTest extends TestCase
      */
     public function users_authenticated_can_search_by_fields_on_the_list_album()
     {
-        $user = factory(User::class)->create();
-        $album1 = factory(Album::class)->create(['created_at' => now()->subDays(1)]);
-        $album2 = factory(Album::class)->create(['titulo' => 'album']);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/albums?search={$album2->titulo}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/albums?search={$this->album2->titulo}");
 
         $response->assertViewHas(
             'search',
-            $album2->titulo
+            $this->album2->titulo
         )->assertViewHas(
             'albums',
-            Album::search($album2->titulo)->orderBy('fecha', 'DESC')->get()
+            Album::search($this->album2->titulo)->orderBy('fecha', 'DESC')->get()
         );
     }
 }

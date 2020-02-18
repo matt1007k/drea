@@ -11,12 +11,25 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanSeeListMenuTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $menu2;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $menu1 = factory(Menu::class)->create(['created_at' => now()->subDays(1)]);
+        $this->menu2 = factory(Menu::class)->create(['titulo' => 'menuo']);
+    }
 
     /** @test */
     public function guest_users_cannot_see_list_menu()
     {
         $this->get(route('admin.menus.index'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -24,13 +37,7 @@ class UsersCanSeeListMenuTest extends TestCase
      */
     public function users_authenticated_can_see_list_menu()
     {
-
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $menu1 = factory(Menu::class)->create(['created_at' => now()->subDays(1)]);
-        $menu2 = factory(Menu::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('admin.menus.index'));
 
         $response->assertViewHasAll([
@@ -38,7 +45,7 @@ class UsersCanSeeListMenuTest extends TestCase
             'search'
         ])
             ->assertViewIs('admin.menus.index')
-            ->assertSee($menu2->titulo);
+            ->assertSee($this->menu2->titulo);
     }
 
     /**
@@ -46,19 +53,15 @@ class UsersCanSeeListMenuTest extends TestCase
      */
     public function users_authenticated_can_search_by_fields_on_the_list_menu()
     {
-        $user = factory(User::class)->create();
-        $menu1 = factory(Menu::class)->create(['created_at' => now()->subDays(1)]);
-        $menu2 = factory(Menu::class)->create(['titulo' => 'menuo']);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/menus?search={$menu2->titulo}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/menus?search={$this->menu2->titulo}");
 
         $response->assertViewHas(
             'search',
-            $menu2->titulo
+            $this->menu2->titulo
         )->assertViewHas(
             'menus',
-            Menu::search($menu2->titulo)->latest()->get()
+            Menu::search($this->menu2->titulo)->latest()->get()
         );
     }
 }

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\hasPage;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    use hasPage;
+
     protected $guarded = [];
 
     public function scopeSearch($query, $search)
@@ -13,8 +16,8 @@ class Menu extends Model
         return $query->where('titulo', 'LIKE', "%$search%");
     }
 
-    public function page()
+    public function submenus()
     {
-        return $this->morphOne(Page::class, 'pageable');
+        return $this->hasMany(Submenu::class);
     }
 }

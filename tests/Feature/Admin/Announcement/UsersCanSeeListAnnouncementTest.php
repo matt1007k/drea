@@ -12,12 +12,27 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanSeeListAnnouncementTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $grupo;
+    protected $announcement2;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->grupo = factory(AnnouncementGroup::class)->create();
+        $announcement1 = factory(Announcement::class)->create(['grupo_id' => $this->grupo->id, 'created_at' => now()->subDays(1)]);
+        $this->announcement2 = factory(Announcement::class)->create(['titulo' => 'Announcemento', 'grupo_id' => $this->grupo->id]);
+    }
 
     /** @test */
     public function guest_users_cannot_see_list_announcement()
     {
         $this->get(route('admin.announcements.index'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -25,14 +40,8 @@ class UsersCanSeeListAnnouncementTest extends TestCase
      */
     public function users_authenticated_can_see_list_announcement()
     {
-
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $grupo = factory(AnnouncementGroup::class)->create();
-        $announcement1 = factory(Announcement::class)->create(['grupo_id' => $grupo->id, 'created_at' => now()->subDays(1)]);
-        $announcement2 = factory(Announcement::class)->create(['grupo_id' => $grupo->id]);
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('admin.announcements.index'));
 
         $response->assertViewHasAll([
@@ -42,7 +51,7 @@ class UsersCanSeeListAnnouncementTest extends TestCase
             'search'
         ])
             ->assertViewIs('admin.announcements.index')
-            ->assertSee($announcement2->titulo);
+            ->assertSee($this->announcement2->titulo);
     }
 
     /**
@@ -50,21 +59,15 @@ class UsersCanSeeListAnnouncementTest extends TestCase
      */
     public function users_authenticated_can_search_by_announcement_group_on_the_list_announcement()
     {
-
-        $user = factory(User::class)->create();
-        $grupo = factory(AnnouncementGroup::class)->create();
-        $announcement1 = factory(Announcement::class)->create(['grupo_id' => $grupo->id, 'created_at' => now()->subDays(1)]);
-        $announcement2 = factory(Announcement::class)->create(['grupo_id' => $grupo->id]);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/announcements?grupo={$grupo->nombre}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/announcements?grupo={$this->grupo->nombre}");
 
         $response->assertViewHas(
             'grupo',
-            $grupo->nombre
+            $this->grupo->nombre
         )->assertViewHas(
             'announcements',
-            Announcement::with('grupo')->byGroup($grupo->nombre)->latest()->get()
+            Announcement::with('grupo')->byGroup($this->grupo->nombre)->latest()->get()
         );
     }
 
@@ -73,23 +76,18 @@ class UsersCanSeeListAnnouncementTest extends TestCase
      */
     public function users_authenticated_can_search_by_fields_on_the_list_announcement()
     {
-        $user = factory(User::class)->create();
-        $grupo = factory(AnnouncementGroup::class)->create();
-        $announcement1 = factory(Announcement::class)->create(['grupo_id' => $grupo->id, 'created_at' => now()->subDays(1)]);
-        $announcement2 = factory(Announcement::class)->create(['titulo' => 'Announcemento', 'grupo_id' => $grupo->id]);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/announcements?grupo={$grupo->nombre}&search={$announcement2->titulo}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/announcements?grupo={$this->grupo->nombre}&search={$this->announcement2->titulo}");
 
         $response->assertViewHas(
             'grupo',
-            $grupo->nombre
+            $this->grupo->nombre
         )->assertViewHas(
             'search',
-            $announcement2->titulo
+            $this->announcement2->titulo
         )->assertViewHas(
             'announcements',
-            Announcement::with('grupo')->search($announcement2->titulo)->latest()->get()
+            Announcement::with('grupo')->search($this->announcement2->titulo)->latest()->get()
         );
     }
 }

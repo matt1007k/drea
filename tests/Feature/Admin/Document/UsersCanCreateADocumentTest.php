@@ -14,13 +14,25 @@ class UsersCanCreateADocumentTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        factory(TypeDocument::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_form_for_create_a_document()
     {
         $this->get(route('admin.documents.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,9 +40,7 @@ class UsersCanCreateADocumentTest extends TestCase
      */
     public function users_can_see_form_for_create_a_document()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.documents.create'))
             ->assertViewHasAll([
                 'document',
@@ -45,7 +55,7 @@ class UsersCanCreateADocumentTest extends TestCase
     public function guest_users_cannot_create_a_document()
     {
         $this->post(route('admin.documents.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -53,10 +63,7 @@ class UsersCanCreateADocumentTest extends TestCase
      */
     public function users_can_create_a_document()
     {
-        $user = factory(User::class)->create();
-        factory(TypeDocument::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData());
 
         $this->assertDatabaseHas('documentos', $this->formData());
@@ -68,105 +75,73 @@ class UsersCanCreateADocumentTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'titulo' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_tipo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'tipo_id' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['tipo_id']);
+            ]))->assertSessionHasErrors(['tipo_id']);
     }
 
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'titulo' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_titulo_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'titulo' => Str::random(101)
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_descripcion_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'descripcion' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['descripcion']);
+            ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
     public function the_descripcion_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'descripcion' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['descripcion']);
+            ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
     public function the_descripcion_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'descripcion' => Str::random(301)
-            ]));
-
-        $response->assertSessionHasErrors(['descripcion']);
+            ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
     public function the_url_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
                 'url' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['url']);
+            ]))->assertSessionHasErrors(['url']);
     }
 
     /** data send for user */

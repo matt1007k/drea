@@ -14,13 +14,24 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_page_create_external_link()
     {
         $this->get(route('admin.external_links.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,9 +39,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
      */
     public function users_admin_can_see_page_create_external_link()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.external_links.create'))
             ->assertViewIs('admin.external_links.create')
             ->assertViewHas('external_link', new ExternalLink)
@@ -43,7 +52,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
     public function guest_users_cannot_create_external_link()
     {
         $this->post(route('admin.external_links.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -54,18 +63,18 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
         Storage::fake('external_links');
 
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
         $image = UploadedFile::fake()->image('public/img/drea/logo.png');
+        $image_url = 'external_links/' . $image->hashName();
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.external_links.store'), $this->formData([
                 'imagen' => $image
             ]));
 
         // Assert the file was stored...
-        Storage::disk('public')->assertExists('external_links/' . $image->hashName());
+        Storage::disk('public')->assertExists($image_url);
         $this->assertDatabaseHas('external_links', $this->formData([
-            'imagen' => 'external_links/' . $image->hashName()
+            'imagen' => $image_url
         ]));
 
         $response->assertRedirect(route('admin.external_links.index'))
@@ -75,8 +84,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_url_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.external_links.store'), $this->formData([
                 'url' => ''
             ]))->assertSessionHasErrors(['url']);
@@ -85,8 +93,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_url_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.external_links.store'), $this->formData([
                 'url' => 121
             ]))->assertSessionHasErrors(['url']);
@@ -95,8 +102,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_orden_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.external_links.store'), $this->formData([
                 'orden' => ''
             ]))->assertSessionHasErrors(['orden']);
@@ -105,8 +111,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_orden_must_be_a_integer()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.external_links.store'), $this->formData([
                 'orden' => 's'
             ]))->assertSessionHasErrors(['orden']);
@@ -115,8 +120,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_imagen_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.external_links.store'), $this->formData([
                 'imagen' => ''
             ]))->assertSessionHasErrors(['imagen']);
@@ -125,8 +129,7 @@ class UsersCanCreateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_imagen_must_be_image()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.external_links.store'), $this->formData([
                 'imagen' => 'file.pdf'
             ]))->assertSessionHasErrors(['imagen']);

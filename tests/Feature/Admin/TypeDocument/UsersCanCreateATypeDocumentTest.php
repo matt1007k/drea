@@ -13,13 +13,24 @@ class UsersCanCreateATypeDocumentTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_page_create_type_document()
     {
         $this->get(route('admin.types.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,9 +39,7 @@ class UsersCanCreateATypeDocumentTest extends TestCase
     public function users_admin_can_see_page_create_type_document()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.types.create'))
             ->assertViewIs('admin.types.create')
             ->assertViewHas('type', new TypeDocument)
@@ -43,7 +52,7 @@ class UsersCanCreateATypeDocumentTest extends TestCase
     public function guest_users_cannot_create_post()
     {
         $this->post(route('admin.types.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -51,10 +60,7 @@ class UsersCanCreateATypeDocumentTest extends TestCase
      */
     public function users_admin_can_create_a_create_post()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.types.store'), $this->formData());
 
         $this->assertDatabaseHas('tipo_documentos', $this->formData());
@@ -66,8 +72,7 @@ class UsersCanCreateATypeDocumentTest extends TestCase
     /** @test */
     public function the_nombre_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.types.store'), $this->formData([
                 'nombre' => ''
             ]))->assertSessionHasErrors(['nombre']);
@@ -76,8 +81,7 @@ class UsersCanCreateATypeDocumentTest extends TestCase
     /** @test */
     public function the_nombre_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.types.store'), $this->formData([
                 'nombre' => 121
             ]))->assertSessionHasErrors(['nombre']);
@@ -86,14 +90,10 @@ class UsersCanCreateATypeDocumentTest extends TestCase
     /** @test */
     public function the_nombre_may_not_be_greater_than_50_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.types.store'), $this->formData([
                 'nombre' => Str::random(51)
-            ]));
-
-        $response->assertSessionHasErrors(['nombre']);
+            ]))->assertSessionHasErrors(['nombre']);
     }
 
     /** data send for user */

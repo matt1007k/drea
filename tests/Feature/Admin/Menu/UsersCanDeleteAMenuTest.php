@@ -13,16 +13,35 @@ class UsersCanDeleteAMenuTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $menu;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->menu = factory(Menu::class)->create($this->formData());
+    }
+
+    /**
+     * @test
+     */
+    public function guest_cannot_delete_a_menu()
+    {
+        $this->delete(route('admin.menus.destroy', $this->menu))
+            ->assertRedirect($this->pathLogin);
+    }
+
     /**
      * @test
      */
     public function users_can_delete_a_menu()
     {
-        $user = factory(User::class)->create();
-        $menu = factory(Menu::class)->create($this->formData());
-
-        $response = $this->actingAs($user)
-            ->delete(route('admin.menus.destroy', $menu));
+        $response = $this->actingAs($this->user)
+            ->delete(route('admin.menus.destroy', $this->menu));
 
         $this->assertDatabaseMissing('menus', $this->formData());
 

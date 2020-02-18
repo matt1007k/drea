@@ -17,10 +17,12 @@ class UsersCanShowASlideshowTest extends TestCase
 
     protected $user;
     protected $slideshow;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
 
         $this->user = factory(User::class)->create();
         $this->slideshow = factory(Slideshow::class)->create();
@@ -32,7 +34,7 @@ class UsersCanShowASlideshowTest extends TestCase
     public function guest_users_cannot_see_page_show_slideshow()
     {
         $this->get(route('admin.slideshows.show', $this->slideshow))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**

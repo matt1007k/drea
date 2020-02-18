@@ -11,14 +11,27 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanDeleteAVideoTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected $user;
+    protected $video;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->video = factory(Video::class)->create($this->formData());
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_delete_a_video()
     {
-        $video = factory(Video::class)->create();
-        $this->delete(route('admin.videos.destroy', $video), $this->formData())
-            ->assertRedirect('/login');
+        $this->delete(route('admin.videos.destroy', $this->video), $this->formData())
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -26,12 +39,8 @@ class UsersCanDeleteAVideoTest extends TestCase
      */
     public function users_can_delete_a_video()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $video = factory(Video::class)->create($this->formData());
-
-        $response = $this->actingAs($user)
-            ->delete(route('admin.videos.destroy', $video), $this->formData());
+        $response = $this->actingAs($this->user)
+            ->delete(route('admin.videos.destroy', $this->video));
 
         $this->assertDatabaseMissing('videos', $this->formData());
 

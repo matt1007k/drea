@@ -13,11 +13,25 @@ class UsersCanSeeListVideoTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $video2;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $video1 = factory(Video::class)->create(['created_at' => now()->subDays(1)]);
+        $this->video2 = factory(Video::class)->create(['titulo' => 'Videoo']);
+    }
+
     /** @test */
     public function guest_users_cannot_see_list_video()
     {
         $this->get(route('admin.videos.index'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -25,13 +39,7 @@ class UsersCanSeeListVideoTest extends TestCase
      */
     public function users_authenticated_can_see_list_video()
     {
-
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $video1 = factory(Video::class)->create(['created_at' => now()->subDays(1)]);
-        $video2 = factory(Video::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('admin.videos.index'));
 
         $response->assertViewHasAll([
@@ -39,7 +47,7 @@ class UsersCanSeeListVideoTest extends TestCase
             'search'
         ])
             ->assertViewIs('admin.videos.index')
-            ->assertSee($video2->titulo);
+            ->assertSee($this->video2->titulo);
     }
 
     /**
@@ -47,19 +55,15 @@ class UsersCanSeeListVideoTest extends TestCase
      */
     public function users_authenticated_can_search_by_fields_on_the_list_video()
     {
-        $user = factory(User::class)->create();
-        $video1 = factory(Video::class)->create(['created_at' => now()->subDays(1)]);
-        $video2 = factory(Video::class)->create(['titulo' => 'Videoo']);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/videos?search={$video2->titulo}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/videos?search={$this->video2->titulo}");
 
         $response->assertViewHas(
             'search',
-            $video2->titulo
+            $this->video2->titulo
         )->assertViewHas(
             'videos',
-            Video::search($video2->titulo)->latest()->get()
+            Video::search($this->video2->titulo)->latest()->get()
         );
     }
 }

@@ -17,10 +17,13 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
 
     protected $user;
     protected $announcement;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
+
         $this->user = factory(User::class)->create();
         $announcement_group = factory(AnnouncementGroup::class)->create();
         $this->announcement = factory(Announcement::class)->create(['grupo_id' => $announcement_group->id]);
@@ -32,7 +35,7 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
     public function guest_users_cannot_see_form_for_create_an_announcement_link()
     {
         $this->get(route('admin.announcements.links.create', $this->announcement))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -58,7 +61,7 @@ class UsersCanCreateAnAnnouncementLinkTest extends TestCase
     public function guest_users_cannot_create_an_announcement_link()
     {
         $this->post(route('admin.announcements.links.store', $this->announcement), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**

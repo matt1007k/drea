@@ -13,14 +13,26 @@ class UsersCanUpdateAPostTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $post;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->post = factory(Post::class)->create();
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_page_edit_post()
     {
-        $post = factory(Post::class)->create();
-        $this->get(route('admin.posts.edit', $post))
-            ->assertRedirect('/login');
+        $this->get(route('admin.posts.edit', $this->post))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -28,13 +40,10 @@ class UsersCanUpdateAPostTest extends TestCase
      */
     public function users_admin_can_see_page_edit_post()
     {
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.posts.edit', $post))
+        $this->actingAs($this->user)
+            ->get(route('admin.posts.edit', $this->post))
             ->assertViewIs('admin.posts.edit')
-            ->assertViewHas('post', $post)
+            ->assertViewHas('post', $this->post)
             ->assertSeeText('Editar aviso');
     }
 
@@ -43,9 +52,8 @@ class UsersCanUpdateAPostTest extends TestCase
      */
     public function guest_users_cannot_update_post()
     {
-        $post = factory(Post::class)->create();
-        $this->put(route('admin.posts.update', $post), $this->formData())
-            ->assertRedirect('/login');
+        $this->put(route('admin.posts.update', $this->post), $this->formData())
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -54,11 +62,11 @@ class UsersCanUpdateAPostTest extends TestCase
     public function users_admin_can_update_a_post()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create($this->formData());
+        $this->user = factory(User::class)->create();
+        $this->post = factory(Post::class)->create($this->formData());
 
-        $response = $this->actingAs($user)
-            ->put(route('admin.posts.update', $post), $this->formData());
+        $response = $this->actingAs($this->user)
+            ->put(route('admin.posts.update', $this->post), $this->formData());
 
         $this->assertDatabaseHas('avisos', $this->formData());
 
@@ -69,10 +77,8 @@ class UsersCanUpdateAPostTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create();
-        $this->actingAs($user)
-            ->put(route('admin.posts.update', $post), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.posts.update', $this->post), $this->formData([
                 'titulo' => ''
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -80,10 +86,8 @@ class UsersCanUpdateAPostTest extends TestCase
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create();
-        $this->actingAs($user)
-            ->put(route('admin.posts.update', $post), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.posts.update', $this->post), $this->formData([
                 'titulo' => 121
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -91,10 +95,8 @@ class UsersCanUpdateAPostTest extends TestCase
     /** @test */
     public function the_titulo_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create();
-        $this->actingAs($user)
-            ->put(route('admin.posts.update', $post), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.posts.update', $this->post), $this->formData([
                 'titulo' => Str::random(101)
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -102,10 +104,8 @@ class UsersCanUpdateAPostTest extends TestCase
     /** @test */
     public function the_contenido_is_required()
     {
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create();
-        $this->actingAs($user)
-            ->put(route('admin.posts.update', $post), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.posts.update', $this->post), $this->formData([
                 'contenido' => ''
             ]))->assertSessionHasErrors(['contenido']);
     }
@@ -113,10 +113,8 @@ class UsersCanUpdateAPostTest extends TestCase
     /** @test */
     public function the_fecha_is_required()
     {
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create();
-        $this->actingAs($user)
-            ->put(route('admin.posts.update', $post), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.posts.update', $this->post), $this->formData([
                 'fecha' => ''
             ]))->assertSessionHasErrors(['fecha']);
     }

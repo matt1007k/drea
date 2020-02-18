@@ -1,9 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('dashboard', 'DashboardController@index')->name('index');
 
 Route::resource('documents', 'DocumentosController');
 Route::resource('menus', 'MenusController');
+Route::resource('menus.submenus', 'SubmenusController')->except(['index', 'show']);
 Route::resource('albums', 'AlbumesController');
 Route::resource('photos', 'PhotosController');
 Route::resource('videos', 'VideosController');

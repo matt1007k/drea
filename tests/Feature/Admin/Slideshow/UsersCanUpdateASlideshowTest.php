@@ -18,10 +18,12 @@ class UsersCanUpdateAnSlideshowTest extends TestCase
     protected $user;
     protected $slideshow;
     protected $image_name_old;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
 
         Storage::fake('slideshows');
         $image_old = UploadedFile::fake()->image('public/img/drea/logo.png');
@@ -36,7 +38,7 @@ class UsersCanUpdateAnSlideshowTest extends TestCase
     public function guest_users_cannot_see_page_edit_slideshow()
     {
         $this->get(route('admin.slideshows.edit', $this->slideshow))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -57,7 +59,7 @@ class UsersCanUpdateAnSlideshowTest extends TestCase
     public function guest_users_cannot_update_slideshow()
     {
         $this->put(route('admin.slideshows.update', $this->slideshow), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**

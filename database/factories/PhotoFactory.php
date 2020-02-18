@@ -11,8 +11,8 @@ $factory->define(Photo::class, function (Faker $faker) {
         'titulo' => $faker->sentence,
         'fecha' => now()->subDays(rand(1, 20)),
         'publicado' => true,
-        'album_id' => function(){
-        return factory(\App\Models\Album::class)->create();
+        'album_id' => function () {
+            return factory(\App\Models\Album::class)->create();
         },
         'imagen' => $imageUrl
     ];

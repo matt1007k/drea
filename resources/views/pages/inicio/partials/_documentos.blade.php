@@ -13,7 +13,7 @@
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-end">
-        <a href="{{ url('/documentos') }}" class="btn btn-info btn-sm btn-rounded">Ver mas</a>
+        <a href="{{ url('/documentos') }}" class="btn btn-outline-info btn-sm btn-rounded">Ver mas</a>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
         @endforeach
       </div>
       <div class="d-flex justify-content-end">
-        <a href="{{ url('/documentos') }}" class="btn btn-info btn-sm btn-rounded">Ver mas</a>
+        <a href="{{ url('/documentos') }}" class="btn btn-outline-info btn-sm btn-rounded">Ver mas</a>
       </div>
     </div>
   </div>

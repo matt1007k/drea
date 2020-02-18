@@ -15,9 +15,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanCreateAPhotoTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected $user;
+    protected $pathLogin;
+
     public function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
         factory(Album::class, 2)->create();
     }
 
@@ -27,7 +34,7 @@ class UsersCanCreateAPhotoTest extends TestCase
     public function guest_users_cannot_see_page_create_photo()
     {
         $this->get(route('admin.photos.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -35,9 +42,7 @@ class UsersCanCreateAPhotoTest extends TestCase
      */
     public function users_admin_can_see_page_create_photo()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.photos.create'))
             ->assertViewIs('admin.photos.create')
             ->assertViewHas('photo', new Photo)
@@ -51,7 +56,7 @@ class UsersCanCreateAPhotoTest extends TestCase
     public function guest_users_cannot_create_photo()
     {
         $this->post(route('admin.photos.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -61,18 +66,18 @@ class UsersCanCreateAPhotoTest extends TestCase
     {
         Storage::fake('photos');
 
-        $user = factory(User::class)->create();
         $image = UploadedFile::fake()->image('public/img/drea/logo.png');
+        $image_url = 'photos/' . $image->hashName();
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->post(route('admin.photos.store'), $this->formData([
                 'imagen' => $image
             ]));
 
         // Assert the file was stored...
-        Storage::disk('public')->assertExists('photos/' . $image->hashName());
+        Storage::disk('public')->assertExists($image_url);
         $this->assertDatabaseHas('fotos', $this->formData([
-            'imagen' => 'photos/' . $image->hashName()
+            'imagen' => $image_url
         ]));
 
         $response->assertRedirect(route('admin.photos.index'))
@@ -82,8 +87,7 @@ class UsersCanCreateAPhotoTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.photos.store'), $this->formData([
                 'titulo' => ''
             ]))->assertSessionHasErrors(['titulo']);
@@ -92,8 +96,7 @@ class UsersCanCreateAPhotoTest extends TestCase
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.photos.store'), $this->formData([
                 'titulo' => 121
             ]))->assertSessionHasErrors(['titulo']);
@@ -102,21 +105,16 @@ class UsersCanCreateAPhotoTest extends TestCase
     /** @test */
     public function the_titulo_may_not_be_greater_than_100_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.photos.store'), $this->formData([
                 'titulo' => Str::random(101)
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_album_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.photos.store'), $this->formData([
                 'album_id' => ''
             ]))->assertSessionHasErrors(['album_id']);
@@ -125,8 +123,7 @@ class UsersCanCreateAPhotoTest extends TestCase
     /** @test */
     public function the_fecha_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.photos.store'), $this->formData([
                 'fecha' => ''
             ]))->assertSessionHasErrors(['fecha']);
@@ -135,8 +132,7 @@ class UsersCanCreateAPhotoTest extends TestCase
     /** @test */
     public function the_imagen_is_required()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post(route('admin.photos.store'), $this->formData([
                 'imagen' => ''
             ]))->assertSessionHasErrors(['imagen']);

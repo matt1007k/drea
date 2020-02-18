@@ -14,14 +14,35 @@ class UsersCanUpdateAnExternalLinkTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $external_link;
+    protected $old_image_url;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+
+        Storage::fake('external_links');
+
+        $old_image = UploadedFile::fake()->image('imagen.png');
+        $this->old_image_url = 'external_links/' . $old_image->hashName();
+
+        $this->external_link = factory(ExternalLink::class)->create($this->formData([
+            'imagen' => $this->old_image_url,
+        ]));
+    }
+
     /**
      * @test
      */
     public function guest_users_cannot_see_page_edit_external_link()
     {
-        $external_link = factory(ExternalLink::class)->create();
-        $this->get(route('admin.external_links.edit', $external_link))
-            ->assertRedirect('/login');
+        $this->get(route('admin.external_links.edit', $this->external_link))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -29,56 +50,43 @@ class UsersCanUpdateAnExternalLinkTest extends TestCase
      */
     public function users_admin_can_see_page_edit_external_link()
     {
-        $user = factory(User::class)->create();
-        $external_link = factory(ExternalLink::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.external_links.edit', $external_link))
+        $this->actingAs($this->user)
+            ->get(route('admin.external_links.edit', $this->external_link))
             ->assertViewIs('admin.external_links.edit')
-            ->assertViewHas('external_link', $external_link)
+            ->assertViewHas('external_link', $this->external_link)
             ->assertSeeText('Editar enlace externo');
     }
 
     /**
      * @test
      */
-    public function guest_users_cannot_create_external_link()
+    public function guest_users_cannot_update_external_link()
     {
-        $external_link = factory(ExternalLink::class)->create();
-        $this->put(route('admin.external_links.update', $external_link), $this->formData())
-            ->assertRedirect('/login');
+        $this->put(route('admin.external_links.update', $this->external_link), $this->formData())
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
      * @test
      */
-    public function users_admin_can_create_a_external_link()
+    public function users_admin_can_update_a_external_link()
     {
-        Storage::fake('external_links');
-
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-
-        $old_image = UploadedFile::fake()->image('imagen.png');
-        $external_link = factory(ExternalLink::class)->create($this->formData([
-            'imagen' => 'external_links/' . $old_image->hashName()
-        ]));
-
         $new_image = UploadedFile::fake()->image('imagen.png');
+        $new_image_url = 'external_links/' . $new_image->hashName();
 
-        $response = $this->actingAs($user)
-            ->put(route('admin.external_links.update', $external_link), $this->formData([
+        $response = $this->actingAs($this->user)
+            ->put(route('admin.external_links.update', $this->external_link), $this->formData([
                 'imagen' => $new_image
             ]));
 
         // Assert the file was updated...
-        Storage::disk('public')->assertExists('external_links/' . $new_image->hashName());
+        Storage::disk('public')->assertExists($new_image_url);
 
         // Assert a file does not exist...
-        Storage::disk('public')->assertMissing('external_links/' . $old_image->hashName());
+        Storage::disk('public')->assertMissing($this->old_image_url);
 
         $this->assertDatabaseHas('external_links', $this->formData([
-            'imagen' => 'external_links/' . $new_image->hashName()
+            'imagen' => $new_image_url
         ]));
 
         $response->assertRedirect(route('admin.external_links.index'))
@@ -88,11 +96,8 @@ class UsersCanUpdateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_url_is_required()
     {
-        $user = factory(User::class)->create();
-        $external_link = factory(ExternalLink::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.external_links.update', $external_link), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.external_links.update', $this->external_link), $this->formData([
                 'url' => ''
             ]))->assertSessionHasErrors(['url']);
     }
@@ -100,11 +105,8 @@ class UsersCanUpdateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_url_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-        $external_link = factory(ExternalLink::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.external_links.update', $external_link), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.external_links.update', $this->external_link), $this->formData([
                 'url' => 121
             ]))->assertSessionHasErrors(['url']);
     }
@@ -112,11 +114,8 @@ class UsersCanUpdateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_orden_is_required()
     {
-        $user = factory(User::class)->create();
-        $external_link = factory(ExternalLink::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.external_links.update', $external_link), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.external_links.update', $this->external_link), $this->formData([
                 'orden' => ''
             ]))->assertSessionHasErrors(['orden']);
     }
@@ -124,11 +123,8 @@ class UsersCanUpdateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_orden_must_be_a_integer()
     {
-        $user = factory(User::class)->create();
-        $external_link = factory(ExternalLink::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.external_links.update', $external_link), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.external_links.update', $this->external_link), $this->formData([
                 'orden' => 's'
             ]))->assertSessionHasErrors(['orden']);
     }
@@ -136,11 +132,8 @@ class UsersCanUpdateAnExternalLinkTest extends TestCase
     /** @test */
     public function the_imagen_must_be_image()
     {
-        $user = factory(User::class)->create();
-        $external_link = factory(ExternalLink::class)->create();
-
-        $this->actingAs($user)
-            ->put(route('admin.external_links.update', $external_link), $this->formData([
+        $this->actingAs($this->user)
+            ->put(route('admin.external_links.update', $this->external_link), $this->formData([
                 'imagen' => 'file.pdf'
             ]))->assertSessionHasErrors(['imagen']);
     }

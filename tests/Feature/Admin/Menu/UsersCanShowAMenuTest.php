@@ -12,14 +12,26 @@ class UsersCanShowAMenuTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $menu;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->menu = factory(Menu::class)->create();
+    }
+
     /**
      * @test
      */
     public function autheticated_users_cannot_show_a_menu()
     {
-        $menu = factory(Menu::class)->create();
-        $this->get(route('admin.menus.show', $menu))
-            ->assertRedirect('/login');
+        $this->get(route('admin.menus.show', $this->menu))
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -27,14 +39,10 @@ class UsersCanShowAMenuTest extends TestCase
      */
     public function users_can_show_a_menu()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $menu = factory(Menu::class)->create();
-
-        $this->actingAs($user)
-            ->get(route('admin.menus.show', $menu))
+        $this->actingAs($this->user)
+            ->get(route('admin.menus.show', $this->menu))
             ->assertViewIs('admin.menus.show')
-            ->assertViewHas('menu', $menu)
-            ->assertSee($menu->titulo);
+            ->assertViewHas('menu', $this->menu)
+            ->assertSee($this->menu->titulo);
     }
 }

@@ -16,10 +16,13 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     use RefreshDatabase;
 
     protected $user;
+    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->pathLogin = '/auth/login';
+
         $this->user = factory(User::class)->create();
     }
 
@@ -29,7 +32,7 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     public function guest_users_cannot_see_page_create_slideshow()
     {
         $this->get(route('admin.slideshows.create'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -50,7 +53,7 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     public function guest_users_cannot_create_slideshow()
     {
         $this->post(route('admin.slideshows.store'), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -61,6 +64,7 @@ class UsersCanCreateAnSlideshowTest extends TestCase
         Storage::fake('slideshows');
 
         $image = UploadedFile::fake()->image('public/img/drea/logo.png');
+        $image_url = 'slideshows/' . $image->hashName();
 
         $response = $this->actingAs($this->user)
             ->post(route('admin.slideshows.store'), $this->formData([
@@ -68,9 +72,9 @@ class UsersCanCreateAnSlideshowTest extends TestCase
             ]));
 
         // Assert the file was stored...
-        Storage::disk('public')->assertExists('slideshows/' . $image->hashName());
+        Storage::disk('public')->assertExists($image_url);
         $this->assertDatabaseHas('slideshows', $this->formData([
-            'imagen' => 'slideshows/' . $image->hashName()
+            'imagen' => $image_url
         ]));
 
         $response->assertRedirect(route('admin.slideshows.index'))

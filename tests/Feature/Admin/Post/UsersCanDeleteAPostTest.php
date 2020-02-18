@@ -13,15 +13,26 @@ class UsersCanDeleteAPostTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $post;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $this->post = factory(Post::class)->create($this->formData());
+    }
 
     /**
      * @test
      */
     public function guest_users_cannot_delete_post()
     {
-        $post = factory(Post::class)->create();
-        $this->delete(route('admin.posts.destroy', $post), $this->formData())
-            ->assertRedirect('/login');
+        $this->delete(route('admin.posts.destroy', $this->post), $this->formData())
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -29,12 +40,8 @@ class UsersCanDeleteAPostTest extends TestCase
      */
     public function users_admin_can_delete_a_post()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $post = factory(Post::class)->create($this->formData());
-
-        $response = $this->actingAs($user)
-            ->delete(route('admin.posts.destroy', $post), $this->formData());
+        $response = $this->actingAs($this->user)
+            ->delete(route('admin.posts.destroy', $this->post), $this->formData());
 
         $this->assertDatabaseMissing('avisos', $this->formData());
 

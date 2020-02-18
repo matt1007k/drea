@@ -13,11 +13,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UsersCanUpdateAnAnnouncementTest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+    protected $pathLogin;
+
     protected function setUp(): void
     {
         parent::setUp();
-        factory(AnnouncementGroup::class)->create();
-        factory(Announcement::class)->create($this->formData());
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        factory(Announcement::class)->create();
     }
 
     /**
@@ -26,7 +31,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     public function guest_users_cannot_see_form_for_edit_an_announcement()
     {
         $this->get(route('admin.announcements.edit', Announcement::first()))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -35,9 +40,8 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     public function users_can_see_form_for_edit_an_announcement()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->get(route('admin.announcements.edit', Announcement::first()))
             ->assertViewHasAll([
                 'announcement',
@@ -52,7 +56,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     public function guest_users_cannot_update_an_announcement()
     {
         $this->put(route('admin.announcements.update', Announcement::first()), $this->formData())
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -61,9 +65,8 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     public function users_can_update_an_announcement()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData());
 
         $this->assertDatabaseHas('announcements', $this->formData());
@@ -75,92 +78,64 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     /** @test */
     public function the_titulo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
                 'titulo' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_grupo_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
                 'grupo_id' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['grupo_id']);
+            ]))->assertSessionHasErrors(['grupo_id']);
     }
 
     /** @test */
     public function the_titulo_must_be_a_string()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
                 'titulo' => 1212
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_titulo_may_not_be_greater_than_200_characters()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
                 'titulo' => Str::random(201)
-            ]));
-
-        $response->assertSessionHasErrors(['titulo']);
+            ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
     public function the_numero_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
                 'numero' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['numero']);
+            ]))->assertSessionHasErrors(['numero']);
     }
 
     /** @test */
     public function the_fecha_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
                 'fecha' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['fecha']);
+            ]))->assertSessionHasErrors(['fecha']);
     }
 
     /** @test */
     public function the_estado_is_required()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)
+        $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
                 'estado' => ''
-            ]));
-
-        $response->assertSessionHasErrors(['estado']);
+            ]))->assertSessionHasErrors(['estado']);
     }
 
     /** data send for user */

@@ -12,11 +12,25 @@ class UsersCanSeeListSlideshowTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $slideshow2;
+    protected $pathLogin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->pathLogin = '/auth/login';
+
+        $this->user = factory(User::class)->create();
+        $slideshow1 = factory(Slideshow::class)->create(['created_at' => now()->subDays(1)]);
+        $this->slideshow2 = factory(Slideshow::class)->create(['titulo' => 'slideshow']);
+    }
+
     /** @test */
     public function guest_users_cannot_see_list_slideshow()
     {
         $this->get(route('admin.slideshows.index'))
-            ->assertRedirect('/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -24,12 +38,7 @@ class UsersCanSeeListSlideshowTest extends TestCase
      */
     public function users_authenticated_can_see_list_slideshow()
     {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $slideshow1 = factory(Slideshow::class)->create(['created_at' => now()->subDays(1)]);
-        $slideshow2 = factory(Slideshow::class)->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('admin.slideshows.index'));
 
         $response->assertViewHasAll([
@@ -37,7 +46,7 @@ class UsersCanSeeListSlideshowTest extends TestCase
             'search'
         ])
             ->assertViewIs('admin.slideshows.index')
-            ->assertSee($slideshow2->titulo);
+            ->assertSee($this->slideshow2->titulo);
     }
 
     /**
@@ -45,19 +54,15 @@ class UsersCanSeeListSlideshowTest extends TestCase
      */
     public function users_authenticated_can_search_by_fields_on_the_list_slideshow()
     {
-        $user = factory(User::class)->create();
-        $slideshow1 = factory(Slideshow::class)->create(['created_at' => now()->subDays(1)]);
-        $slideshow2 = factory(Slideshow::class)->create(['titulo' => 'slideshow']);
-
-        $response = $this->actingAs($user)
-            ->get("/admin/slideshows?search={$slideshow2->titulo}");
+        $response = $this->actingAs($this->user)
+            ->get("/admin/slideshows?search={$this->slideshow2->titulo}");
 
         $response->assertViewHas(
             'search',
-            $slideshow2->titulo
+            $this->slideshow2->titulo
         )->assertViewHas(
             'slideshows',
-            Slideshow::search($slideshow2->titulo)->orderBy('fecha', 'DESC')->get()
+            Slideshow::search($this->slideshow2->titulo)->orderBy('fecha', 'DESC')->get()
         );
     }
 }
