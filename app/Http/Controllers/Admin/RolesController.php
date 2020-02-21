@@ -11,69 +11,67 @@ class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('has.permission:roles.index')->only(['index']);
-        $this->middleware('has.permission:roles.show')->only(['show']);
-        $this->middleware('has.permission:roles.create')->only(['create', 'store']);
-        $this->middleware('has.permission:roles.edit')->only(['edit', 'update']);
-        $this->middleware('has.permission:roles.destroy')->only(['destroy']);
-    }
-    public function index(Request $request)
-    {
-        $roles = Role::With(['permissions'])->orderBy('name', 'ASC')->get();
-
-        return response()->json(['roles' => $roles], 200);
+        $this->middleware('can:roles.index')->only(['index']);
+        $this->middleware('can:roles.show')->only(['show']);
+        $this->middleware('can:roles.create')->only(['create', 'store']);
+        $this->middleware('can:roles.edit')->only(['edit', 'update']);
+        $this->middleware('can:roles.destroy')->only(['destroy']);
     }
 
-    public function getRoles(Request $request)
+    public function index()
     {
-        $roles = Role::orderBy('name', 'ASC')->get();
+        $search = request('search') ? request('search') : '';
 
-        return response()->json(['roles' => $roles], 200);
+        if ($search != '') {
+            $roles = Role::where('name', 'LIKE', "%$search%")
+                ->orWhere('slug', 'LIKE', "%$search%")
+                ->orWhere('description', 'LIKE', "%$search%")
+                ->latest()
+                ->get();
+        } else {
+            $roles = Role::latest()->get();
+        }
+
+        return view('admin.roles.index', compact('roles', 'search'));
+    }
+
+    public function show(Role $role)
+    {
+        return view('admin.roles.show', compact('role'));
+    }
+
+    public function create()
+    {
+        $role = new Role();
+        return view('admin.roles.create', compact('role'));
     }
 
     public function store(RoleCreatedRequest $request)
     {
-        $role = new Role();
-        $role->name = $request->nombre;
-        $role->slug = $request->identificador;
-        $role->description = $request->descripcion;
-        if ($role->save()) {
-            // $role->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());
-            return response()->json([
-                'created' => true,
-            ], 200);
-        } else {
-            return response()->json([
-                'created' => false,
-            ], 500);
-        }
+        Role::create($request->all());
+
+        return redirect()->route('admin.roles.index')
+            ->with('msg', 'El registro se guardó correctamente');
     }
 
-    public function update(RoleUpdatedRequest $request, $id)
+    public function edit(Role $role)
     {
-        $role = Role::findOrFail($id);
-        $role->name = $request->nombre;
-        $role->slug = $request->identificador;
-        $role->description = $request->descripcion;
-        if ($role->save()) {
-            // $role->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());// $role->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());
-
-            return response()->json([
-                'updated' => true,
-            ], 200);
-        } else {
-            return response()->json([
-                'updated' => false,
-            ], 500);
-        }
+        return view('admin.roles.edit', compact('role'));
     }
-    public function destroy($id)
+
+    public function update(RoleUpdatedRequest $request, Role $role)
     {
-        $role = Role::findOrFail($id);
-        if ($role->delete()) {
-            return response()->json([
-                'deleted' => true,
-            ], 200);
-        }
+        $role->update($request->all());
+
+        return redirect()->route('admin.roles.index')
+            ->with('msg', 'El registro se editó correctamente');
+    }
+
+    public function destroy(Role $role)
+    {
+        $role->delete();
+
+        return redirect()->route('admin.roles.index')
+            ->with('msg', 'El registro se eliminó correctamente');
     }
 }

@@ -68,13 +68,14 @@
   // Data Picker Initialization
   $('#fecha').kendoDateTimePicker({
       culture: "es-ES",
+      // dateInput: true,
       timeFormat: "HH:mm",
       format: "dd-MM-yyyy HH:mm tt",
       value: new Date(
         {{$post->fecha->format('Y')}}, 
         {{$post->fecha->format('m') - 1 }}, 
         {{$post->fecha->format('d')}}, 
-        {{$post->fecha->format('h')}}, 
+        {{$post->fecha->format('H')}}, 
         {{$post->fecha->format('i')}}, 
         {{$post->fecha->format('s')}}
       ),

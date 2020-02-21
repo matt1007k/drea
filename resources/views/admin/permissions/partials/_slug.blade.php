@@ -1,0 +1,1 @@
+<span class="bg-teal-500 text-white rounded-full py-2 px-6 text-lg text-uppercase">{{ $permission->slug }}</span>

@@ -22,6 +22,6 @@ class TypeDocumentsController extends Controller
         ]);
 
         return redirect()->route('admin.documents.index')
-            ->with('msg', 'Registro completado');
+            ->with('msg', 'El registro se guardó correctamente');
     }
 }

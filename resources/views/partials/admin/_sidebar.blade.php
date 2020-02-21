@@ -314,8 +314,11 @@
           <span>Roles</span>
         </a>
         <ul class="mi-menu-sub">
-          <li>
-            <a href="snippets/login.html">Lista de roles</a>
+          <li class="{{ request()->is('admin/roles') ? 'active' : '' }}">
+            <a href="{{ route('admin.roles.index') }}">Lista de roles</a>
+          </li>
+          <li class="{{ request()->is('admin/roles/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.roles.create') }}">Registrar rol</a>
           </li>
 
         </ul>

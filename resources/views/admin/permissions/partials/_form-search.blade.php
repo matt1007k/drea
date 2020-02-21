@@ -1,6 +1,6 @@
 <!-- Top Table UI -->
 <div class="bg-white mb-4 px-3 py-3">
-  <form action="{{ route('admin.posts.index') }}" method="GET">
+  <form action="{{ route('admin.permissions.index') }}" method="GET">
 
     <!-- Grid row -->
     <div class="row">

@@ -11,67 +11,67 @@ class PermissionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('has.permission:permissions.index')->only(['index']);
-        $this->middleware('has.permission:permissions.show')->only(['show']);
-        $this->middleware('has.permission:permissions.create')->only(['create', 'store']);
-        $this->middleware('has.permission:permissions.edit')->only(['edit', 'update']);
-        $this->middleware('has.permission:permissions.destroy')->only(['destroy']);
-    }
-    public function index(Request $request)
-    {
-        $permissions = Permission::orderBy('name', 'ASC')->get();
-
-        return response()->json(['permissions' => $permissions], 200);
+        $this->middleware('can:permissions.index')->only(['index']);
+        $this->middleware('can:permissions.show')->only(['show']);
+        $this->middleware('can:permissions.create')->only(['create', 'store']);
+        $this->middleware('can:permissions.edit')->only(['edit', 'update']);
+        $this->middleware('can:permissions.destroy')->only(['destroy']);
     }
 
-    public function getPermissions(Request $request)
+    public function index()
     {
-        $permissions = Permission::orderBy('name', 'ASC')->get();
+        $search = request('search') ? request('search') : '';
 
-        return response()->json(['permissions' => $permissions], 200);
+        if ($search != '') {
+            $permissions = Permission::where('name', 'LIKE', "%$search%")
+                ->orWhere('slug', 'LIKE', "%$search%")
+                ->orWhere('description', 'LIKE', "%$search%")
+                ->latest()
+                ->get();
+        } else {
+            $permissions = Permission::latest()->get();
+        }
+
+        return view('admin.permissions.index', compact('permissions', 'search'));
+    }
+
+    public function show(Permission $permission)
+    {
+        return view('admin.permissions.show', compact('permission'));
+    }
+
+    public function create()
+    {
+        $permission = new Permission();
+        return view('admin.permissions.create', compact('permission'));
     }
 
     public function store(PermisoCreatedRequest $request)
     {
-        $permission = new Permission();
-        $permission->name = $request->nombre;
-        $permission->slug = $request->identificador;
-        $permission->description = $request->descripcion;
-        if ($permission->save()) {
-            return response()->json([
-                'created' => true,
-            ], 200);
-        } else {
-            return response()->json([
-                'created' => false,
-            ], 500);
-        }
+        Permission::create($request->all());
+
+        return redirect()->route('admin.permissions.index')
+            ->with('msg', 'El registro se guardó correctamente');
     }
 
-    public function update(PermisoUpdatedRequest $request, $id)
+    public function edit(Permission $permission)
     {
-        $permission = Permission::findOrFail($id);
-        $permission->name = $request->nombre;
-        $permission->slug = $request->identificador;
-        $permission->description = $request->descripcion;
-        if ($permission->save()) {
-
-            return response()->json([
-                'updated' => true,
-            ], 200);
-        } else {
-            return response()->json([
-                'updated' => false,
-            ], 500);
-        }
+        return view('admin.permissions.edit', compact('permission'));
     }
-    public function destroy($id)
+
+    public function update(PermisoUpdatedRequest $request, Permission $permission)
     {
-        $permission = Permission::findOrFail($id);
-        if ($permission->delete()) {
-            return response()->json([
-                'deleted' => true,
-            ], 200);
-        }
+        $permission->update($request->all());
+
+        return redirect()->route('admin.permissions.index')
+            ->with('msg', 'El registro se editó correctamente');
+    }
+
+    public function destroy(Permission $permission)
+    {
+        $permission->delete();
+
+        return redirect()->route('admin.permissions.index')
+            ->with('msg', 'El registro se eliminó correctamente');
     }
 }

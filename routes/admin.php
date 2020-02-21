@@ -15,6 +15,8 @@ Route::resource('announcement_groups', 'AnnouncementGroupsController');
 Route::resource('announcements', 'AnnouncementsController');
 Route::resource('announcements.links', 'AnnouncementLinksController')->except(['index', 'show']);
 Route::resource('slideshows', 'SlideshowsController');
+Route::resource('roles', 'RolesController');
+Route::resource('permissions', 'PermissionsController');
 
 Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
 Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');

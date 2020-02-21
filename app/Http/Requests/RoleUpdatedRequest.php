@@ -25,9 +25,9 @@ class RoleUpdatedRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required',
-            'identificador' => ['required', Rule::unique('roles', 'slug')->ignore($this->route('role'))],
-            'descripcion' => 'required|max:255',
+            'name' => 'required|string|max:100',
+            'slug' => ['required', 'string', Rule::unique('roles', 'slug')->ignore($this->route('role'))],
+            'description' => 'required|string|max:250',
         ];
     }
 }
