@@ -36,7 +36,7 @@
           <a href="{{ route('admin.permissions.create') }}"
             class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mr-2 fas fa-plus"></i>
-            Registrar rol
+            Registrar permiso
           </a>
         </div>
 
@@ -114,11 +114,10 @@
 
 @push('scripts')
 <script src="{{ asset('/js/datatables.min.js') }}"></script>
-<script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
   $('#permissionsTable').DataTable({
     "sort":  [[ 3, "asc" ]],
-    "searching": false,
+    "searching": true,
     language: {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",

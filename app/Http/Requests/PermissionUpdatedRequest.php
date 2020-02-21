@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PermisoUpdatedRequest extends FormRequest
+class PermissionUpdatedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class PermisoUpdatedRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required',
-            'identificador' => ['required', Rule::unique('permissions', 'slug')->ignore($this->route('permiso'))],
-            'descripcion' => 'required|max:255',
+            'name' => 'required|string|max:100',
+            'slug' => ['required', 'string', Rule::unique('permissions', 'slug')->ignore($this->route('permission'))],
+            'description' => 'required|string|max:250',
         ];
     }
 }

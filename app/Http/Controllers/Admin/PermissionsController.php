@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PermisoCreatedRequest;
-use App\Http\Requests\PermisoUpdatedRequest;
+use App\Http\Requests\PermissionCreatedRequest;
+use App\Http\Requests\PermissionUpdatedRequest;
 use Caffeinated\Shinobi\Models\Permission;
-use Illuminate\Http\Request;
 
 class PermissionsController extends Controller
 {
@@ -46,7 +45,7 @@ class PermissionsController extends Controller
         return view('admin.permissions.create', compact('permission'));
     }
 
-    public function store(PermisoCreatedRequest $request)
+    public function store(PermissionCreatedRequest $request)
     {
         Permission::create($request->all());
 
@@ -59,7 +58,7 @@ class PermissionsController extends Controller
         return view('admin.permissions.edit', compact('permission'));
     }
 
-    public function update(PermisoUpdatedRequest $request, Permission $permission)
+    public function update(PermissionUpdatedRequest $request, Permission $permission)
     {
         $permission->update($request->all());
 
