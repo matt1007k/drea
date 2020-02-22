@@ -14,23 +14,10 @@ class UsersCanCreateAPermissionTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
-    protected $pathLogin;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->pathLogin = '/auth/login';
-
-        $this->user = factory(User::class)->create();
-        factory(Role::class)->create();
-        User::first()->assignRoles('admin');
-    }
-
     /**
      * @test
      */
-    public function guest_users_cannot_see_page_create_a_role()
+    public function guest_users_cannot_see_page_create_a_permission()
     {
         $this->get(route('admin.permissions.create'))
             ->assertRedirect($this->pathLogin);
@@ -39,7 +26,7 @@ class UsersCanCreateAPermissionTest extends TestCase
     /**
      * @test
      */
-    public function users_admin_can_see_page_create_a_role()
+    public function users_admin_can_see_page_create_a_permission()
     {
         $this->withoutExceptionHandling();
         $this->actingAs($this->user)
@@ -52,7 +39,7 @@ class UsersCanCreateAPermissionTest extends TestCase
     /**
      * @test
      */
-    public function guest_users_cannot_create_a_role()
+    public function guest_users_cannot_create_a_permission()
     {
         $this->post(route('admin.permissions.store'), $this->formData())
             ->assertRedirect($this->pathLogin);
@@ -61,7 +48,7 @@ class UsersCanCreateAPermissionTest extends TestCase
     /**
      * @test
      */
-    public function users_admin_can_create_a_role()
+    public function users_admin_can_create_a_permission()
     {
         $response = $this->actingAs($this->user)
             ->post(route('admin.permissions.store'), $this->formData());

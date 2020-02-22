@@ -13,17 +13,11 @@ class UsersCanSeeListPermissionTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $permission2;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
-        $this->user = factory(User::class)->create();
-        factory(Role::class)->create();
-        User::first()->assignRoles('admin');
 
         $permission1 = factory(Permission::class)->create(['name' => 'primer', 'slug' => 'primer.permission', 'created_at' => now()->subDays(1)]);
         $this->permission2 = factory(Permission::class)->create(['name' => 'segundo', 'slug' => 'segundo.permission',]);

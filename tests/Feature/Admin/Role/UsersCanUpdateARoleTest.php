@@ -13,19 +13,11 @@ class UsersCanUpdateARoleTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $role;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
-
-        // role admin and assign to user
-        $this->user = factory(User::class)->create();
-        factory(Role::class)->create();
-        User::first()->assignRoles('admin');
 
         $this->role = factory(Role::class)->create([
             'name' => 'Primer rol',

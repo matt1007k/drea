@@ -12,17 +12,11 @@ class UsersCanSeeListRoleTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $role2;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
-        $this->user = factory(User::class)->create();
-        factory(Role::class)->create();
-        User::first()->assignRoles('admin');
 
         $role1 = factory(Role::class)->create(['name' => 'primer', 'slug' => 'primer.role', 'created_at' => now()->subDays(1)]);
         $this->role2 = factory(Role::class)->create(['name' => 'segundo', 'slug' => 'segundo.role',]);

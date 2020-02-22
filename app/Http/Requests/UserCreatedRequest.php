@@ -24,11 +24,9 @@ class UserCreatedRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'dni' => 'required|numeric|min:8|unique:users',
-            'password' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'estado' => ['required'],
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'string', 'email', 'max:150', 'unique:users'],
+            'password' => ['required', 'min:8'],
         ];
     }
 }

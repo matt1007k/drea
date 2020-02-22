@@ -13,19 +13,6 @@ class UsersCanCreateARoleTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
-    protected $pathLogin;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->pathLogin = '/auth/login';
-
-        $this->user = factory(User::class)->create();
-        factory(Role::class)->create();
-        User::first()->assignRoles('admin');
-    }
-
     /**
      * @test
      */

@@ -17,6 +17,7 @@ Route::resource('announcements.links', 'AnnouncementLinksController')->except(['
 Route::resource('slideshows', 'SlideshowsController');
 Route::resource('roles', 'RolesController');
 Route::resource('permissions', 'PermissionsController');
+Route::resource('users', 'UsersController');
 
 Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
 Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');

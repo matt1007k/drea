@@ -14,19 +14,11 @@ class UsersCanShowAPermissionTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $permission;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
-
-        // permission admin and assign to user
-        $this->user = factory(User::class)->create();
-        factory(Role::class)->create();
-        User::first()->assignRoles('admin');
 
         $this->permission = factory(Permission::class)->create([
             'name' => 'Primer permiso',

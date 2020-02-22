@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserCreatedRequest;
+use App\Http\Requests\UserUpdatedRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,109 +14,60 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('can:users.index')->only(['index']);
-        $this->middleware('can:users.create')->only(['store']);
-        $this->middleware('can:users.edit')->only(['update']);
+        $this->middleware('can:users.show')->only(['show']);
+        $this->middleware('can:users.create')->only(['store', 'create']);
+        $this->middleware('can:users.edit')->only(['update', 'edit']);
         $this->middleware('can:users.destroy')->only(['destroy']);
     }
 
     public function index()
     {
-        $usuarios = User::With(['roles', 'permissions'])->get();
+        $users = User::With(['roles'])->latest()->get();
 
-        return response()->json(['usuarios' => $usuarios], 200);
+        return view('admin.users.index', compact('users'));
+    }
+
+    public function show(User $user)
+    {
+        return view('admin.users.show', compact('user'));
+    }
+
+    public function create()
+    {
+        $user = new User();
+        return view('admin.users.create', compact('user'));
     }
 
     public function store(UserCreatedRequest $request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user = User::create($request->all());
+        $user->syncRoles($request->roles);
+        $user->syncPermissions($request->permissions);
 
-        if ($user->save()) {
-            if ($request->has('roles')) {
-                $user->roles()->sync(collect($request->roles)->pluck('id')->toArray());
-            }
-            if ($request->has('permissions')) {
-                $user->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());
-            }
-            return response()->json([
-                'updated' => true,
-            ], 200);
-        } else {
-            return response()->json([
-                'updated' => false,
-            ], 200);
-        }
-    }
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-        ]);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->has('password')) {
-            $user->password = Hash::make($request->password);
-        }
-        if ($user->save()) {
-            if ($request->has('roles')) {
-                $user->roles()->sync(collect($request->roles)->pluck('id')->toArray());
-            }
-            if ($request->has('permissions')) {
-                $user->permissions()->sync(collect($request->permissions)->pluck('id')->toArray());
-            }
-            return response()->json([
-                'updated' => true,
-            ], 200);
-        } else {
-            return response()->json([
-                'updated' => false,
-            ], 200);
-        }
-    }
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-
-        if ($user->estado === 'activo') {
-            $user->estado = 'inactivo';
-        } else if ($user->estado === 'inactivo') {
-            $user->estado = 'activo';
-        }
-
-        if ($user->save()) {
-            return response()->json([
-                'deleted' => true,
-            ]);
-        }
+        return redirect()->route('admin.users.index')
+            ->with('msg', 'El registro se guardó correctamente');
     }
 
-    public function editarAuth(Request $request, $id)
+    public function edit(User $user)
     {
-        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user'));
+    }
 
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'dni' => ['required', 'numeric', 'min:8', Rule::unique('users')->ignore($user->id)],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-        ]);
-        $user->name = $request->name;
-        $user->dni = $request->dni;
-        if ($request->has('password')) {
-            $user->password = Hash::make($request->password);
-        }
-        if ($user->save()) {
-            return response()->json([
-                'updated' => true,
-            ], 201);
-        } else {
-            return response()->json([
-                'updated' => false,
-            ], 201);
-        }
+    public function update(UserUpdatedRequest $request, User $user)
+    {
+        $user->update($request->all());
+        $user->syncRoles($request->roles);
+        $user->syncPermissions($request->permissions);
+
+        return redirect()->route('admin.users.index')
+            ->with('msg', 'El registro se editó correctamente');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return redirect()->route('admin.users.index')
+            ->with('msg', 'El registro se eliminó correctamente');
     }
 }
