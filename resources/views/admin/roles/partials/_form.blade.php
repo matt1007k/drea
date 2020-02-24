@@ -40,6 +40,35 @@
   @enderror
 </div>
 
+<div class="h4">Permiso especial</div>
+<div class="form-group">
+  <input type="radio" name="special" id="special-all-access" value="all-access" class="mi-radio-state bg-purple"
+    @if($role->special == "all-access") checked @endif>
+  <label class="m-r-30" for="special-all-access">Acceso total</label>
+
+  <input type="radio" name="special" id="special-no-access" value="no-access" class="mi-radio-state bg-purple"
+    @if($role->special == "no-access") checked @endif>
+  <label class="m-r-30" for="special-no-access">Ningún acceso</label>
+
+</div>
+
+<hr>
+<div class="h4">Lista de Permisos</div>
+<div class="form-group">
+  <ul class="list-unstyled">
+    @foreach($permissions as $permission)
+    <li>
+      <input type="checkbox" id="permission-{{ $permission->slug }}" name="permissions[]"
+        value="{{ $permission->slug }}" @foreach ($role->permissions as $r_permission)
+      @if($r_permission->id == $permission->id) checked @endif
+      @endforeach>
+      <label class="m-r-30"
+        for="permission-{{ $permission->slug }}"><em>({{$permission->description ?: 'Sin descripción'}})</em></label>
+
+    </li>
+    @endforeach
+  </ul>
+</div>
 
 
 <div class="d-flex justify-content-between mt-4">

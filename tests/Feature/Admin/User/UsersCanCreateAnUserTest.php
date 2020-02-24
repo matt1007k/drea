@@ -31,7 +31,10 @@ class UsersCanCreateAnUserTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('admin.users.create'))
             ->assertViewIs('admin.users.create')
-            ->assertViewHas('user', new User)
+            ->assertViewHasAll([
+                'user',
+                'roles'
+            ])
             ->assertSeeText('Registrar usuario');
     }
 
@@ -53,7 +56,6 @@ class UsersCanCreateAnUserTest extends TestCase
         $response = $this->actingAs($this->user)
             ->post(route('admin.users.store'), $this->formData([
                 'roles' => ['admin'],
-                'permissions' => [],
             ]));
 
         $this->assertDatabaseHas('users', [

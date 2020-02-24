@@ -24,7 +24,7 @@
 
   <section>
 
-    @include('admin.permissions.partials._form-search')
+    {{-- @include('admin.permissions.partials._form-search') --}}
     <div class="mi-card">
 
       <!-- Card image -->
@@ -143,7 +143,7 @@
         }
     }
   });
-  
+  $('.dataTables_length').addClass('bs-select');
    
   function onDelete(id) {
       swal({

@@ -21,6 +21,11 @@ class Document extends Model
         });
     }
 
+    public function scopeByDate($query, $date)
+    {
+        return $query->where('created_at', 'LIKE', "%$date%");
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('titulo', 'LIKE', "%$search%")

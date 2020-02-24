@@ -67,7 +67,15 @@
                 <td class="text-center font-weight-bold">{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->roles }}</td>
+                <td class="text-center">
+                  @forelse ($user->roles as $role)
+                  <span class="mr-2">
+                    @include('admin.roles.partials._slug')
+                  </span>
+                  @empty
+                  <span class="font-bold text-gray-800">Sin roles</span>
+                  @endforelse
+                </td>
                 <td>
                   <a href="{{ route('admin.users.show', $user) }}" class="px-2 btn btn-light btn-sm"
                     data-balloon-pos="down" aria-label="Ver registro">
@@ -141,6 +149,7 @@
         }
     }
   });
+  $('.dataTables_length').addClass('bs-select');
   
    
   function onDelete(id) {

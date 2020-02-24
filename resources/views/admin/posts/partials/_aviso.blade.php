@@ -6,7 +6,12 @@
     @endif
 
     <div class="text-muted mb-2">
-      {{ $aviso->fecha->format('d M yy') }}
+      <i class="mr-1 fa fa-calendar-alt"></i>
+      {{ $aviso->fecha_format }}
+      <span>
+        . <i class="mr-1 fa fa-clock"></i>
+        {{ $aviso->fechaDiffForHumans }}
+      </span>
     </div>
 
 

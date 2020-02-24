@@ -30,3 +30,5 @@ Route::get('/avisos/{post}', 'PostsController@show')->name('posts.show');
 Route::get('/avisos/{post}/edit', 'PostsController@edit')->name('posts.edit');
 Route::put('/avisos/{post}', 'PostsController@update')->name('posts.update');
 Route::delete('/avisos/{post}', 'PostsController@destroy')->name('posts.destroy');
+
+Route::resource('posts.tests', 'PostsController')->shallow();

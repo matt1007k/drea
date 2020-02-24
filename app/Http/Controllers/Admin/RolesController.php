@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoleCreatedRequest;
 use App\Http\Requests\RoleUpdatedRequest;
+use Caffeinated\Shinobi\Models\Permission;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
 
@@ -20,19 +21,8 @@ class RolesController extends Controller
 
     public function index()
     {
-        $search = request('search') ? request('search') : '';
-
-        if ($search != '') {
-            $roles = Role::where('name', 'LIKE', "%$search%")
-                ->orWhere('slug', 'LIKE', "%$search%")
-                ->orWhere('description', 'LIKE', "%$search%")
-                ->latest()
-                ->get();
-        } else {
-            $roles = Role::latest()->get();
-        }
-
-        return view('admin.roles.index', compact('roles', 'search'));
+        $roles = Role::latest()->get();
+        return view('admin.roles.index', compact('roles'));
     }
 
     public function show(Role $role)
@@ -43,12 +33,15 @@ class RolesController extends Controller
     public function create()
     {
         $role = new Role();
-        return view('admin.roles.create', compact('role'));
+        $permissions = Permission::all();
+        return view('admin.roles.create', compact('role', 'permissions'));
     }
 
     public function store(RoleCreatedRequest $request)
     {
-        Role::create($request->all());
+        $role = Role::create($request->all());
+        if ($request->has('permissions')) $role->syncPermissions($request->permissions);
+
 
         return redirect()->route('admin.roles.index')
             ->with('msg', 'El registro se guardó correctamente');
@@ -56,12 +49,15 @@ class RolesController extends Controller
 
     public function edit(Role $role)
     {
-        return view('admin.roles.edit', compact('role'));
+        $permissions = Permission::all();
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     public function update(RoleUpdatedRequest $request, Role $role)
     {
         $role->update($request->all());
+        if (empty($request->get('permissions'))) $role->revokePermissionTo($role->permissions->pluck('slug'));
+        if ($request->has('permissions')) $role->syncPermissions($request->permissions);
 
         return redirect()->route('admin.roles.index')
             ->with('msg', 'El registro se editó correctamente');

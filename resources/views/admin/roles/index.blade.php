@@ -24,7 +24,7 @@
 
   <section>
 
-    @include('admin.roles.partials._form-search')
+    {{-- @include('admin.roles.partials._form-search') --}}
     <div class="mi-card">
 
       <!-- Card image -->
@@ -116,7 +116,7 @@
 <script>
   $('#rolesTable').DataTable({
     "sort":  [[ 3, "asc" ]],
-    "searching": false,
+    "searching": true,
     language: {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -142,7 +142,7 @@
         }
     }
   });
-  
+  $('.dataTables_length').addClass('bs-select');
    
   function onDelete(id) {
       swal({

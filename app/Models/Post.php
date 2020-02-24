@@ -12,8 +12,15 @@ class Post extends Model
         'fecha'
     ];
 
-    public function getFechaFormatAttribute(){
-      return $this->fecha->format('d M yy');
+    public function getFechaFormatAttribute()
+    {
+        return $this->fecha->format('d F, Y');
+    }
+
+    public function getFechaDiffForHumansAttribute()
+    {
+        // \Carbon\Carbon::parse($this->fecha)->diffForHumans();
+        return $this->fecha->diffForHumans();
     }
 
     public function getRouteKeyName()

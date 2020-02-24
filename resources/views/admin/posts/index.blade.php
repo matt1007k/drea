@@ -28,7 +28,7 @@
     <div class="mi-card">
 
       <!-- Card image -->
-      <div class="flex justify-between mi-card-content align-center">
+      <div class="flex justify-between align-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de avisos</div> --}}
 
@@ -70,15 +70,15 @@
                 <td></td>
                 <td>
                   <a href="{{ route('admin.posts.show', $post) }}" class="px-2 btn btn-light btn-sm"
-                     data-balloon-pos="down" aria-label="Ver registro">
+                    data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
                   <a href="{{ route('admin.posts.edit', $post) }}" class="px-2 btn btn-info btn-sm"
-                     data-balloon-pos="down" aria-label="Editar registro">
+                    data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
                   <button type="button" onclick="onDelete({{ $post->id }})" class="px-2 btn btn-danger btn-sm"
-                     data-balloon-pos="down" aria-label="Eliminar registro">
+                    data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
                   <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
@@ -142,7 +142,7 @@
         }
     }
   });
-  
+  $('.dataTables_length').addClass('bs-select');
    
   function onDelete(id) {
       swal({

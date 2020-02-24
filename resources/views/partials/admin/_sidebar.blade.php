@@ -311,6 +311,21 @@
       <li class="mi-menu-toggle" data-mi-color="col-purple">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_security"></i>
+          <span>Permisos</span>
+        </a>
+        <ul class="mi-menu-sub">
+          <li class="{{ request()->is('admin/permissions') ? 'active' : '' }}">
+            <a href="{{ route('admin.permissions.index') }}">Lista de permisos</a>
+          </li>
+          <li class="{{ request()->is('admin/permissions/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.permissions.create') }}">Registrar permiso</a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="mi-menu-toggle" data-mi-color="col-purple">
+        <a href="javascript:void(0);">
+          <i class="mi mi-icon_verified_user"></i>
           <span>Roles</span>
         </a>
         <ul class="mi-menu-sub">
@@ -323,10 +338,23 @@
 
         </ul>
       </li>
+      <li class="mi-menu-toggle" data-mi-color="col-purple">
+        <a href="javascript:void(0);">
+          <i class="mi mi-icon_people"></i>
+          <span>Usuarios</span>
+        </a>
+        <ul class="mi-menu-sub">
+          <li class="{{ request()->is('admin/users') ? 'active' : '' }}">
+            <a href="{{ route('admin.users.index') }}">Lista de usuarios</a>
+          </li>
+          <li class="{{ request()->is('admin/users/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.users.create') }}">Registrar usuario</a>
+          </li>
+
+        </ul>
+      </li>
       <li data-mi-color="col-indigo"><a href="snippets/timeline.html"><i
             class="mi mi-icon_timeline"></i><span>Timeline</span></a></li>
-      <li data-mi-color="col-pink"><a href="snippets/profile.html"> <i class="mi mi-icon_person"></i>
-          <span>Profile</span></a></li>
       <li data-mi-color="col-blue-grey"><a href="snippets/search.html"> <i class="mi mi-icon_search"></i>
           <span>Search</span></a></li>
       <li data-mi-color="col-teal"><a href="snippets/faq.html"> <i class="mi mi-icon_help"></i> <span>FAQ</span></a>

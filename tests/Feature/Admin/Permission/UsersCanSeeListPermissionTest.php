@@ -40,27 +40,8 @@ class UsersCanSeeListPermissionTest extends TestCase
 
         $response->assertViewHasAll([
             'permissions',
-            'search'
         ])
             ->assertViewIs('admin.permissions.index')
             ->assertSee($this->permission2->name);
-    }
-
-    /**
-     * @test
-     */
-    public function users_authenticated_can_search_by_fields_on_the_list_post()
-    {
-        $response = $this->actingAs($this->user)
-            ->get("/admin/permissions?search={$this->permission2->name}");
-
-        $response->assertViewHas(
-            'search',
-            $this->permission2->name
-        )->assertViewHas(
-            'permissions',
-            Permission::where('name', 'LIKE', "%{$this->permission2->name}%")
-                ->orderBy('created_at', 'DESC')->get()
-        );
     }
 }

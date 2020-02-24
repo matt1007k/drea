@@ -44,7 +44,10 @@ class UsersCanUpdateARoleTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('admin.roles.edit', $this->role))
             ->assertViewIs('admin.roles.edit')
-            ->assertViewHas('role', $this->role)
+            ->assertViewHasAll([
+                'role',
+                'permissions'
+            ])
             ->assertSeeText('Editar rol');
     }
 
@@ -63,7 +66,9 @@ class UsersCanUpdateARoleTest extends TestCase
     public function users_admin_can_update_a_role()
     {
         $response = $this->actingAs($this->user)
-            ->put(route('admin.roles.update', $this->role), $this->formData());
+            ->put(route('admin.roles.update', $this->role), $this->formData([
+                'permissions' => []
+            ]));
 
         $this->assertDatabaseHas('roles', $this->formData());
 

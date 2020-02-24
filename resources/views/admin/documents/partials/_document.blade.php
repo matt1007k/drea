@@ -10,8 +10,9 @@
       <a href="{{ $document->url }}" target="_blank" class="h5">
         {{ $document->titulo }}
       </a>
-      <div class="text-muted mb-2">
-        {{ $document->created_at->format('d M yy') }}
+      <div class="mt-1 mb-3 text-sm text-muted">
+        <i class="mr-1 fa fa-calendar-alt"></i>
+        {{ $document->created_at->format('d F, Y') }}
       </div>
       <p class="text-justify">
         {{ $document->descripcion}}

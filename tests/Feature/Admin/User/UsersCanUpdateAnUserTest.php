@@ -39,7 +39,10 @@ class UsersCanUpdateAnUserTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('admin.users.edit', $this->user2))
             ->assertViewIs('admin.users.edit')
-            ->assertViewHas('user', $this->user2)
+            ->assertViewHasAll([
+                'user',
+                'roles'
+            ])
             ->assertSeeText('Editar usuario');
     }
 
@@ -61,7 +64,6 @@ class UsersCanUpdateAnUserTest extends TestCase
         $response = $this->actingAs($this->user)
             ->put(route('admin.users.update', $this->user2), $this->formData([
                 'roles' => ['admin'],
-                'permissions' => [],
             ]));
 
         $this->assertDatabaseHas('users', $this->formData());

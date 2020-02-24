@@ -41,6 +41,21 @@
 </div>
 @endif
 
+<div class="h4">Lista de Roles</div>
+<div class="form-group">
+  <ul class="list-unstyled">
+    @foreach($roles as $role)
+    <li>
+      <input type="checkbox" id="role-{{ $role->slug }}" name="roles[]" value="{{ $role->slug }}" @foreach ($user->roles
+      as $r_role)
+      @if($r_role->id == $role->id) checked @endif
+      @endforeach>
+      <label class="m-r-30" for="role-{{ $role->slug }}"><em>({{$role->description ?: 'Sin descripción'}})</em></label>
+
+    </li>
+    @endforeach
+  </ul>
+</div>
 <div class="d-flex justify-content-between mt-4">
   <button class="btn btn-success text-uppercase" dusk="btn-registrar">
     {{ $btnText }}

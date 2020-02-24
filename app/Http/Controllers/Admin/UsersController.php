@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\UserCreatedRequest;
 use App\Http\Requests\UserUpdatedRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+use Caffeinated\Shinobi\Models\Role;
 
 class UsersController extends Controller
 {
@@ -35,14 +33,14 @@ class UsersController extends Controller
     public function create()
     {
         $user = new User();
-        return view('admin.users.create', compact('user'));
+        $roles = Role::all();
+        return view('admin.users.create', compact('user', 'roles'));
     }
 
     public function store(UserCreatedRequest $request)
     {
         $user = User::create($request->all());
         $user->syncRoles($request->roles);
-        $user->syncPermissions($request->permissions);
 
         return redirect()->route('admin.users.index')
             ->with('msg', 'El registro se guardó correctamente');
@@ -50,14 +48,15 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(UserUpdatedRequest $request, User $user)
     {
         $user->update($request->all());
-        $user->syncRoles($request->roles);
-        $user->syncPermissions($request->permissions);
+        if (empty($request->get('roles'))) $user->deleteRoles();
+        if ($request->has('roles')) $user->syncRoles($request->roles);
 
         return redirect()->route('admin.users.index')
             ->with('msg', 'El registro se editó correctamente');

@@ -31,7 +31,10 @@ class UsersCanCreateARoleTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('admin.roles.create'))
             ->assertViewIs('admin.roles.create')
-            ->assertViewHas('role', new Role)
+            ->assertViewHasAll([
+                'role',
+                'permissions'
+            ])
             ->assertSeeText('Registrar rol');
     }
 
@@ -50,7 +53,9 @@ class UsersCanCreateARoleTest extends TestCase
     public function users_admin_can_create_a_role()
     {
         $response = $this->actingAs($this->user)
-            ->post(route('admin.roles.store'), $this->formData());
+            ->post(route('admin.roles.store'), $this->formData([
+                'permissions' => []
+            ]));
 
         $this->assertDatabaseHas('roles', $this->formData());
 

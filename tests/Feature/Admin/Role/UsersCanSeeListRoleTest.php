@@ -39,27 +39,8 @@ class UsersCanSeeListRoleTest extends TestCase
 
         $response->assertViewHasAll([
             'roles',
-            'search'
         ])
             ->assertViewIs('admin.roles.index')
             ->assertSee($this->role2->name);
-    }
-
-    /**
-     * @test
-     */
-    public function users_authenticated_can_search_by_fields_on_the_list_post()
-    {
-        $response = $this->actingAs($this->user)
-            ->get("/admin/roles?search={$this->role2->name}");
-
-        $response->assertViewHas(
-            'search',
-            $this->role2->name
-        )->assertViewHas(
-            'roles',
-            Role::where('name', 'LIKE', "%{$this->role2->name}%")
-                ->orderBy('created_at', 'DESC')->get()
-        );
     }
 }

@@ -19,19 +19,8 @@ class PermissionsController extends Controller
 
     public function index()
     {
-        $search = request('search') ? request('search') : '';
-
-        if ($search != '') {
-            $permissions = Permission::where('name', 'LIKE', "%$search%")
-                ->orWhere('slug', 'LIKE', "%$search%")
-                ->orWhere('description', 'LIKE', "%$search%")
-                ->latest()
-                ->get();
-        } else {
-            $permissions = Permission::latest()->get();
-        }
-
-        return view('admin.permissions.index', compact('permissions', 'search'));
+        $permissions = Permission::latest()->get();
+        return view('admin.permissions.index', compact('permissions'));
     }
 
     public function show(Permission $permission)

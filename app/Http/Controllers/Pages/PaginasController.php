@@ -13,7 +13,8 @@ class PaginasController extends Controller
         $menu = Menu::where('ruta', "/$tipo")->first();
         if ($menu) {
             if ($menu->page != null) {
-                return view("pages.index", compact('menu'));
+                $page = $menu->page;
+                return view("pages.index", compact('page'));
             } else {
                 return redirect()->route("pages.{$tipo}");
             }
