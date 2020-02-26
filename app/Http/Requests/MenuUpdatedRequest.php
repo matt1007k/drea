@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class MenuCreatedRequest extends FormRequest
+class MenuUpdatedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +27,7 @@ class MenuCreatedRequest extends FormRequest
         return [
             'titulo' => 'required|string|max:100',
             'ruta' => 'required|string|max:50',
-            'orden' => 'required|integer|unique:menus,orden'
+            'orden' => ['required', 'integer', Rule::unique('menus', 'orden')->ignore($this->route('menu'))]
         ];
     }
 }

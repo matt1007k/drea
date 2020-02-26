@@ -94,11 +94,11 @@ class UsersCanUpdateASubmenuTest extends TestCase
     }
 
     /** @test */
-    public function the_titulo_may_not_be_greater_than_50_characters()
+    public function the_titulo_may_not_be_greater_than_100_characters()
     {
         $this->actingAs($this->user)
             ->put(route('admin.menus.submenus.update', [$this->menu, $this->submenu]), $this->formData([
-                'titulo' => Str::random(51)
+                'titulo' => Str::random(101)
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -121,11 +121,11 @@ class UsersCanUpdateASubmenuTest extends TestCase
     }
 
     /** @test */
-    public function the_ruta_may_not_be_greater_than_20_characters()
+    public function the_ruta_may_not_be_greater_than_50_characters()
     {
         $this->actingAs($this->user)
             ->put(route('admin.menus.submenus.update', [$this->menu, $this->submenu]), $this->formData([
-                'ruta' => Str::random(21)
+                'ruta' => Str::random(51)
             ]))->assertSessionHasErrors(['ruta']);
     }
 
@@ -144,6 +144,16 @@ class UsersCanUpdateASubmenuTest extends TestCase
         $this->actingAs($this->user)
             ->put(route('admin.menus.submenus.update', [$this->menu, $this->submenu]), $this->formData([
                 'orden' => 'd'
+            ]))->assertSessionHasErrors(['orden']);
+    }
+
+    /** @test */
+    public function the_orden_must_be_uniqued()
+    {
+        factory(Submenu::class)->create(['menu_id' => $this->menu->id]);
+        $this->actingAs($this->user)
+            ->put(route('admin.menus.submenus.update', [$this->menu, $this->submenu]), $this->formData([
+                'orden' => 2
             ]))->assertSessionHasErrors(['orden']);
     }
 

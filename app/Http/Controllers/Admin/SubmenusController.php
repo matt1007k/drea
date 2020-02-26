@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Models\Submenu;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmenuCreatedRequest;
+use App\Http\Requests\SubmenuUpdatedRequest;
 
 class SubmenusController extends Controller
 {
@@ -33,7 +34,7 @@ class SubmenusController extends Controller
         return view('admin.submenus.edit', compact('submenu', 'menu'));
     }
 
-    public function update(SubmenuCreatedRequest $request, Menu $menu, Submenu $submenu)
+    public function update(SubmenuUpdatedRequest $request, Menu $menu, Submenu $submenu)
     {
         $submenu->update([
             'titulo' => request('titulo'),

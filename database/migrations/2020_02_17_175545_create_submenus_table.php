@@ -15,8 +15,8 @@ class CreateSubmenusTable extends Migration
     {
         Schema::create('submenus', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('titulo', 50);
-            $table->string('ruta', 20);
+            $table->string('titulo', 100);
+            $table->string('ruta', 50);
             $table->integer('orden')->unique();
             $table->boolean('publicado')->default(false);
 

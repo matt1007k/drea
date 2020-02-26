@@ -48,8 +48,7 @@
       </div>
 
       @forelse ($menu->submenus as $submenu)
-      @include('admin.submenus.partials._submenu', ['column_class' => 'pt-3 col-md-4 rounded-lg
-      bg-white md:ml-3'])
+      @include('admin.submenus.partials._submenu', ['column_class' => 'col-sm-4 mt-3'])
       @empty
       <div class="text-3xl text-red-800">Sin Submenús</div>
       @endforelse

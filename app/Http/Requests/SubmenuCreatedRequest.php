@@ -24,9 +24,9 @@ class SubmenuCreatedRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo' => 'required|string|max:50',
-            'ruta' => 'required|string|max:20',
-            'orden' => 'required|integer'
+            'titulo' => 'required|string|max:100',
+            'ruta' => 'required|string|max:50',
+            'orden' => 'required|integer|unique:submenus,orden'
         ];
     }
 }

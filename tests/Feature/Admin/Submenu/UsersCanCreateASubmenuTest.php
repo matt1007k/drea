@@ -92,11 +92,11 @@ class UsersCanCreateASubmenuTest extends TestCase
     }
 
     /** @test */
-    public function the_titulo_may_not_be_greater_than_50_characters()
+    public function the_titulo_may_not_be_greater_than_100_characters()
     {
         $this->actingAs($this->user)
             ->post(route('admin.menus.submenus.store', $this->menu), $this->formData([
-                'titulo' => Str::random(51)
+                'titulo' => Str::random(101)
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -119,11 +119,11 @@ class UsersCanCreateASubmenuTest extends TestCase
     }
 
     /** @test */
-    public function the_ruta_may_not_be_greater_than_20_characters()
+    public function the_ruta_may_not_be_greater_than_50_characters()
     {
         $this->actingAs($this->user)
             ->post(route('admin.menus.submenus.store', $this->menu), $this->formData([
-                'ruta' => Str::random(21)
+                'ruta' => Str::random(51)
             ]))->assertSessionHasErrors(['ruta']);
     }
 
@@ -142,6 +142,16 @@ class UsersCanCreateASubmenuTest extends TestCase
         $this->actingAs($this->user)
             ->post(route('admin.menus.submenus.store', $this->menu), $this->formData([
                 'orden' => 'd'
+            ]))->assertSessionHasErrors(['orden']);
+    }
+
+    /** @test */
+    public function the_orden_must_be_uniqued()
+    {
+        $menu = factory(Submenu::class)->create(['menu_id' => $this->menu->id]);
+        $this->actingAs($this->user)
+            ->post(route('admin.menus.submenus.store', $this->menu), $this->formData([
+                'orden' => 1
             ]))->assertSessionHasErrors(['orden']);
     }
 

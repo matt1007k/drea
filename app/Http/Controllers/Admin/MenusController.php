@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\MenuCreatedRequest;
+use App\Http\Requests\MenuUpdatedRequest;
 use App\Models\Menu;
 
 class MenusController extends Controller
@@ -55,7 +56,7 @@ class MenusController extends Controller
         return view('admin.menus.edit', compact('menu'));
     }
 
-    public function update(MenuCreatedRequest $request, Menu $menu)
+    public function update(MenuUpdatedRequest $request, Menu $menu)
     {
         $menu->update([
             'titulo' => request('titulo'),

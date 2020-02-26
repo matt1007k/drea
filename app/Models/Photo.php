@@ -15,14 +15,14 @@ class Photo extends Model
 
     public function getFechaFormatAttribute()
     {
-        return $this->fecha->format('d M yy');
+        return $this->fecha->format('d F, Y');
     }
 
     public function pathImage()
     {
         return Storage::disk('public')->exists($this->imagen)
-                ? Storage::url($this->imagen)
-                : "";
+            ? Storage::url($this->imagen)
+            : "";
     }
 
     public function getImagenUpdated()
@@ -48,7 +48,8 @@ class Photo extends Model
         });
     }
 
-    public function scopePublished($query){
+    public function scopePublished($query)
+    {
         return $query->where('publicado', true);
     }
 

@@ -90,11 +90,11 @@ class UsersCanCreateAMenuTest extends TestCase
     }
 
     /** @test */
-    public function the_titulo_may_not_be_greater_than_50_characters()
+    public function the_titulo_may_not_be_greater_than_100_characters()
     {
         $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
-                'titulo' => Str::random(51)
+                'titulo' => Str::random(101)
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -117,11 +117,11 @@ class UsersCanCreateAMenuTest extends TestCase
     }
 
     /** @test */
-    public function the_ruta_may_not_be_greater_than_20_characters()
+    public function the_ruta_may_not_be_greater_than_50_characters()
     {
         $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
-                'ruta' => Str::random(21)
+                'ruta' => Str::random(51)
             ]))->assertSessionHasErrors(['ruta']);
     }
 
@@ -140,6 +140,16 @@ class UsersCanCreateAMenuTest extends TestCase
         $this->actingAs($this->user)
             ->post(route('admin.menus.store'), $this->formData([
                 'orden' => 'd'
+            ]))->assertSessionHasErrors(['orden']);
+    }
+
+    /** @test */
+    public function the_orden_must_be_uniqued()
+    {
+        factory(Menu::class)->create();
+        $this->actingAs($this->user)
+            ->post(route('admin.menus.store'), $this->formData([
+                'orden' => 1
             ]))->assertSessionHasErrors(['orden']);
     }
 

@@ -14,7 +14,7 @@ class Slideshow extends Model
 
     public function getFechaFormatAttribute()
     {
-        return $this->fecha->format('d M yy');
+        return $this->fecha->format('d F, Y');
     }
 
     public function getImagenUpdated()
