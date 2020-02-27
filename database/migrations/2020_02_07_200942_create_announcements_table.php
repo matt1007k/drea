@@ -15,7 +15,7 @@ class CreateAnnouncementsTable extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('titulo', 200);
+            $table->string('titulo', 400);
             $table->string('numero', 10);
             $table->timestamp('fecha');
             $table->enum('estado', ['en proceso', 'cancelado', 'finalizado', 'desierto'])->default('en proceso');
