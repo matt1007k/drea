@@ -2,13 +2,11 @@
 
 namespace Tests\Feature\Admin\Announcement;
 
-use Tests\TestCase;
 use App\Models\Announcement;
-use App\Models\AnnouncementGroup;
 use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class UsersCanUpdateAnAnnouncementTest extends TestCase
 {
@@ -45,7 +43,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
             ->get(route('admin.announcements.edit', Announcement::first()))
             ->assertViewHasAll([
                 'announcement',
-                'grupos'
+                'grupos',
             ])
             ->assertViewIs('admin.announcements.edit');
     }
@@ -80,7 +78,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
-                'titulo' => ''
+                'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -89,7 +87,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
-                'grupo_id' => ''
+                'grupo_id' => '',
             ]))->assertSessionHasErrors(['grupo_id']);
     }
 
@@ -98,16 +96,16 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
-                'titulo' => 1212
+                'titulo' => 1212,
             ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
-    public function the_titulo_may_not_be_greater_than_200_characters()
+    public function the_titulo_may_not_be_greater_than_400_characters()
     {
         $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
-                'titulo' => Str::random(201)
+                'titulo' => Str::random(401),
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -116,7 +114,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
-                'numero' => ''
+                'numero' => '',
             ]))->assertSessionHasErrors(['numero']);
     }
 
@@ -125,7 +123,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
-                'fecha' => ''
+                'fecha' => '',
             ]))->assertSessionHasErrors(['fecha']);
     }
 
@@ -134,7 +132,7 @@ class UsersCanUpdateAnAnnouncementTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.announcements.update', Announcement::first()), $this->formData([
-                'estado' => ''
+                'estado' => '',
             ]))->assertSessionHasErrors(['estado']);
     }
 

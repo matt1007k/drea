@@ -3443,12 +3443,346 @@ class AnnouncementLinksTableSeeder extends Seeder
             'announcement_id' => 109,
         ]);
 
-        // Announcement 109
-        // AnnouncementLink::create([
-        //     'titulo' => '',
-        //     'url' => '/documentos/2018/CAS/',
-        //     'fecha' => formatDatetimeToDB(''),
-        //     'announcement_id' => 109,
-        // ]);
+        // Announcement 110
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas01/cas_001_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('06/02/2020 07:34 AM'),
+            'announcement_id' => 110,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADO DE EVALUACIÓN DE HOJA DE VIDA',
+            'url' => '/documentos/2020/cas/cas01/cas_001_2020_rhv.pdf',
+            'fecha' => formatDatetimeToDB('04/02/2020 10:29 AM'),
+            'announcement_id' => 110,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas01/cas_001_2020_c2.pdf',
+            'fecha' => formatDatetimeToDB('28/01/2020 03:52 PM'),
+            'announcement_id' => 110,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas01/cas_001_2020_c.pdf',
+            'fecha' => formatDatetimeToDB('27/01/2020 05:45 PM'),
+            'announcement_id' => 110,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas01/cas_001_2020.pdf',
+            'fecha' => formatDatetimeToDB('13/01/2020 09:16 AM'),
+            'announcement_id' => 110,
+        ]);
+
+        // Announcement 111
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas02/cas_002_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('19/02/2020 12:16 PM'),
+            'announcement_id' => 111,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas02/cas_002_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('13/02/2020 05:55 PM'),
+            'announcement_id' => 111,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas02/cas_002_2020.pdf',
+            'fecha' => formatDatetimeToDB('24/01/2020 10:12 AM'),
+            'announcement_id' => 111,
+        ]);
+
+        // Announcement 112
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas03/cas_003_2020_rf.pd',
+            'fecha' => formatDatetimeToDB('12/02/2020 06:02 PM'),
+            'announcement_id' => 112,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas03/cas_003_2020_comunicado.pdf',
+            'fecha' => formatDatetimeToDB('11/02/2020 05:48 PM'),
+            'announcement_id' => 112,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas03/cas_003_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('07/02/2020 05:35 PM'),
+            'announcement_id' => 112,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas03/cas_003_2020.pdf',
+            'fecha' => formatDatetimeToDB('23/01/2020 03:53 PM'),
+            'announcement_id' => 112,
+        ]);
+
+        // Announcement 113
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas04/cas_004_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('12/02/2020 06:06 PM'),
+            'announcement_id' => 113,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas04/cas_004_2020_comunicado.pdf',
+            'fecha' => formatDatetimeToDB('11/02/2020 05:48 PM'),
+            'announcement_id' => 113,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas04/cas_004_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('07/02/2020 05:37 PM'),
+            'announcement_id' => 113,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas04/cas_004_2020.pdf',
+            'fecha' => formatDatetimeToDB('23/01/2020 03:56 PM'),
+            'announcement_id' => 113,
+        ]);
+
+        // Announcement 114
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas05/cas_005_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('21/02/2020 04:27 PM'),
+            'announcement_id' => 114,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas05/cas_005_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('17/02/2020 06:26 PM'),
+            'announcement_id' => 114,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas05/cas_005_2020.pdf',
+            'fecha' => formatDatetimeToDB('04/02/2020 12:05 PM'),
+            'announcement_id' => 114,
+        ]);
+
+        // Announcement 115
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas06/cas_006_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('17/02/2020 07:10 PM'),
+            'announcement_id' => 115,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS DE RECLAMOS',
+            'url' => '/documentos/2020/cas/cas06/cas_006_2020_rc.pdf',
+            'fecha' => formatDatetimeToDB('14/02/2020 05:42 PM'),
+            'announcement_id' => 115,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA LA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas06/cas_006_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('14/02/2020 08:18 AM'),
+            'announcement_id' => 115,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas06/cas_006_2020_c.pdf',
+            'fecha' => formatDatetimeToDB('11/02/2020 08:05 PM'),
+            'announcement_id' => 115,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'FE DE ERRATAS',
+            'url' => '/documentos/2020/cas/cas06/cas_006_2020_f-e.pdf',
+            'fecha' => formatDatetimeToDB('07/02/2020 09:40 AM'),
+            'announcement_id' => 115,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas06/cas_006_2020.pdf',
+            'fecha' => formatDatetimeToDB('23/01/2020 04:51 PM'),
+            'announcement_id' => 115,
+        ]);
+
+        // Announcement 116
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas07/cas_007_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('21/02/2020 04:31 PM'),
+            'announcement_id' => 116,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas07/cas_007_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('17/02/2020 06:26 PM'),
+            'announcement_id' => 116,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas07/cas_007_2020.pdf',
+            'fecha' => formatDatetimeToDB('04/02/2020 12:07 PM'),
+            'announcement_id' => 116,
+        ]);
+
+        // Announcement 117
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas08/cas_008_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('26/02/2020 08:14 AM'),
+            'announcement_id' => 117,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'RECLAMOS',
+            'url' => '/documentos/2020/cas/cas08/cas_008_2020_reclamos.pdf',
+            'fecha' => formatDatetimeToDB('24/02/2020 01:32 PM'),
+            'announcement_id' => 117,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas08/cas_008_2020_c.pdf',
+            'fecha' => formatDatetimeToDB('24/02/2020 11:46 AM'),
+            'announcement_id' => 117,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA LA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas08/cas_008_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('24/02/2020 10:37 AM'),
+            'announcement_id' => 117,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas08/cas_008_2020.pdf',
+            'fecha' => formatDatetimeToDB('05/02/2020 08:59 AM'),
+            'announcement_id' => 117,
+        ]);
+
+        // Announcement 118
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas09/cas_009_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('26/02/2020 08:14 AM'),
+            'announcement_id' => 118,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas09/cas_009_2020_c.pdf',
+            'fecha' => formatDatetimeToDB('24/02/2020 11:49 AM'),
+            'announcement_id' => 118,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas09/cas_009_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('21/02/2020 04:32 PM'),
+            'announcement_id' => 118,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'FE DE ERRATAS',
+            'url' => '/documentos/2020/cas/cas09/cas_009_2020_f-e.pdf',
+            'fecha' => formatDatetimeToDB('21/02/2020 01:00 PM'),
+            'announcement_id' => 118,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas09/cas_009_2020.pdf',
+            'fecha' => formatDatetimeToDB('06/02/2020 10:14 AM'),
+            'announcement_id' => 118,
+        ]);
+
+        // Announcement 119
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas10/cas_010_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('26/02/2020 08:15 AM'),
+            'announcement_id' => 119,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas10/cas_010_2020_c.pdf',
+            'fecha' => formatDatetimeToDB('24/02/2020 11:49 AM'),
+            'announcement_id' => 119,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/documentos/2020/cas/cas10/cas_010_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('21/02/2020 06:36 PM'),
+            'announcement_id' => 119,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas10/cas_010_2020.pdf',
+            'fecha' => formatDatetimeToDB('05/02/2020 09:00 AM'),
+            'announcement_id' => 119,
+        ]);
+
+        // Announcement 120
+        AnnouncementLink::create([
+            'titulo' => 'FE DE ERRATAS',
+            'url' => '/documentos/2020/cas/cas11/cas_011_2020_f-e.pdf',
+            'fecha' => formatDatetimeToDB('20/02/2020 12:56 PM'),
+            'announcement_id' => 120,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas11/cas_011_2020.pdf',
+            'fecha' => formatDatetimeToDB('12/02/2020 08:21 AM'),
+            'announcement_id' => 120,
+        ]);
+
+        // Announcement 121
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS FINALES',
+            'url' => '/documentos/2020/cas/cas12/cas_012_2020_rf.pdf',
+            'fecha' => formatDatetimeToDB('26/02/2020 09:47 AM'),
+            'announcement_id' => 121,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'RESULTADOS EVALUACIÓN TIC',
+            'url' => '/documentos/2020/cas/cas12/cas_012_2020_tic.pdf',
+            'fecha' => formatDatetimeToDB('25/02/2020 11:21 AM'),
+            'announcement_id' => 121,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'COMUNICADO',
+            'url' => '/documentos/2020/cas/cas12/cas_012_2020_c.pdf',
+            'fecha' => formatDatetimeToDB('24/02/2020 12:59 PM'),
+            'announcement_id' => 121,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'APTOS PARA EVALUACIÓN DE CAPACIDADES',
+            'url' => '/ckeditor_assets/attachments/692/cas_012_2020_aec.pdf',
+            'fecha' => formatDatetimeToDB('21/02/2020 08:00 PM'),
+            'announcement_id' => 121,
+        ]);
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas12/cas_012_2020.pdf',
+            'fecha' => formatDatetimeToDB('05/02/2020 05:53 PM'),
+            'announcement_id' => 121,
+        ]);
+
+        // Announcement 122
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas13/cas_013_2020.pdf',
+            'fecha' => formatDatetimeToDB('20/02/2020 10:27 AM'),
+            'announcement_id' => 122,
+        ]);
+
+        // Announcement 123
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas14/cas_014_2020.pdf',
+            'fecha' => formatDatetimeToDB('27/02/2020 05:39 PM'),
+            'announcement_id' => 123,
+        ]);
+
+        // Announcement 124
+        AnnouncementLink::create([
+            'titulo' => 'PRIMERA CONVOCATORIA',
+            'url' => '/documentos/2020/cas/cas15/cas_015_2020.pdf',
+            'fecha' => formatDatetimeToDB('27/02/2020 05:39 PM'),
+            'announcement_id' => 124,
+        ]);
     }
 }

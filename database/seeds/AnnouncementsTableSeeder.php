@@ -786,12 +786,110 @@ class AnnouncementsTableSeeder extends Seeder
         ]);
 
         // Grupo 4 2020
-        // Announcement::create([
-        //     'titulo' => '',
-        //     'numero' => '07',
-        //     'fecha' => formatDatetimeToDB(''),
-        //     'estado' => 'finalizado',
-        //     'grupo_id' => 4,
-        // ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) ABOGADO PARA LA OFICINA DE ASESORÍA JURÍDICA DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN AYACUCHO',
+            'numero' => '001',
+            'fecha' => formatDatetimeToDB('13/01/2020 09:14 AM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) PROFESIONAL PARA DESEMPEÑAR EL CARGO Y FUNCIONES DE RESPONSABLE DE LA UNIDAD FORMULADORA DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO',
+            'numero' => '002',
+            'fecha' => formatDatetimeToDB('24/01/2020 10:11 AM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) RESPONSABLE DEL ÁREA DE ABASTECIMIENTOS Y SERVICIOS AUXILIARES DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN AYACUCHO',
+            'numero' => '003',
+            'fecha' => formatDatetimeToDB('23/01/2020 03:51 PM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) ESPECIALISTA EN CONTRATACIONES DEL ESTADO PARA EL ÁREA DE ABASTECIMIENTOS Y SERVICIOS AUXILIARES DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO',
+            'numero' => '004',
+            'fecha' => formatDatetimeToDB('23/01/2020 03:54 PM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE TRES (03) VIGILANTES PARA LABORAR EN EL INSTITUTO DE EDUCACIÓN SUPERIOR PEDAGÓGICA PÚBLICA REVALIDADO "PUQUIO" DE LA PROVINCIA DE LUCANAS, DISTRITO DE PUQUIO',
+            'numero' => '005',
+            'fecha' => formatDatetimeToDB('04/02/2020 11:59 AM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE SIETE (07) COORDINADORES LOCALES PARA EL PROGRAMA PRESUPUESTAL 0068 - REDUCCIÓN DE LAS VULNERABILIDADES Y ATENCIÓN DE EMERGENCIAS POR DESASTRES DE LA DRE AYACUCHO',
+            'numero' => '006',
+            'fecha' => formatDatetimeToDB('23/01/2020 04:46 PM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) VIGILANTE PARA LABORAR EN EL INSTITUTO DE EDUCACIÓN SUPERIOR PEDAGÓGICA PÚBLICA REVALIDADO "NUESTRA SEÑORA DE LOURDES" DE LA PROVINCIA DE HUAMANGA, DISTRITO DE AYACUCHO',
+            'numero' => '007',
+            'fecha' => formatDatetimeToDB('04/02/2020 12:05 PM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) COORDINADOR (A) REGIONAL DE CALIDAD DE LA INFORMACIÓN EN EL MARCO DEL PROGRAMA PRESUPUESTAL N° 0090 LOGROS DE APRENDIZAJE DE LOS ESTUDIANTES DE EDUCACIÓN BASICA REGULAR - PELA',
+            'numero' => '008',
+            'fecha' => formatDatetimeToDB('05/02/2020 08:53 AM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) ESPECIALISTA DE CONVIVENCIA ESCOLAR REGIONAL PARA LA DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO',
+            'numero' => '009',
+            'fecha' => formatDatetimeToDB('06/02/2020 10:13 AM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) GESTOR(A) REGIONAL EN EL MARCO DEL PROGRAMA PRESUPUESTAL N° 0090 LOGROS DE APRENDIZAJE DE LOS ESTUDIANTES DE EDUCACIÓN BÁSICA REGULAR - PELA',
+            'numero' => '010',
+            'fecha' => formatDatetimeToDB('05/02/2020 08:54 AM'),
+            'estado' => 'finalizado',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) INGENIERO/ARQUITECTO PARA LA DIRECCIÓN DE GESTIÓN INSTITUCIONAL DE DRE AYACUCHO',
+            'numero' => '011',
+            'fecha' => formatDatetimeToDB('12/02/2020 08:18 AM'),
+            'estado' => 'en proceso',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) INGENIERO PARA LA UNIDAD FORMULADORA DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO',
+            'numero' => '012',
+            'fecha' => formatDatetimeToDB('05/02/2020 05:51 PM'),
+            'estado' => 'en proceso',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) COORDINADOR(A) TÉCNICO REGIONAL PARA EL PP 051 PTCD, DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO',
+            'numero' => '013',
+            'fecha' => formatDatetimeToDB('20/02/2020 10:26 AM'),
+            'estado' => 'en proceso',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) ESPECIALISTA EN PROYECTOS DE INVERSIÓN DE LA UNIDAD FORMULADORA DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO',
+            'numero' => '014',
+            'fecha' => formatDatetimeToDB('27/02/2020 05:37 PM'),
+            'estado' => 'en proceso',
+            'grupo_id' => 4,
+        ]);
+        Announcement::create([
+            'titulo' => 'CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN (01) SECRETARIO TECNICO PARA LA SECRETARÍA TÉCNICA DE LOS ÓRGANOS INSTRUCTORES DEL PROCEDIMIENTO ADMINISTRATIVO DISCIPLINARIO DE LA DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO',
+            'numero' => '015',
+            'fecha' => formatDatetimeToDB('27/02/2020 05:38 PM'),
+            'estado' => 'en proceso',
+            'grupo_id' => 4,
+        ]);
     }
 }

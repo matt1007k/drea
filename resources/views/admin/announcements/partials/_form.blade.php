@@ -98,7 +98,7 @@
         {{$announcement->fecha->format('Y')}}, 
         {{$announcement->fecha->format('m') - 1 }}, 
         {{$announcement->fecha->format('d')}}, 
-        {{$announcement->fecha->format('h')}}, 
+        {{$announcement->fecha->format('H')}}, 
         {{$announcement->fecha->format('i')}}, 
         {{$announcement->fecha->format('s')}}
       ),

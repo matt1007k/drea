@@ -24,11 +24,11 @@ class AnnouncementCreatedRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo' => 'required|string|max:200',
+            'titulo' => 'required|string|max:400',
             'numero' => 'required|max:10',
             'fecha' => 'required',
             'estado' => 'required',
-            'grupo_id' => 'required'
+            'grupo_id' => 'required',
         ];
     }
 }
