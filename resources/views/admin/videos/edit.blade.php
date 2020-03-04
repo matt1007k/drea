@@ -2,23 +2,31 @@
 
 @section('title', 'Editar video')
 
-@section('breadcrumb')
-<nav aria-label="breadcrumb" class="mb-5">
-  <ol class="breadcrumb bg-white py-2 px-2">
+@section('content-header')
+<div class="mi-content-header">
+  <div class="mi-card m-b-0">
+    <div class="mi-card-header bg-green">
+      <div class="mi-title">
+        <i class="mi mi-icon_edit"></i>
+        <span>Editar vídeo</span>
+      </div>
+    </div>
+  </div>
+  <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
     <li class="breadcrumb-item"><a href="{{ route('admin.videos.index') }}">Lista de videos</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Editar video</li>
+    <li class="breadcrumb-item active" aria-current="page">Editar vídeo</li>
   </ol>
-</nav>
+</div>
 @endsection
 
 @section('content')
 <div class="container">
   <div class="row">
-    <div class="col-md-6 mx-auto">
-      <div class="card">
-        <div class="card-body">
-          <div class="h3 form-header bg-custom-primary text-white text-center">Editar video</div>
+    <div class="col-md-12 mx-auto">
+      <div class="mi-card">
+        <div class="mi-card-content">
+          {{-- <div class="h3 form-header bg-custom-primary text-white text-center">Editar video</div> --}}
           <form action="{{ route('admin.videos.update', $video) }}" method="POST">
             @method('PUT')
             @include('admin.videos.partials._form', ['btnText' => 'Editar'])

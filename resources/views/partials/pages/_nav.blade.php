@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-custom-primary shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-custom-primary shadow-sm sticky-top ">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <img height="64px" class="mr-1" src="{{ asset('img/drea/logo.png') }}" alt="Logo DREA">
+            <img height="54px" class="mr-1" src="{{ asset('img/drea/logo.png') }}" alt="Logo DREA">
             <span class="font-weight-bold">
                 <div>DIRECCIÓN REGIONAL DE</div>
                 EDUCACIÓN DE AYACUCHO
@@ -20,32 +20,30 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Inicio</a>
-                </li>
+                @foreach ($menus as $menu)
+                {{-- @if (!empty($menu->submenus))
                 <li class="nav-item dropdown">
                     <a id="dropdownInst" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" v-pre>
-                        La Institución
-                    </a>
+                        aria-haspopup="true" aria-expanded="false">
+                        {{ $menu->titulo }}
+                </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownInst">
-                        <a class="dropdown-item" href="{{ url('/nosotros') }}">
-                            Nosotros
-                        </a>
-                        <a class="dropdown-item" href="{{ url('/organigrama') }}">
-                            Organigrama
-                        </a>
-                        <a class="dropdown-item" href="{{ url('/directorio-institucional') }}">
-                            Directorio Institucional
-                        </a>
-                        <a class="dropdown-item" href="{{ url('/superior') }}">
-                            Superior
-                        </a>
-                    </div>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownInst">
+                    @foreach ($menu->submenus as $submenu)
+                    <a class="dropdown-item" href="{{ url($submenu->ruta) }}">
+                        {{ $submenu->titulo }}
+                    </a>
+                    @endforeach
+                </div>
                 </li>
+                @else--}}
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url($menu->ruta) }}">{{ $menu->titulo }}</a>
+                </li>
+                {{-- @endif --}}
+
+                @endforeach
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ url('/unidades-gestion') }}">Unidades de Gestión</a>
                 </li>
                 <li class="nav-item">
@@ -56,7 +54,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/galeria') }}">Galeria de Fotos</a>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

@@ -27,8 +27,14 @@ class Announcement extends Model
     public function scopeByGroup($query, $group)
     {
         return $query->whereHas('grupo', function ($q) use ($group) {
-            $q->where('nombre', 'LIKE', "%$group%");
+            $q->where('nombre', 'LIKE', "%$group%")
+                ->orWhere('anio', 'LIKE', "%$group%");
         });
+    }
+
+    public function scopeNewest($query)
+    {
+        return $query->orderBy('fecha', 'DESC');
     }
 
     public function scopeSearch($query, $search)

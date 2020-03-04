@@ -1,22 +1,26 @@
 @csrf
 
-<div class="md-form">
-  <label for="nombre">Nombre</label>
-  <input type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror "
-    value="{{ old('nombre', $announcement_group->nombre) }}" autocomplete="nombre" autofocus>
+<div class="form-group">
+  <div class="mi-input @error('nombre') mi-error @enderror">
+    <label for="nombre" class="mi-input-label">Nombre</label>
+    <input type="text" name="nombre" id="nombre" class="form-control "
+      value="{{ old('nombre', $announcement_group->nombre) }}" autocomplete="nombre" autofocus>
+  </div>
   @error('nombre')
-  <div class="invalid-feedback" dusk="error-nombre">
+  <div class="error" dusk="error-nombre">
     {{ $message }}
   </div>
   @enderror
 </div>
 
-<div class="md-form">
-  <label for="anio">Año</label>
-  <input type="text" name="anio" id="anio" class="form-control @error('anio') is-invalid @enderror "
-    value="{{ old('anio', $announcement_group->anio) }}" autocomplete="anio" autofocus>
+<div class="form-group">
+  <div class="mi-input @error('nombre') mi-error @enderror">
+    <label for="nombre" class="mi-input-label">Año</label>
+    <input type="text" name="anio" id="anio" class="form-control" value="{{ old('anio', $announcement_group->anio) }}"
+      autocomplete="anio" autofocus>
+  </div>
   @error('anio')
-  <div class="invalid-feedback" dusk="error-anio">
+  <div class="error" dusk="error-anio">
     {{ $message }}
   </div>
   @enderror
@@ -37,11 +41,11 @@
 
 
 <div class="d-flex justify-content-between mt-4">
-  <button class="btn btn-success" dusk="btn-registrar">
+  <button class="btn btn-success text-uppercase" dusk="btn-registrar">
     {{ $btnText }}
     <i class="fa fa-check ml-1"></i>
   </button>
-  <a href="{{ route('admin.announcement_groups.index') }} " class="btn btn-danger">
+  <a href="{{ route('admin.announcement_groups.index') }} " class="btn btn-danger text-uppercase">
     Cancelar
     <i class="fa fa-ban ml-1"></i>
   </a>

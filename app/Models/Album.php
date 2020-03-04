@@ -52,8 +52,8 @@ class Album extends Model
     public function pathImage()
     {
         return Storage::disk('public')->exists($this->imagen)
-            ? Storage::url($this->imagen)
-            : "";
+        ? Storage::url($this->imagen)
+        : "";
     }
 
     public function pathPage()

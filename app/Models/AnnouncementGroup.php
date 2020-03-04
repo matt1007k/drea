@@ -14,6 +14,11 @@ class AnnouncementGroup extends Model
             ->orWhere('anio', 'LIKE', "%$search%");
     }
 
+    public function scopeYear($query, $year)
+    {
+        return $query->where('anio', $year);
+    }
+
     public function convocatorias()
     {
         return $this->hasMany(Announcement::class, 'grupo_id');

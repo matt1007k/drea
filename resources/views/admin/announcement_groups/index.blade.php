@@ -2,34 +2,41 @@
 
 @section('title', 'Lista de grupos de convocatorias')
 
-@section('breadcrumb')
-<nav aria-label="breadcrumb" class="mb-2">
-  <ol class="px-2 py-2 bg-white breadcrumb">
+@section('content-header')
+<div class="mi-content-header">
+  <div class="mi-card m-b-0">
+    <div class="mi-card-header bg-green">
+      <div class="mi-title">
+        <i class="mi mi-icon_list"></i>
+        <span>Lista de grupos de convocatorias</span>
+      </div>
+    </div>
+  </div>
+  <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
     <li class="breadcrumb-item active" aria-current="page">Lista de grupos de convocatorias</li>
   </ol>
-</nav>
+</div>
 @endsection
 
 @section('content')
-<div class="mb-4 container-fluid">
+<div class="mb-4">
 
   <section>
 
     @include('admin.announcement_groups.partials._form-search')
-    <div class="card card-cascade narrower z-depth-1">
+    <div class="mi-card">
 
       <!-- Card image -->
-      <div
-        class="py-2 mx-4 mb-3 view view-cascade gradient-card-header blue-gradient narrower d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center">
 
-        <div class="mx-3 h4 white-text">Lista de grupos de convocatorias</div>
+        {{-- <div class="mx-3 h4 white-text">Lista de grupos de convocatorias</div> --}}
 
-        <div>
+        <div class="p-6">
           <a href="{{ route('admin.announcement_groups.create') }}"
-            class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"
-            data-placement="bottom" title="Registrar grupos de convocatoria">
+            class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mt-0 fas fa-plus"></i>
+            Registrar grupo
           </a>
         </div>
 
@@ -60,21 +67,19 @@
               <tr>
                 <td class="text-center font-weight-bold">{{ $announcement_group->id }}</td>
                 <td>{{ $announcement_group->nombre }}</td>
-                <td>{{ $announcement_group->anio }}</td>
+                <td class="text-center">{{ $announcement_group->anio }}</td>
                 <td></td>
                 <td>
-                  <a href="{{ route('admin.announcement_groups.show', $announcement_group) }}" class="px-2 btn btn-outline-dark btn-rounded
-                  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                  <a href="{{ route('admin.announcement_groups.show', $announcement_group) }}"
+                    class="px-2 btn btn-light btn-sm" data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
                   <a href="{{ route('admin.announcement_groups.edit', $announcement_group) }}"
-                    class="px-2 btn btn-outline-info btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Editar registro">
+                    class="px-2 btn btn-info btn-sm" data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
                   <button type="button" onclick="onDelete({{ $announcement_group->id }})"
-                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Eliminar registro">
+                    class="px-2 btn btn-danger btn-sm" data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
                   <form action="{{ route('admin.announcement_groups.destroy', $announcement_group) }}" method="POST">
@@ -140,9 +145,9 @@
   $('.dataTables_length').addClass('bs-select');
 
   function onDelete(id) {
-      Swal.fire({
+      swal({
           title: 'Estás seguro de eliminar el registro?',
-          icon: 'warning',
+          type: 'warning',
           showCloseButton: true,
           showCancelButton: true,
           confirmButtonColor: "#3085d6",

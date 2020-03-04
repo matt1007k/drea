@@ -32,7 +32,7 @@
 
         {{-- <div class="mx-3 h4 white-text">Lista de avisos</div> --}}
 
-        <div>
+        <div class="p-6">
           <a href="{{ route('admin.posts.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mr-2 fas fa-plus"></i>
             Registrar aviso

@@ -1,22 +1,26 @@
 @csrf
 
-<div class="md-form">
-  <label for="titulo">Titulo</label>
-  <input type="text" name="titulo" id="titulo" class="form-control @error('titulo') is-invalid @enderror "
-    value="{{ old('titulo', $video->titulo) }}" autocomplete="titulo" autofocus>
+<div class="form-group">
+  <div class="mi-input @error('titulo') mi-error @enderror">
+    <label for="titulo" class="mi-input-label">Titulo</label>
+    <input type="text" name="titulo" id="titulo" class="form-control" value="{{ old('titulo', $video->titulo) }}"
+      autocomplete="titulo" autofocus>
+  </div>
   @error('titulo')
-  <div class="invalid-feedback" dusk="error-titulo">
+  <div class="error" dusk="error-titulo">
     {{ $message }}
   </div>
   @enderror
 </div>
 
-<div class="md-form">
-  <label for="video">Video</label>
-  <input type="text" name="video" id="video" class="form-control @error('video') is-invalid @enderror "
-    value="{{ old('video', $video->video) }}" autocomplete="video" autofocus>
+<div class="form-group">
+  <div class="mi-input @error('video') mi-error @enderror">
+    <label for="video" class="mi-input-label">Video</label>
+    <input type="text" name="video" id="video" class="form-control @error('video') is-invalid @enderror "
+      value="{{ old('video', $video->video) }}" autocomplete="video" autofocus>
+  </div>
   @error('video')
-  <div class="invalid-feedback" dusk="error-video">
+  <div class="error" dusk="error-video">
     {{ $message }}
   </div>
   @enderror
@@ -34,8 +38,8 @@
 </div>
 
 <h6 class="mb-0">Publicado</h6>
-<div class="md-form mt-0">
-  <div class="switch">
+<div class="form-group mt-0">
+  <div class="mi-switch">
     <label>
       No
       <input type="checkbox" name="publicado" @if(old('publicado', $video->publicado) == 1) checked
@@ -45,36 +49,37 @@
     </label>
   </div>
 </div>
-<br>
-
-
 
 <div class="d-flex justify-content-between mt-4">
-  <button class="btn btn-success" dusk="btn-registrar">
+  <button class="btn btn-success text-uppercase" dusk="btn-registrar">
     {{ $btnText }}
     <i class="fa fa-check ml-1"></i>
   </button>
-  <a href="{{ route('admin.videos.index') }} " class="btn btn-danger">
+  <a href="{{ route('admin.videos.index') }} " class="btn btn-danger text-uppercase">
     Cancelar
     <i class="fa fa-ban ml-1"></i>
   </a>
 </div>
 
 @push('scripts')
+<script src="https://kendo.cdn.telerik.com/2019.2.514/js/cultures/kendo.culture.es-ES.min.js"></script>
 <script>
   // Data Picker Initialization
-    $('.datepicker').pickadate({
-      max: new Date(),
-      monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
-      weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-      weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Ju', 'Vie', 'Sab'],
-      // Buttons
-      today: 'Hoy',
-      clear: 'Limpiar',
-      close: 'Cerrar',
-      // Formats
-      formatSubmit: 'dd/mm/yyyy'
-    });
+  $('#fecha').kendoDateTimePicker({
+      culture: "es-ES",
+      // dateInput: true,
+      timeFormat: "HH:mm",
+      format: "dd-MM-yyyy HH:mm tt",
+      value: new Date(
+        {{$video->fecha->format('Y')}}, 
+        {{$video->fecha->format('m') - 1 }}, 
+        {{$video->fecha->format('d')}}, 
+        {{$video->fecha->format('H')}}, 
+        {{$video->fecha->format('i')}}, 
+        {{$video->fecha->format('s')}}
+      ),
+      min: new Date(2010, 1, 1, 8, 0, 0),
+      max: new Date()
+  });
 </script>
 @endpush

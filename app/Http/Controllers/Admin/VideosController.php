@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Video;
 use App\Http\Requests\VideoCreatedRequest;
+use App\Models\Video;
+use Carbon\Carbon;
 
 class VideosController extends Controller
 {
@@ -34,7 +34,7 @@ class VideosController extends Controller
 
     public function create()
     {
-        $video = new Video();
+        $video = new Video(['fecha' => now()]);
         return view('admin.videos.create', compact('video'));
     }
 

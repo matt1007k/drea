@@ -36,6 +36,18 @@
   border-color: #767171 !important;
 }
 
+.text-custom-success {
+  color: #14e082;
+}
+
+.bg-custom-success {
+  background: #14e082;
+}
+
+.border-custom-success {
+  border-color: #14e082 !important;
+}
+
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

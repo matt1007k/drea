@@ -45,11 +45,10 @@ class PhotosController extends Controller
 
     public function create()
     {
-        $photo = new Photo();
+        $photo = new Photo(['fecha' => now()]);
         $albums = Album::orderBy('titulo', 'ASC')->get();
         return view('admin.photos.create', compact('photo', 'albums'));
     }
-
 
     public function store(PhotoCreatedRequest $request)
     {
@@ -64,7 +63,6 @@ class PhotosController extends Controller
         return redirect()->route('admin.photos.index')
             ->with('msg', 'El registro se guardó correctamente');
     }
-
 
     public function show(Photo $photo)
     {
@@ -90,7 +88,6 @@ class PhotosController extends Controller
         return redirect()->route('admin.photos.index')
             ->with('msg', 'El registro se editó correctamente');
     }
-
 
     public function destroy(Photo $photo)
     {

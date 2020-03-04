@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Album;
+use App\Models\Menu;
 use App\Models\Post;
 use App\Observers\AlbumObserver;
 use App\Observers\PostObserver;
+use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Carbon::setlocale(config('app.locale'));
+        setlocale(LC_ALL, "es_ES");
+
+        view()->composer('partials.pages._nav', function ($view) {
+            $menus = Menu::published()->order('ASC')->get();
+            $view->with('menus', $menus);
+        });
+
         /**
          * Paginate a standard Laravel Collection.
          *

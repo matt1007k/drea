@@ -1,19 +1,17 @@
 <!-- Top Table UI -->
-<div class="card p-2 mb-5">
+<div class="p-2 mb-4 bg-white">
   <form action="{{ route('admin.photos.index') }}" method="GET">
 
     <!-- Grid row -->
-    <div class="row">
+    <div class="flex flex-wrap md:items-end">
 
       <!-- Grid column -->
-      <div class="col-lg-3 col-md-12 d-flex align-items-center">
+      <div class="flex items-end justify-between w-full md:w-1/4">
 
         <!-- Name -->
-        <div class="d-block">
-          <label for="album-doc" class="mb-0 ml-2">Filtrar por álbum</label>
-          <select name="album"
-            class="mdb-select colorful-select dropdown-primary mx-2 mt-0 md-form md-dropdown initialized"
-            id="album-doc">
+        <div class="w-full block">
+          <label for="album-doc" class="mb-0">Filtrar por álbum</label>
+          <select name="album" class="w-full form-control" id="album-doc">
             <option value="todos" @if($album=='todos' ) selected @endif>Todos</option>
 
             @foreach ($albums as $albumdb)
@@ -23,22 +21,24 @@
 
           </select>
         </div>
-        <a href="{{ route('admin.albums.index') }}" class="btn btn-primary btn-rounded btn-sm px-4"
-          dusk="btn-list-album" data-toggle="tooltip" data-placement="bottom" title="Lista de álbumes">
-          <i class="fas fa-plus mt-0"></i>
-        </a>
+        <div class="ml-2">
+          <a href="{{ route('admin.types.create') }}" class="rl-2 btn btn-primary btn-sm" dusk="btn-create-type"
+            data-balloon-pos="down" aria-label="Lista de álbumes">
+            <i class="mt-0 fas fa-list"></i>
+          </a>
+        </div>
 
       </div>
       <!-- Grid column -->
 
 
       <!-- Grid column -->
-      <div class="col-lg col-md-12">
+      <div class="w-full md:w-3/4">
 
-        <div class="d-flex md-form mt-2 ml-2">
+        <div class="flex ml-2 md-form">
           <input class="form-control" type="text" name="search" placeholder="Buscar"
             value="{{ $search ? $search : old('search') }}">
-          <button type="submit" class="btn btn-sm btn-primary ml-2 px-2 waves-effect waves-light"><i
+          <button type="submit" class="px-2 ml-2 btn btn-sm btn-primary waves-effect waves-light"><i
               class="fas fa-search"></i>
           </button>
         </div>

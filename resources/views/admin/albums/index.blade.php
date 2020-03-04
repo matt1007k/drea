@@ -2,34 +2,40 @@
 
 @section('title', 'Lista de álbumes')
 
-@section('breadcrumb')
-<nav aria-label="breadcrumb" class="mb-2">
-  <ol class="px-2 py-2 bg-white breadcrumb">
+@section('content-header')
+<div class="mi-content-header">
+  <div class="mi-card m-b-0">
+    <div class="mi-card-header bg-green">
+      <div class="mi-title">
+        <i class="mi mi-icon_list"></i>
+        <span>Lista de álbumes</span>
+      </div>
+    </div>
+  </div>
+  <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
     <li class="breadcrumb-item active" aria-current="page">Lista de álbumes</li>
   </ol>
-</nav>
+</div>
 @endsection
 
 @section('content')
-<div class="mb-4 container-fluid">
+<div class="mb-4 ">
 
   <section>
 
     @include('admin.albums.partials._form-search')
-    <div class="card card-cascade narrower z-depth-1">
+    <div class="mi-card">
 
       <!-- Card image -->
-      <div
-        class="py-2 mx-4 mb-3 view view-cascade gradient-card-header blue-gradient narrower d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center">
 
-        <div class="mx-3 h4 white-text">Lista de álbumes</div>
+        {{-- <div class="mx-3 h4 white-text">Lista de álbumes</div> --}}
 
-        <div>
-          <a href="{{ route('admin.albums.create') }}"
-            class="px-2 btn btn-outline-white btn-rounded btn-sm waves-effect waves-light" data-toggle="tooltip"
-            data-placement="bottom" title="Registrar álbum">
+        <div class="p-6">
+          <a href="{{ route('admin.albums.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mt-0 fas fa-plus"></i>
+            Registrar álbum
           </a>
         </div>
 
@@ -69,19 +75,16 @@
                   @include('admin.albums.partials._publicado')
                 </td>
                 <td>
-                  <a href="{{ $album->pathAdmin() }}" class="px-2 btn
-                  btn-outline-dark btn-rounded
-                                   btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ver registro">
+                  <a href="{{ $album->pathAdmin() }}" class="px-2 btn btn-light btn-sm" data-balloon-pos="down"
+                    aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('admin.albums.edit', $album) }}" class="px-2 btn
-                  btn-outline-info btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Editar registro">
+                  <a href="{{ route('admin.albums.edit', $album) }}" class="px-2 btn btn-info btn-sm"
+                    data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  <button type="button" onclick="onDelete({{ $album->id }})"
-                    class="px-2 btn btn-outline-danger btn-rounded btn-sm" data-toggle="tooltip" data-placement="bottom"
-                    title="Eliminar registro">
+                  <button type="button" onclick="onDelete({{ $album->id }})" class="px-2 btn btn-danger btn-sm"
+                    data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
                   <form action="{{ route('admin.albums.destroy', $album) }}" method="POST">
