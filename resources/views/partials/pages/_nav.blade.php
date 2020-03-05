@@ -21,26 +21,26 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 @foreach ($menus as $menu)
-                {{-- @if (!empty($menu->submenus))
+                @if ($menu->submenus->count() > 0)
                 <li class="nav-item dropdown">
                     <a id="dropdownInst" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         {{ $menu->titulo }}
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownInst">
-                    @foreach ($menu->submenus as $submenu)
-                    <a class="dropdown-item" href="{{ url($submenu->ruta) }}">
-                        {{ $submenu->titulo }}
                     </a>
-                    @endforeach
-                </div>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownInst">
+                        @foreach ($menu->submenus as $submenu)
+                        <a class="dropdown-item" href="{{ url($submenu->ruta) }}">
+                            {{ $submenu->titulo }}
+                        </a>
+                        @endforeach
+                    </div>
                 </li>
-                @else--}}
+                @else
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url($menu->ruta) }}">{{ $menu->titulo }}</a>
                 </li>
-                {{-- @endif --}}
+                @endif
 
                 @endforeach
                 {{-- <li class="nav-item">

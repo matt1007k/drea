@@ -38,7 +38,7 @@ final, puede postular a otra Convocatoria CAS.")
           <div class="h3 mt-4 mb-3 text-custom-primary text-center">Convocatorias</div>
 
           @foreach ($announcements as $announcement)
-          <div class="content mb-4 px-sm-4 py-3 ">
+          <div class="content px-sm-4 py-3 ">
             <div class="d-flex justify-content-between align-items-center">
               <div class="h4 text-custom-primary">{{ $announcement->numero }}</div>
               @include('admin.announcements.partials._estado')
@@ -48,6 +48,7 @@ final, puede postular a otra Convocatoria CAS.")
               {{ $announcement->fecha_format }}
             </div>
             <p>{{ $announcement->titulo }}</p>
+            @if ($announcement->links->count() > 0)
             <p class="mt-2">
               <strong>Archivos:</strong>
               <i class="fa fa-paperclip text-info ml-2"></i>
@@ -63,10 +64,11 @@ final, puede postular a otra Convocatoria CAS.")
                 @endforeach
               </ol>
             </div>
+            @endif
           </div>
           @endforeach
           <div class="d-flex justify-content-center">
-            {{ $announcements->links() }}
+            {{-- {{ $announcements->links() }} --}}
           </div>
 
         </div>
@@ -82,7 +84,7 @@ final, puede postular a otra Convocatoria CAS.")
   filter.addEventListener('change', function(ev){
     ev.preventDefault();
     var anio = ev.target.value;
-    window.location.href = '/convocatorias?a=' + anio; 
+    window.location.href = '/' + '{{ request()->path() }}' + '?a=' + anio; 
   });
 </script>
 @endpush

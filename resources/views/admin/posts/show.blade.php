@@ -25,7 +25,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md">
-      <div class="bg-white p-6 mx-4 shadow-lg">
+      <div class="p-6 mx-4 bg-white shadow-lg">
         @include('admin.posts.partials._aviso')
       </div>
       <a href="{{ route('admin.posts.index')}}" class="btn btn-link">

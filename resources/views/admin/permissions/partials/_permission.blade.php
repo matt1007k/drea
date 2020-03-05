@@ -3,7 +3,7 @@
 
     <div class="h3 text-custom-primary">{{ $permission->name }}</div>
 
-    <div>@include('admin.permissions.partials._slug')</div>
+    <div class="mb-4">@include('admin.permissions.partials._slug')</div>
 
     <div class="w-sm-100">
       {{ $permission->description }}

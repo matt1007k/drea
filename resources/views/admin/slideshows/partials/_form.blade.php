@@ -89,7 +89,7 @@
         {{$slideshow->fecha->format('Y')}}, 
         {{$slideshow->fecha->format('m') - 1 }}, 
         {{$slideshow->fecha->format('d')}}, 
-        {{$slideshow->fecha->format('h')}}, 
+        {{$slideshow->fecha->format('H')}}, 
         {{$slideshow->fecha->format('i')}}, 
         {{$slideshow->fecha->format('s')}}
       ),

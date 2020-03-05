@@ -3,7 +3,7 @@
 
     <div class="h3 text-custom-primary">{{ $role->name }}</div>
 
-    <div>@include('admin.roles.partials._slug')</div>
+    <div class="mb-4">@include('admin.roles.partials._slug')</div>
 
     <div class="w-sm-100">
       {{ $role->description }}

@@ -40,6 +40,7 @@ class Announcement extends Model
     public function scopeSearch($query, $search)
     {
         return $query->where('titulo', 'LIKE', "%$search%")
-            ->orWhere('numero', 'LIKE', "%$search%");
+            ->orWhere('numero', 'LIKE', "%$search%")
+            ->orWhere('estado', 'LIKE', "%$search%");
     }
 }

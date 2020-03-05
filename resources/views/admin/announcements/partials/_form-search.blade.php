@@ -36,10 +36,9 @@
     <div class="w-full md:w-3/4">
 
       <div class="flex ml-2 md-form">
-        <input class="mt-2 form-control" type="text" name="search" placeholder="Buscar"
+        <input class="form-control" type="text" name="search" placeholder="Buscar"
           value="{{ $search ? $search : old('search') }}">
-        <button type="submit" class="px-2 ml-2 btn btn-sm btn-primary waves-effect waves-light"><i
-            class="fas fa-search"></i>
+        <button type="submit" class="ml-2 btn btn-sm btn-primary waves-effect waves-light"><i class="fas fa-search"></i>
         </button>
       </div>
     </div>

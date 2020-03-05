@@ -3,7 +3,8 @@
 
     <div class="h3 text-custom-primary">{{ $slideshow->titulo }}</div>
 
-    <div class="text-muted mb-2">
+    <div class="text-muted mb-3 flex items-center">
+      <i class="mi mi-icon_date_range mr-2 text-gray-500"></i>
       {{ $slideshow->fecha_format }}
     </div>
 

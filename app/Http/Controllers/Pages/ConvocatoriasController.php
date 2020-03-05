@@ -12,7 +12,7 @@ class ConvocatoriasController extends Controller
     {
         $anio = request('a') ? request('a') : (String) date('Y');
         $announcement_group = AnnouncementGroup::year($anio)->first();
-        $announcements = $announcement_group->convocatorias()->newest()->paginate(10);
+        $announcements = $announcement_group->convocatorias()->newest()->get();
         $anios = $yearsService->getYearsLatest();
 
         return view('pages.convocatorias.index', compact(

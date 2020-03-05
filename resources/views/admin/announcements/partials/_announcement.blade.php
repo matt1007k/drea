@@ -5,7 +5,8 @@
     <div class="content">
       <div class="h4">{{ $announcement->titulo }} </div>
 
-      <div class="text-muted mb-2">
+      <div class="text-muted mb-3 flex items-center">
+        <i class="mi mi-icon_date_range mr-2 text-gray-500"></i>
         {{ $announcement->fecha_format }}
       </div>
       <p class="text-justify mb-2">

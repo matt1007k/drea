@@ -3,7 +3,8 @@
   <div class="rounded-lg bg-white py-5 px-4 mb-2">
     <div class="h5 text-gray-800">{{ $link->titulo }} </div>
 
-    <div class="text-muted mb-2">
+    <div class="text-muted mb-3 flex items-center">
+      <i class="mi mi-icon_date_range mr-2 text-gray-500"></i>
       {{ $link->fecha->format('d/m/Y') }}
     </div>
     <p class="text-justify mb-2">
