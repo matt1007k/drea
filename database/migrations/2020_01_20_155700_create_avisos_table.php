@@ -19,6 +19,7 @@ class CreateAvisosTable extends Migration
             $table->string('titulo', 100);
             $table->text('contenido');
             $table->timestamp('fecha');
+            $table->boolean('publicado')->default(false);
             $table->timestamps();
         });
     }

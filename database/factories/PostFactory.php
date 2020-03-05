@@ -11,5 +11,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'titulo' => $faker->sentence,
         'fecha' => now()->subDays(rand(1, 20)),
         'contenido' => "<h1>$faker->sentence</h1><img src='$imageUrl' class='w-sm-100'/><p>$faker->paragraph</p>",
+        'publicado' => true,
     ];
 });

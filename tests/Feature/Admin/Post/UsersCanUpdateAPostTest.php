@@ -2,27 +2,21 @@
 
 namespace Tests\Feature\Admin\Post;
 
-use Tests\TestCase;
 use App\Models\Post;
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class UsersCanUpdateAPostTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $post;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
 
-        $this->user = factory(User::class)->create();
         $this->post = factory(Post::class)->create();
     }
 
@@ -61,10 +55,6 @@ class UsersCanUpdateAPostTest extends TestCase
      */
     public function users_admin_can_update_a_post()
     {
-        $this->withoutExceptionHandling();
-        $this->user = factory(User::class)->create();
-        $this->post = factory(Post::class)->create($this->formData());
-
         $response = $this->actingAs($this->user)
             ->put(route('admin.posts.update', $this->post), $this->formData());
 
@@ -79,7 +69,7 @@ class UsersCanUpdateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.posts.update', $this->post), $this->formData([
-                'titulo' => ''
+                'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -88,7 +78,7 @@ class UsersCanUpdateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.posts.update', $this->post), $this->formData([
-                'titulo' => 121
+                'titulo' => 121,
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -97,7 +87,7 @@ class UsersCanUpdateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.posts.update', $this->post), $this->formData([
-                'titulo' => Str::random(101)
+                'titulo' => Str::random(101),
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -106,7 +96,7 @@ class UsersCanUpdateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.posts.update', $this->post), $this->formData([
-                'contenido' => ''
+                'contenido' => '',
             ]))->assertSessionHasErrors(['contenido']);
     }
 
@@ -115,7 +105,7 @@ class UsersCanUpdateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.posts.update', $this->post), $this->formData([
-                'fecha' => ''
+                'fecha' => '',
             ]))->assertSessionHasErrors(['fecha']);
     }
 
@@ -125,7 +115,8 @@ class UsersCanUpdateAPostTest extends TestCase
         return array_merge([
             'titulo' => 'Mi primer aviso',
             'contenido' => '<h1>Mi primer descripcion</h1>',
-            'fecha' => '2019-12-31 00:00:00'
+            'fecha' => '2019-12-31 00:00:00',
+            'publicado' => true,
         ], $override);
     }
 }

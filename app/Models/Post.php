@@ -9,7 +9,7 @@ class Post extends Model
     protected $table = 'avisos';
     protected $guarded = [];
     protected $dates = [
-        'fecha'
+        'fecha',
     ];
 
     public function getFechaFormatAttribute()
@@ -36,6 +36,11 @@ class Post extends Model
     public function pathAdmin()
     {
         return route('admin.posts.show', $this->slug);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('publicado', true);
     }
 
     public function scopeSearch($query, $search)

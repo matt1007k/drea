@@ -2,27 +2,14 @@
 
 namespace Tests\Feature\Admin\Post;
 
-use Tests\TestCase;
 use App\Models\Post;
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class UsersCanCreateAPostTest extends TestCase
 {
     use RefreshDatabase;
-
-    protected $user;
-    protected $pathLogin;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->pathLogin = '/auth/login';
-
-        $this->user = factory(User::class)->create();
-    }
 
     /**
      * @test
@@ -73,7 +60,7 @@ class UsersCanCreateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.posts.store'), $this->formData([
-                'titulo' => ''
+                'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -82,7 +69,7 @@ class UsersCanCreateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.posts.store'), $this->formData([
-                'titulo' => 121
+                'titulo' => 121,
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -91,7 +78,7 @@ class UsersCanCreateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.posts.store'), $this->formData([
-                'titulo' => Str::random(101)
+                'titulo' => Str::random(101),
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -100,7 +87,7 @@ class UsersCanCreateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.posts.store'), $this->formData([
-                'contenido' => ''
+                'contenido' => '',
             ]))->assertSessionHasErrors(['contenido']);
     }
 
@@ -109,7 +96,7 @@ class UsersCanCreateAPostTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.posts.store'), $this->formData([
-                'fecha' => ''
+                'fecha' => '',
             ]))->assertSessionHasErrors(['fecha']);
     }
 
@@ -121,7 +108,8 @@ class UsersCanCreateAPostTest extends TestCase
             'titulo' => 'Mi primer aviso',
             'contenido' => '<h1>Mi primer descripcion</h1>',
             // 'fecha_submit' => '31/12/2019',
-            'fecha' => '2019-12-31 00:00:00'
+            'fecha' => '2019-12-31 00:00:00',
+            'publicado' => true,
         ], $override);
     }
 }

@@ -85,7 +85,7 @@
       </li>
       <li class="mi-menu-toggle" data-mi-color="col-teal">
         <a href="javascript:void(0);">
-          <i class="mi mi-icon_border_top"></i>
+          <i class="mi mi-icon_insert_drive_file"></i>
           <span>Documentos</span>
         </a>
         <ul class="mi-menu-sub">
@@ -95,6 +95,21 @@
           <li class="{{ request()->is('admin/documents') ? 'active' : '' }}">
             <a href="{{ route('admin.documents.create') }}">Registrar documento</a>
           </li>
+        </ul>
+      </li>
+      <li class="mi-menu-toggle" data-mi-color="col-teal">
+        <a href="javascript:void(0);">
+          <i class="mi mi-icon_speaker_notes"></i>
+          <span>Anuncios</span>
+        </a>
+        <ul class="mi-menu-sub">
+          <li class="{{ request()->is('admin/ads') ? 'active' : '' }}">
+            <a href="{{ route('admin.ads.index') }}">Lista de anuncios</a>
+          </li>
+          <li class="{{ request()->is('admin/ads/create') ? 'active' : '' }}">
+            <a href="{{ route('admin.ads.create') }}">Registrar anuncio</a>
+          </li>
+
         </ul>
       </li>
       <li class="header">CONVOCATORIAS</li>
@@ -201,112 +216,8 @@
           </li>
         </ul>
       </li>
-      <li class="mi-menu-toggle" data-mi-color="col-light-blue">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_view_compact"></i>
-          <span>Forms & Cards</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li>
-            <a href="forms_cards/cards.html">Card Types</a>
-          </li>
 
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-orange">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_assessment"></i>
-          <span>Charts</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="mi-menu-toggle">
-            <a href="javascript:void(0);">
-              <span>Bar Charts</span>
-            </a>
-            <ul class="mi-menu-sub">
-              <li>
-                <a href="charts/bar/vertical.html">Vertical</a>
-              </li>
 
-            </ul>
-          </li>
-          <li class="mi-menu-toggle">
-            <a href="javascript:void(0);">
-              <span>Line Charts</span>
-            </a>
-            <ul class="mi-menu-sub">
-              <li>
-                <a href="charts/line/basic.html">Basic</a>
-              </li>
-
-            </ul>
-          </li>
-          <li class="mi-menu-toggle">
-            <a href="javascript:void(0);">
-              <span>Area Charts</span>
-            </a>
-            <ul class="mi-menu-sub">
-              <li>
-                <a href="charts/area/boundaries.html">Boundaries</a>
-              </li>
-
-            </ul>
-          </li>
-          <li class="mi-menu-toggle">
-            <a href="javascript:void(0);">
-              <span>Other Charts</span>
-            </a>
-            <ul class="mi-menu-sub">
-              <li>
-                <a href="charts/other/scatter.html">Scatter</a>
-              </li>
-
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-green">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_extension"></i>
-          <span>Components</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li>
-            <a href="components/modals.html">Modals</a>
-          </li>
-
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-black">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_view_column"></i>
-          <span>QRCode &amp; Barcode</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li>
-            <a href="qrcode_barcode/qrcode.html">QRCode</a>
-          </li>
-
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-teal">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_wifi_tethering"></i>
-          <span>Gauges</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li>
-            <a href="gauges/radial_gauges.html">Radial Gauges</a>
-          </li>
-
-        </ul>
-      </li>
-      <li data-mi-color="col-deep-orange">
-        <a href="snippets/google_maps.html">
-          <i class="mi mi-icon_map"></i>
-          <span>Google Maps</span>
-        </a>
-      </li>
       <li class="header">SEGURIDAD</li>
       <li class="mi-menu-toggle" data-mi-color="col-purple">
         <a href="javascript:void(0);">
@@ -353,18 +264,7 @@
 
         </ul>
       </li>
-      <li data-mi-color="col-indigo"><a href="snippets/timeline.html"><i
-            class="mi mi-icon_timeline"></i><span>Timeline</span></a></li>
-      <li data-mi-color="col-blue-grey"><a href="snippets/search.html"> <i class="mi mi-icon_search"></i>
-          <span>Search</span></a></li>
-      <li data-mi-color="col-teal"><a href="snippets/faq.html"> <i class="mi mi-icon_help"></i> <span>FAQ</span></a>
-      </li>
-      <li data-mi-color="col-red"><a href="snippets/error_page.html"> <i class="mi mi-icon_error"></i> <span>Error
-            Page</span></a></li>
-      <li data-mi-color="col-green"><a href="snippets/pricing_table.html"> <i class="mi mi-icon_local_atm"></i>
-          <span>Pricing Tables</span></a></li>
-      <li data-mi-color="col-purple"><a href="snippets/invoice.html"> <i class="mi mi-icon_print"></i>
-          <span>Invoice</span></a></li>
+
     </ul>
   </div>
   <!-- ============================================================== -->

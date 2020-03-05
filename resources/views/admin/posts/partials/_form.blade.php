@@ -26,6 +26,18 @@
   @enderror
 </div>
 
+<h6 class="mb-0">Publicado</h6>
+<div class="form-group mt-0">
+  <div class="mi-switch">
+    <label>
+      No
+      <input type="checkbox" name="publicado" @if(old('publicado', $post->publicado) == 1) checked
+      @endif
+      >
+      <span class="lever"></span> Si
+    </label>
+  </div>
+</div>
 
 <div class="form-group mb-5">
   <label for="contenido">Contenido</label>

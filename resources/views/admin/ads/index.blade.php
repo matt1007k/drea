@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de avisos')
+@section('title', 'Lista de anuncios')
 
 @section('content-header')
 <div class="mi-content-header">
@@ -8,34 +8,34 @@
     <div class="mi-card-header bg-green">
       <div class="mi-title">
         <i class="mi mi-icon_list"></i>
-        <span>Lista de avisos</span>
+        <span>Lista de anuncios</span>
       </div>
     </div>
   </div>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Lista de avisos</li>
+    <li class="breadcrumb-item active" aria-current="page">Lista de anuncios</li>
   </ol>
 </div>
 @endsection
 
 @section('content')
-<div class="mb-4">
+<div class="mb-4 ">
 
   <section>
 
-    @include('admin.posts.partials._form-search')
+    {{-- @include('admin.ads.partials._form-search') --}}
     <div class="mi-card">
 
       <!-- Card image -->
-      <div class="flex justify-between align-center">
+      <div class="d-flex justify-content-between align-items-center">
 
-        {{-- <div class="mx-3 h4 white-text">Lista de avisos</div> --}}
+        {{-- <div class="mx-3 h4 white-text">Lista de anuncios</div> --}}
 
         <div class="p-6">
-          <a href="{{ route('admin.posts.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
-            <i class="mr-2 fas fa-plus"></i>
-            Registrar aviso
+          <a href="{{ route('admin.ads.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
+            <i class="mt-0 fas fa-plus"></i>
+            Registrar anuncio
           </a>
         </div>
 
@@ -46,15 +46,16 @@
 
         <div class="">
           <!-- Table -->
-          <table id="postsTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
+          <table id="adsTable" class="table table-responsive table-striped table-bordered table-sm" width="100%">
 
             <!-- Table head -->
             <thead>
               <tr>
-                <th class="text-center th-lg font-weight-bold">#</th>
-                <th class="text-center th-lg font-weight-bold">Titulo</th>
-                <th class="text-center th-lg font-weight-bold">Fecha</th>
-                <th class="text-center th-lg font-weight-bold">Publicado</th>
+                <th class="th-lg text-center font-weight-bold">#</th>
+                <th class="th-lg text-center font-weight-bold">Imagen</th>
+                <th class="th-lg text-center font-weight-bold">Titulo</th>
+                <th class="th-lg text-center font-weight-bold">Url</th>
+                <th class="th-lg text-center font-weight-bold">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -62,29 +63,32 @@
 
             <!-- Table body -->
             <tbody>
-              @foreach ($posts as $post)
+              @foreach ($ads as $ad)
               <tr>
-                <td class="text-center font-weight-bold">{{ $post->id }}</td>
-                <td>{{ $post->titulo }}</td>
-                <td>{{ $post->fecha_format }}</td>
-                <td class="text-center">@include('admin.posts.partials._publicado')</td>
+                <td class="text-center font-weight-bold">{{ $ad->id }}</td>
+                <td><img src="{{ $ad->pathimage() }}" alt="{{ $ad->titulo }}" width="100"></td>
+                <td>{{ $ad->titulo }}</td>
+                <td>{{ $ad->url }}</td>
+                <td class="text-center">
+                  @include('admin.ads.partials._publicado')
+                </td>
                 <td>
-                  <a href="{{ route('admin.posts.show', $post) }}" class="px-2 btn btn-light btn-sm"
-                    data-balloon-pos="down" aria-label="Ver registro">
+                  <a href="{{ route('admin.ads.show', $ad) }}" class="px-2 btn btn-light btn-sm" data-balloon-pos="down"
+                    aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('admin.posts.edit', $post) }}" class="px-2 btn btn-info btn-sm"
-                    data-balloon-pos="down" aria-label="Editar registro">
+                  <a href="{{ route('admin.ads.edit', $ad) }}" class="px-2 btn btn-info btn-sm" data-balloon-pos="down"
+                    aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
-                  <button type="button" onclick="onDelete({{ $post->id }})" class="px-2 btn btn-danger btn-sm"
+                  <button type="button" onclick="onDelete({{ $ad->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
                   </button>
-                  <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
+                  <form action="{{ route('admin.ads.destroy', $ad) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="none" id="btn-delete-{{ $post->id }}"></button>
+                    <button type="submit" id="btn-delete-{{ $ad->id }}"></button>
                   </form>
                 </td>
               </tr>
@@ -107,16 +111,14 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('/css/datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/datatables-select.min.css') }}">
-
 @endpush
 
 @push('scripts')
 <script src="{{ asset('/js/datatables.min.js') }}"></script>
 <script src="{{ asset('/js/datatables-select.min.js') }}"></script>
 <script>
-  $('#postsTable').DataTable({
-    "sort":  [[ 3, "asc" ]],
-    "searching": false,
+  $('#adsTable').DataTable({
+    "sort":  [[ 1, "asc" ]],
     language: {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -125,7 +127,7 @@
         "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
         "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
+        "sInfoadFix":    "",
         "sSearch":         "Buscar:",
         "sUrl":            "",
         "sInfoThousands":  ",",
@@ -143,11 +145,11 @@
     }
   });
   $('.dataTables_length').addClass('bs-select');
-   
+
   function onDelete(id) {
-      swal({
+      Swal.fire({
           title: 'Estás seguro de eliminar el registro?',
-          type: 'warning',
+          icon: 'warning',
           showCloseButton: true,
           showCancelButton: true,
           confirmButtonColor: "#3085d6",

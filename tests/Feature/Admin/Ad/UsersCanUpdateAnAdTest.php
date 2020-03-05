@@ -9,44 +9,53 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-class UsersCanCreateAnAdTest extends TestCase
+class UsersCanUpdateAnAdTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $ad;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->ad = factory(Ad::class)->create();
+    }
+
     /**
      * @test
      */
-    public function guest_cannot_see_form_create_an_ad()
+    public function guest_cannot_see_form_edit_an_ad()
     {
-        $this->get(route('admin.ads.create'))
+        $this->get(route('admin.ads.edit', $this->ad))
             ->assertRedirect($this->pathLogin);
     }
 
     /**
      * @test
      */
-    public function users_admin_can_see_page_create_an_ad()
+    public function users_admin_can_see_page_edit_an_ad()
     {
         $this->actingAs($this->user)
-            ->get(route('admin.ads.create'))
-            ->assertViewIs('admin.ads.create')
-            ->assertViewHas('ad', new Ad())
-            ->assertSeeText('Registrar anuncio');
+            ->get(route('admin.ads.edit', $this->ad))
+            ->assertViewIs('admin.ads.edit')
+            ->assertViewHas('ad', $this->ad)
+            ->assertSeeText('Editar anuncio');
     }
 
     /**
      * @test
      */
-    public function guest_users_cannot_create_an_ad()
+    public function guest_users_cannot_update_an_ad()
     {
-        $this->post(route('admin.ads.store'), $this->formData())
+        $this->put(route('admin.ads.update', $this->ad), $this->formData())
             ->assertRedirect($this->pathLogin);
     }
 
     /**
      * @test
      */
-    public function users_admin_can_create_an_ad()
+    public function users_admin_can_update_an_ad()
     {
         Storage::fake('ads');
 
@@ -54,25 +63,25 @@ class UsersCanCreateAnAdTest extends TestCase
         $image_url = 'ads/' . $image->hashName();
 
         $response = $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
+            ->put(route('admin.ads.update', $this->ad), $this->formData([
                 'imagen' => $image,
             ]));
 
-        // Assert the file was stored...
+        // Assert the file was updated...
         Storage::disk('public')->assertExists($image_url);
         $this->assertDatabaseHas('ads', $this->formData([
             'imagen' => $image_url,
         ]));
 
         $response->assertRedirect(route('admin.ads.index'))
-            ->assertSessionHas('msg', 'El registro se guardó correctamente');
+            ->assertSessionHas('msg', 'El registro se editó correctamente');
     }
 
     /** @test */
     public function the_titulo_is_required()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
+            ->put(route('admin.ads.update', $this->ad), $this->formData([
                 'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -81,7 +90,7 @@ class UsersCanCreateAnAdTest extends TestCase
     public function the_titulo_must_be_a_string()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
+            ->put(route('admin.ads.update', $this->ad), $this->formData([
                 'titulo' => 121,
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -90,7 +99,7 @@ class UsersCanCreateAnAdTest extends TestCase
     public function the_titulo_may_not_be_greater_than_100_characters()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
+            ->put(route('admin.ads.update', $this->ad), $this->formData([
                 'titulo' => Str::random(101),
             ]))->assertSessionHasErrors(['titulo']);
     }
@@ -99,7 +108,7 @@ class UsersCanCreateAnAdTest extends TestCase
     public function the_url_is_required()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
+            ->put(route('admin.ads.update', $this->ad), $this->formData([
                 'url' => '',
             ]))->assertSessionHasErrors(['url']);
     }
@@ -108,7 +117,7 @@ class UsersCanCreateAnAdTest extends TestCase
     public function the_url_must_be_a_string()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
+            ->put(route('admin.ads.update', $this->ad), $this->formData([
                 'url' => 121,
             ]))->assertSessionHasErrors(['url']);
     }
@@ -117,18 +126,9 @@ class UsersCanCreateAnAdTest extends TestCase
     public function the_url_may_not_be_greater_than_250_characters()
     {
         $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
+            ->put(route('admin.ads.update', $this->ad), $this->formData([
                 'url' => Str::random(251),
             ]))->assertSessionHasErrors(['url']);
-    }
-
-    /** @test */
-    public function the_imagen_is_required()
-    {
-        $this->actingAs($this->user)
-            ->post(route('admin.ads.store'), $this->formData([
-                'imagen' => '',
-            ]))->assertSessionHasErrors(['imagen']);
     }
 
     /** data send for user */

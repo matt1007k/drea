@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Post;
 use App\Http\Requests\PostCreatedRequest;
+use App\Models\Post;
+use Carbon\Carbon;
 
 class PostsController extends Controller
 {
@@ -30,7 +30,7 @@ class PostsController extends Controller
     public function create()
     {
         $post = new Post([
-            'fecha' => Carbon::now()
+            'fecha' => Carbon::now(),
         ]);
         return view('admin.posts.create', compact('post'));
     }
@@ -41,6 +41,7 @@ class PostsController extends Controller
             'titulo' => request('titulo'),
             'contenido' => request('contenido'),
             'fecha' => Carbon::parse(request('fecha')),
+            'publicado' => request('publicado') ? true : false,
         ]);
         return redirect()->route('admin.posts.index')
             ->with('msg', 'El registro se guardó correctamente');
@@ -63,6 +64,7 @@ class PostsController extends Controller
             'titulo' => request('titulo'),
             'contenido' => request('contenido'),
             'fecha' => Carbon::parse((string) request('fecha')),
+            'publicado' => request('publicado') ? true : false,
         ]);
         return redirect()->route('admin.posts.index')
             ->with('msg', 'El registro se editó correctamente');
