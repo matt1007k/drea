@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Models\Album;
 use App\Models\Menu;
 use App\Models\Post;
+use App\Models\Slideshow;
 use App\Observers\AlbumObserver;
 use App\Observers\PostObserver;
+use App\Observers\SlideshowObserver;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -66,5 +68,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Register observer album
         Album::observe(AlbumObserver::class);
+
+        // Register observer slideshow
+        Slideshow::observe(SlideshowObserver::class);
     }
 }

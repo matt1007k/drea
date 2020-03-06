@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Slideshow;
 use App\Http\Requests\SlideshowCreatedRequest;
 use App\Http\Requests\SlideshowUpdatedRequest;
+use App\Models\Slideshow;
+use Carbon\Carbon;
 
 class SlideshowsController extends Controller
 {
@@ -14,9 +14,9 @@ class SlideshowsController extends Controller
         $search = request('search') ? request('search') : '';
 
         if ($search != '') {
-            $slideshows = Slideshow::search($search)->orderBy('fecha', 'DESC')->get();
+            $slideshows = Slideshow::search($search)->orderLatestDate()->get();
         } else {
-            $slideshows = Slideshow::orderBy('fecha', 'DESC')->get();
+            $slideshows = Slideshow::orderLatestDate()->get();
         }
 
         return view(
@@ -38,7 +38,6 @@ class SlideshowsController extends Controller
     {
         Slideshow::create([
             'titulo' => request('titulo'),
-            'descripcion' => request('descripcion'),
             'imagen' => request()->file('imagen')->store('slideshows', 'public'),
             'fecha' => Carbon::parse(request('fecha')),
             'publicado' => request('publicado') ? true : false,
@@ -62,7 +61,6 @@ class SlideshowsController extends Controller
     {
         $slideshow->update([
             'titulo' => request('titulo'),
-            'descripcion' => request('descripcion'),
             'imagen' => $slideshow->getImagenUpdated(),
             'fecha' => Carbon::parse(request('fecha')),
             'publicado' => request('publicado') ? true : false,

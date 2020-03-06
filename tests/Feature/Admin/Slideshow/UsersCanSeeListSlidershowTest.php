@@ -2,26 +2,21 @@
 
 namespace Tests\Feature\Admin\menu;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Slideshow;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UsersCanSeeListSlideshowTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $slideshow2;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
 
-        $this->user = factory(User::class)->create();
         $slideshow1 = factory(Slideshow::class)->create(['created_at' => now()->subDays(1)]);
         $this->slideshow2 = factory(Slideshow::class)->create(['titulo' => 'slideshow']);
     }
@@ -43,7 +38,7 @@ class UsersCanSeeListSlideshowTest extends TestCase
 
         $response->assertViewHasAll([
             'slideshows',
-            'search'
+            'search',
         ])
             ->assertViewIs('admin.slideshows.index')
             ->assertSee($this->slideshow2->titulo);
@@ -62,7 +57,7 @@ class UsersCanSeeListSlideshowTest extends TestCase
             $this->slideshow2->titulo
         )->assertViewHas(
             'slideshows',
-            Slideshow::search($this->slideshow2->titulo)->orderBy('fecha', 'DESC')->get()
+            Slideshow::search($this->slideshow2->titulo)->orderLatestDate()->get()
         );
     }
 }

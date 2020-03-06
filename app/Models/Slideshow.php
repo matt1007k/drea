@@ -38,11 +38,16 @@ class Slideshow extends Model
             ->orWhere('descripcion', 'LIKE', "%$search%");
     }
 
+    public function scopeOrderLatestDate($query)
+    {
+        return $query->orderBy('fecha', 'DESC');
+    }
+
     public function pathImage()
     {
         return Storage::disk('public')->exists($this->imagen)
-            ? Storage::url($this->imagen)
-            : "";
+        ? Storage::url($this->imagen)
+        : "";
     }
 
     public function deleteStorageImage()

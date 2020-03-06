@@ -3,17 +3,28 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
-use App\Models\Document;
+use App\Models\Ad;
+use App\Models\ExternalLink;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\Slideshow;
+use App\Models\TypeDocument;
 
 class InicioController extends Controller
 {
     public function index()
     {
-        $avisos = Post::orderBy('fecha', 'DESC')->paginate(10);
-        $documentos_interes = Document::latest()->limit(2)->byTipo('Documentos de interés')->get();
-        $documentos_resoluciones = Document::latest()->limit(2)->byTipo('Resoluciones')->get();
-        return view('pages.inicio.index', compact('avisos', 'documentos_interes', 'documentos_resoluciones'));
+        $avisos = Post::orderLatestDate()->published()->paginate(10);
+        $anuncios = Ad::latest()->published()->get();
+        $tipoDocumentos = TypeDocument::all();
+        $slideshows = Slideshow::orderLatestDate()->published()->get();
+        $externalLinks = ExternalLink::order('ASC')->published()->get();
+
+        return view('pages.inicio.index', compact(
+            'avisos',
+            'anuncios',
+            'tipoDocumentos',
+            'slideshows',
+            'externalLinks'
+        ));
     }
 }

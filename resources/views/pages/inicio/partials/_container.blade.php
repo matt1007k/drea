@@ -18,10 +18,11 @@
             <div class="h4 text-custom-primary mt-3">Anuncios</div>
             <div class="card">
                 <div class="card-body">
-                    <img src="http://www.dreayacucho.gob.pe/ckeditor_assets/pictures/596/content_etico.jpg" alt="etico"
-                        class="img-fluid">
-                    <img src="http://www.dreayacucho.gob.pe/ckeditor_assets/pictures/300/content_esc2019.jpg"
-                        alt="content" class="img-fluid">
+                    @foreach ($anuncios as $anuncio)
+                    <a href="{{ $anuncio->url }}">
+                        <img src="{{ $anuncio->pathImage() }}" alt="{{ $anuncio->titulo }}" class="img-fluid w-100">
+                    </a>
+                    @endforeach
                 </div>
             </div>
         </div>

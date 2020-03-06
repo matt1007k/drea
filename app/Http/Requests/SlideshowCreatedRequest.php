@@ -25,7 +25,6 @@ class SlideshowCreatedRequest extends FormRequest
     {
         return [
             'titulo' => 'required|string|max:100',
-            'descripcion' => 'required|string|max:250',
             'fecha' => 'required',
             'imagen' => 'required|image|max:3000|mimes:jpeg,jpg,png',
         ];

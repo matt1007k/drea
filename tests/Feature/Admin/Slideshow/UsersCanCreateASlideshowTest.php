@@ -2,29 +2,17 @@
 
 namespace Tests\Feature\Admin\slideshow;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
 use App\Models\Slideshow;
 use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
-class UsersCanCreateAnSlideshowTest extends TestCase
+class UsersCanCreateASlideshowTest extends TestCase
 {
     use RefreshDatabase;
-
-    protected $user;
-    protected $pathLogin;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->pathLogin = '/auth/login';
-
-        $this->user = factory(User::class)->create();
-    }
 
     /**
      * @test
@@ -68,13 +56,13 @@ class UsersCanCreateAnSlideshowTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->post(route('admin.slideshows.store'), $this->formData([
-                'imagen' => $image
+                'imagen' => $image,
             ]));
 
         // Assert the file was stored...
         Storage::disk('public')->assertExists($image_url);
         $this->assertDatabaseHas('slideshows', $this->formData([
-            'imagen' => $image_url
+            'imagen' => $image_url,
         ]));
 
         $response->assertRedirect(route('admin.slideshows.index'))
@@ -86,7 +74,7 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.slideshows.store'), $this->formData([
-                'titulo' => ''
+                'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -95,7 +83,7 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.slideshows.store'), $this->formData([
-                'titulo' => 121
+                'titulo' => 121,
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -104,35 +92,8 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.slideshows.store'), $this->formData([
-                'titulo' => Str::random(101)
+                'titulo' => Str::random(101),
             ]))->assertSessionHasErrors(['titulo']);
-    }
-
-    /** @test */
-    public function the_descripcion_is_required()
-    {
-        $this->actingAs($this->user)
-            ->post(route('admin.slideshows.store'), $this->formData([
-                'descripcion' => ''
-            ]))->assertSessionHasErrors(['descripcion']);
-    }
-
-    /** @test */
-    public function the_descripcion_must_be_a_string()
-    {
-        $this->actingAs($this->user)
-            ->post(route('admin.slideshows.store'), $this->formData([
-                'descripcion' => 121
-            ]))->assertSessionHasErrors(['descripcion']);
-    }
-
-    /** @test */
-    public function the_descripcion_may_not_be_greater_than_250_characters()
-    {
-        $this->actingAs($this->user)
-            ->post(route('admin.slideshows.store'), $this->formData([
-                'descripcion' => Str::random(251)
-            ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
@@ -140,7 +101,7 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.slideshows.store'), $this->formData([
-                'fecha' => ''
+                'fecha' => '',
             ]))->assertSessionHasErrors(['fecha']);
     }
 
@@ -149,7 +110,7 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.slideshows.store'), $this->formData([
-                'imagen' => ''
+                'imagen' => '',
             ]))->assertSessionHasErrors(['imagen']);
     }
 
@@ -158,10 +119,9 @@ class UsersCanCreateAnSlideshowTest extends TestCase
     {
         return array_merge([
             'titulo' => 'Mi primer slideshow',
-            'descripcion' => 'Mi primer descripcion',
             'imagen' => 'image.png',
             'fecha' => '2019-12-31 00:00:00',
-            'publicado' => true
+            'publicado' => true,
         ], $override);
     }
 }

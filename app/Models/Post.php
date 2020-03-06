@@ -48,4 +48,9 @@ class Post extends Model
         return $query->where('titulo', 'LIKE', "%$search%")
             ->orWhere('fecha', 'LIKE', "%$search%");
     }
+
+    public function scopeOrderLatestDate($query)
+    {
+        return $query->orderBy('fecha', 'DESC');
+    }
 }

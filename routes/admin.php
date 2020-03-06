@@ -23,7 +23,6 @@ Route::resource('ads', 'AdsController');
 Route::get('/tipos/create', 'TypeDocumentsController@create')->name('types.create');
 Route::post('/tipos', 'TypeDocumentsController@store')->name('types.store');
 
-
 Route::get('/avisos', 'PostsController@index')->name('posts.index');
 Route::get('/avisos/create', 'PostsController@create')->name('posts.create');
 Route::post('/avisos', 'PostsController@store')->name('posts.store');
@@ -32,4 +31,4 @@ Route::get('/avisos/{post}/edit', 'PostsController@edit')->name('posts.edit');
 Route::put('/avisos/{post}', 'PostsController@update')->name('posts.update');
 Route::delete('/avisos/{post}', 'PostsController@destroy')->name('posts.destroy');
 
-Route::resource('posts.tests', 'PostsController')->shallow();
+Route::post('posts.upload', 'PostsController@upload')->name('posts.upload');

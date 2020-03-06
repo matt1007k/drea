@@ -2,29 +2,21 @@
 
 namespace Tests\Feature\Admin\Slideshow;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
 use App\Models\Slideshow;
 use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UsersCanShowASlideshowTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $slideshow;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
 
-        $this->user = factory(User::class)->create();
         $this->slideshow = factory(Slideshow::class)->create();
     }
 

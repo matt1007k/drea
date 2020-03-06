@@ -14,11 +14,21 @@ class ExternalLink extends Model
         return $query->where('url', 'LIKE', "%$search%");
     }
 
+    public function scopePublished($query)
+    {
+        return $query->where('publicado', true);
+    }
+
+    public function scopeOrder($query, $type)
+    {
+        return $query->orderBy('orden', "$type");
+    }
+
     public function pathImage()
     {
         return Storage::disk('public')->exists($this->imagen)
-            ? Storage::url($this->imagen)
-            : "";
+        ? Storage::url($this->imagen)
+        : "";
     }
 
     public function getImagenUpdated()

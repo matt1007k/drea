@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row mx-1 d-flex align-items-center justify-content-lg-between justify-content-sm-center">
             <div>
-                <img src="{{ asset('img/drea/logo-minedu.png') }}" height="74px" alt="Logo MINEDU">
+                <img src="{{ asset('img/drea/logo_gra.png') }}" height="74px" alt="Logo MINEDU">
             </div>
             <div class="row d-flex align-items-center">
                 <div class="text-left mr-md-2 text-muted mx-sm-auto">

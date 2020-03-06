@@ -65,15 +65,19 @@
 </div>
 
 @push('scripts')
-<script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script>
+<script src="{{ asset('vendors/ckeditor/ckeditor.js') }}"></script>
 <script src="https://kendo.cdn.telerik.com/2019.2.514/js/cultures/kendo.culture.es-ES.min.js"></script>
 <script>
-  CKEDITOR.replace( 'contenido' );
+  CKEDITOR.replace( 'contenido', {
+    filebrowserUploadUrl: "{{route('admin.posts.upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+  } );
   CKEDITOR.editorConfig = function( config ) {
     config.language = 'es';
     config.uiColor = '#F7B42C';
     config.height = 300;
     config.toolbarCanCollapse = true;
+    config.extraPlugins = 'uploadimage';
   };
 
 

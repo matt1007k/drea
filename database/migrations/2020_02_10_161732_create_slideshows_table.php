@@ -16,7 +16,7 @@ class CreateSlideshowsTable extends Migration
         Schema::create('slideshows', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('titulo', 100);
-            $table->string('descripcion', 250)->nullable();
+            $table->string('slug')->unique();
             $table->string('imagen');
             $table->timestamp('fecha');
             $table->boolean('publicado')->default(false);

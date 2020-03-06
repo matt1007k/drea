@@ -13,4 +13,9 @@ class TypeDocument extends Model
     {
         return $this->hasMany(Document::class, 'tipo_id');
     }
+
+    public function newestDocuments($number)
+    {
+        return $this->documentos()->latest()->limit($number)->get();
+    }
 }

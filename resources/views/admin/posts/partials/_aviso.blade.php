@@ -20,7 +20,9 @@
     </div>
 
     @if( request()->is('/') || request()->is("avisos"))
-    <a href="{{ $aviso->pathPage() }} " class="btn btn-outline-info btn-sm btn-rounded">Ver mas</a>
+    <div class="d-flex justify-content-end">
+      <a href="{{ $aviso->pathPage() }} " class="btn btn-outline-info btn-sm btn-rounded">Ver más</a>
+    </div>
     @endif
   </div>
 
