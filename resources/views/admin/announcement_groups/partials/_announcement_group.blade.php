@@ -5,7 +5,7 @@
 
     <div class="text-muted mb-3 flex items-center">
       <i class="mi mi-icon_date_range mr-2 text-gray-500"></i>
-      {{ $announcement_group->created_at->format('d M yy') }}
+      {{ $announcement_group->created_at->format('d F, yy') }}
     </div>
 
 

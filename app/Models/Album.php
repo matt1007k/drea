@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Date\Date;
 
 class Album extends Model
 {
@@ -16,6 +17,11 @@ class Album extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getFechaAttribute($date)
+    {
+        return new Date($date);
     }
 
     public function getFechaFormatAttribute()

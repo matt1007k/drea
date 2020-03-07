@@ -1,5 +1,5 @@
 <div id="carouselHomeIndicators" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
+    <ol class="carousel-indicators d-none d-sm-flex">
         @foreach ($slideshows as $key => $slideshow)
         <li data-target="#carouselHomeIndicators" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}">
         </li>

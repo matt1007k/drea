@@ -4,12 +4,18 @@ namespace App\Models;
 
 use App\Traits\hasPage;
 use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Date\Date;
 
 class Menu extends Model
 {
     use hasPage;
 
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function scopeSearch($query, $search)
     {

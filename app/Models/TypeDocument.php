@@ -3,11 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Date\Date;
 
 class TypeDocument extends Model
 {
     protected $table = "tipo_documentos";
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function documentos()
     {

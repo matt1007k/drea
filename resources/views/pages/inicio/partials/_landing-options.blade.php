@@ -1,15 +1,15 @@
-<div class="options-landing">
+<div class="container options-landing mb-4">
     <div class="row">
 
         <!-- Grid column -->
         <div class="col-xl-3 col-md-6 mb-md-4 px-sm-0">
             <!-- Card -->
-            <div class="card bg-danger text-white card-cascade cascading-admin-card">
+            <div class="card mt-0 bg-danger text-white card-cascade cascading-admin-card">
                 <!-- Card content -->
                 <a href="http://sisgedo.regionayacucho.gob.pe/app/main.php"
                     class="d-flex justify-content-between card-body card-body-cascade text-white">
                     <div>
-                        <h4>SISGUEDO</h4>
+                        <h4>SISGEDO</h4>
                         <p class="card-text text-white">Sistema de Gestión Documentaria, ubica tus expediente aqui.</p>
                     </div>
                     <div>
@@ -24,13 +24,14 @@
         <!-- Grid column -->
         <div class="col-xl-3 col-md-6 mb-md-0 mb-md-4 pr-0 pl-0">
             <!-- Card -->
-            <div class="card bg-success text-white card-cascade cascading-admin-card">
+            <div class="card mt-0 bg-success text-white card-cascade cascading-admin-card">
                 <!-- Card content -->
                 <a href="{{ url('/avisos') }}"
                     class="d-flex justify-content-between card-body card-body-cascade text-white">
                     <div>
                         <h4>Publicaciones</h4>
-                        <p class="card-text text-white">Informate con avisos, noticias y comunicados oficiales.</p>
+                        <p class="card-text text-white">Informate con avisos, noticias y comunicados oficiales de la
+                            DREA.</p>
                     </div>
                     <div>
                         <img src="{{ asset('/img/icons/blogging.png') }}" alt="Computer" srcset="">
@@ -44,7 +45,7 @@
         <!-- Grid column -->
         <div class="col-xl-3 col-md-6 mb-md-4 pr-0 pl-0">
             <!-- Card -->
-            <div class="card bg-info text-white card-cascade cascading-admin-card">
+            <div class="card mt-0 bg-info text-white card-cascade cascading-admin-card">
                 <!-- Card content -->
                 <a href="{{ url('/videos') }}"
                     class="d-flex justify-content-between card-body card-body-cascade text-white">
@@ -64,7 +65,7 @@
         <!-- Grid column -->
         <div class="col-xl-3 col-md-6 mb-0 pl-0 pr-xl-0">
             <!-- Card -->
-            <div class="card bg-warning text-white card-cascade cascading-admin-card">
+            <div class="card mt-0 bg-warning text-white card-cascade cascading-admin-card">
                 <!-- Card content -->
                 <a href="{{ url('/documentos') }}"
                     class="d-flex justify-content-between card-body card-body-cascade text-white">

@@ -15,13 +15,16 @@
     </div>
 
 
-    <div class="w-sm-100">
+    <div class="content w-sm-100">
       {!! $aviso->contenido !!}
     </div>
 
     @if( request()->is('/') || request()->is("avisos"))
     <div class="d-flex justify-content-end">
-      <a href="{{ $aviso->pathPage() }} " class="btn btn-outline-info btn-sm btn-rounded">Ver más</a>
+      <a href="{{ $aviso->pathPage() }} " class="btn btn-link text-dark">
+        Ver más
+        <div class="fa fa-arrow-right ml-2"></div>
+      </a>
     </div>
     @endif
   </div>

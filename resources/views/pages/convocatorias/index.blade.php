@@ -53,17 +53,19 @@ final, puede postular a otra Convocatoria CAS.")
               <strong>Archivos:</strong>
               <i class="fa fa-paperclip text-info ml-2"></i>
             </p>
-            <div class="px-sm-5">
-              <ol class="unstyled">
+            <div class="row d-flex justify-content-center">
+              <ol class="col-md-6 list-group">
                 @foreach ($announcement->links as $link)
-                <li class="pb-2">
-                  <a href="{{ $link->url }}">
-                    {{ $link->titulo }} ({{ $link->fecha->format('d-m-Y')}})
+                <li class="pb-2 list-group-item d-flex justify-content-between align-items-center">
+                  <span class="font-weight-bold">{{ $link->titulo }} ({{ $link->fecha->format('d-m-Y')}})</span>
+                  <a href="{{ $link->url }}" class="ml-2 text-danger">
+                    <i class="fa fa-file-pdf fa-2x"></i>
                   </a>
                 </li>
                 @endforeach
               </ol>
             </div>
+            <hr>
             @endif
           </div>
           @endforeach

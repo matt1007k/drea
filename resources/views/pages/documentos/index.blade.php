@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
   <div class="row">
-    <div class="px-3 py-5 bg-white col-md">
+    <div class="px-3 py-5 col-md">
       @if(isset($search) || isset($q) || isset($d))
       <div class="h5 text-muted mb-4">Resultados encontrados ({{$documents->count()}})</div>
       @endif

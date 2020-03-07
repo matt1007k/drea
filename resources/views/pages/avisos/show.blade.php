@@ -35,6 +35,7 @@
 <script type='text/javascript'
   src='https://platform-api.sharethis.com/js/sharethis.js#property=5e2e51e946b8180012d48a3f&product=inline-share-buttons&cms=sop'
   async='async'></script>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v5.0">
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v6.0&appId=383458192039624&autoLogAppEvents=1">
 </script>
 @endpush

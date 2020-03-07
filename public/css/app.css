@@ -12949,8 +12949,6 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   font-size: 1em;
 }
 
-.options-landing {
-  margin-top: -30px;
-  margin-left: 10%;
-  margin-right: 10%;
+#posts .content img {
+  max-width: 100%;
 }

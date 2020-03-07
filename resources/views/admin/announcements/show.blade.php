@@ -30,7 +30,7 @@
 
   </div>
   <div class="row">
-    <div class="rounded-lg bg-gray-500 px-3 py-4 mt-3">
+    <div class="col-md-12 rounded-lg bg-gray-500 px-3 py-4 mt-3">
 
       <div class="h4 text-gray-800">
         Enlaces
@@ -40,14 +40,16 @@
         </a>
       </div>
 
-      @forelse ($announcement->links as $link)
-      @include('admin.announcement_links.partials._announcement_link', ['column_class' => 'col-md-4'])
-      @empty
-      <div class="text-lg text-gray-800">Sin enlaces</div>
-      @endforelse
+
     </div>
 
-
+    <div class="col-md-12 links">
+      @forelse ($announcement->links as $link)
+      @include('admin.announcement_links.partials._announcement_link', ['column_class' => 'link-item'])
+      @empty
+      <div class="bg-white p-4 text-center text-4xl font-normal text-gray-800">Sin enlaces</div>
+      @endforelse
+    </div>
   </div>
   <div class="row">
     <a href="{{ route('admin.announcements.index')}}" class="btn btn-link">
@@ -58,6 +60,16 @@
 </div>
 
 @endsection
+
+@push('styles')
+<style>
+  .links {
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+</style>
+@endpush
 
 @push('scripts')
 <script>

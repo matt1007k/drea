@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Date\Date;
 
 class ExternalLink extends Model
 {
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function scopeSearch($query, $search)
     {

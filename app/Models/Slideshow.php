@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Date\Date;
 
 class Slideshow extends Model
 {
@@ -11,6 +12,11 @@ class Slideshow extends Model
 
     protected $dates = ['fecha'];
     protected $appends = ['fecha_format'];
+
+    public function getFechaAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function getFechaFormatAttribute()
     {

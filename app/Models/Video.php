@@ -3,12 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Date\Date;
 
 class Video extends Model
 {
     protected $guarded = [];
     protected $dates = ['fecha'];
     protected $appends = ['fecha_format'];
+
+    public function getFechaAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function getFechaFormatAttribute()
     {

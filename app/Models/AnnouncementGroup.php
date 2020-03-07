@@ -3,10 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Date\Date;
 
 class AnnouncementGroup extends Model
 {
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function scopeSearch($query, $search)
     {

@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Date\Date;
 
 class Ad extends Model
 {
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function scopePublished($query)
     {
@@ -16,7 +22,9 @@ class Ad extends Model
 
     public function pathImage()
     {
-        return Storage::disk('public')->exists($this->imagen) ? Storage::url($this->imagen) : "";
+        return Storage::disk('public')->exists($this->imagen)
+        ? Storage::url($this->imagen)
+        : "";
     }
 
     public function getImagenUpdated()

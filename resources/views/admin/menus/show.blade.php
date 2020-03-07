@@ -37,7 +37,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="rounded-lg bg-gray-500 px-3 py-4 mt-3">
+    <div class="col-md-12 rounded-lg bg-gray-500 px-3 py-4 mt-3 mb-8">
 
       <div class="h4 text-gray-800">
         Submenús
@@ -47,12 +47,12 @@
         </a>
       </div>
 
-      @forelse ($menu->submenus as $submenu)
-      @include('admin.submenus.partials._submenu', ['column_class' => 'col-sm-4 mt-3'])
-      @empty
-      <div class="text-3xl text-red-800">Sin Submenús</div>
-      @endforelse
     </div>
+    @forelse ($menu->submenus as $submenu)
+    @include('admin.submenus.partials._submenu', ['column_class' => 'col-12 mt-3'])
+    @empty
+    <div class="bg-white p-4 text-center font-normal text-muted text-4xl ">Sin submenús...</div>
+    @endforelse
 
 
   </div>

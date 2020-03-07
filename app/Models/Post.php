@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Date\Date;
 
 class Post extends Model
 {
@@ -11,6 +12,11 @@ class Post extends Model
     protected $dates = [
         'fecha',
     ];
+
+    public function getFechaAttribute($date)
+    {
+        return new Date($date);
+    }
 
     public function getFechaFormatAttribute()
     {

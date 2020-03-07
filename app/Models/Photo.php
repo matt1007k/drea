@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Date\Date;
 
 class Photo extends Model
 {
@@ -13,6 +14,11 @@ class Photo extends Model
     protected $dates = ['fecha'];
     protected $appends = ['fecha_format'];
 
+    public function getFechaAttribute($date)
+    {
+        return new Date($date);
+    }
+
     public function getFechaFormatAttribute()
     {
         return $this->fecha->format('d F, Y');
@@ -21,8 +27,8 @@ class Photo extends Model
     public function pathImage()
     {
         return Storage::disk('public')->exists($this->imagen)
-            ? Storage::url($this->imagen)
-            : "";
+        ? Storage::url($this->imagen)
+        : "";
     }
 
     public function getImagenUpdated()
