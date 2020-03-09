@@ -15,9 +15,9 @@
     </div>
     @endforelse
   </div>
-
   <div class="d-flex justify-content-end">
-    <a href="{{ url('/documentos') }}" class="btn btn-link text-dark">
+    <a href="{{ url('/documentos') }}"
+      class="border border-custom-info boton3 rounded p-2 px-3 d-none d-inline-block waves-effect text-uppercase font-weight-bold">
       Ver más
       <i class="fa fa-arrow-right ml-2"></i>
     </a>

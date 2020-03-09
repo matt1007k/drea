@@ -21,7 +21,8 @@
 
     @if( request()->is('/') || request()->is("avisos"))
     <div class="d-flex justify-content-end">
-      <a href="{{ $aviso->pathPage() }} " class="btn btn-link text-dark">
+      <a href="{{ $aviso->pathPage() }} "
+        class="border border-custom-info boton3 rounded p-2 px-3 d-none d-inline-block waves-effect text-uppercase font-weight-bold">
         Ver más
         <div class="fa fa-arrow-right ml-2"></div>
       </a>

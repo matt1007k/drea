@@ -22,7 +22,8 @@ $theme-custom-colors: (
     "primary-dark": #064f65,
     "primary": #096986,
     "secondary": #767171,
-    "success": #14e082
+    "success": #14e082,
+    "info": #318aac
 );
 
 @each $name, $color in $theme-custom-colors {
@@ -34,5 +35,9 @@ $theme-custom-colors: (
     }
     .border-custom-#{$name} {
         border-color: $color !important;
+    }
+    .pagination.pg-custom-#{$name} .page-item.active .page-link,
+    .pagination.pg-custom-#{$name} .page-item.active .page-link:hover {
+        background-color: $color !important;
     }
 }

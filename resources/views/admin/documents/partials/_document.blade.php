@@ -5,7 +5,7 @@
         <img height="200px" src="{{ asset('/img/icons/eq_document.png') }}" alt="{{ $document->titulo }}">
       </a>
 
-      <div>
+      <div class="w-100">
         <h5 class="card-title text-uppercase text-3xl xs:mb-3"><strong>{{ $document->titulo }}</strong></h5>
         <hr>
         <p class="card-text mb-3 text-justify">

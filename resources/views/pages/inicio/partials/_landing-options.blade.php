@@ -10,7 +10,7 @@
                     class="d-flex justify-content-between card-body card-body-cascade text-white">
                     <div>
                         <h4>SISGEDO</h4>
-                        <p class="card-text text-white">Sistema de Gestión Documentaria, ubica tus expediente aqui.</p>
+                        <p class="card-text text-white">Sistema de Gestión Documentaria, ubica tus expedientes aquí.</p>
                     </div>
                     <div>
                         <img src="{{ asset('/img/icons/computer.png') }}" alt="Computer" srcset="">
@@ -30,7 +30,7 @@
                     class="d-flex justify-content-between card-body card-body-cascade text-white">
                     <div>
                         <h4>Publicaciones</h4>
-                        <p class="card-text text-white">Informate con avisos, noticias y comunicados oficiales de la
+                        <p class="card-text text-white">Infórmate con avisos, noticias y comunicados oficiales de la
                             DREA.</p>
                     </div>
                     <div>

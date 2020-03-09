@@ -12,13 +12,25 @@
 @import "./components/carousel-home";
 @import "./components/carousel-partner";
 
-.navbar {
-    .navbar-brand {
-        font-size: 1em;
+@media (max-width: 768px) {
+    .navbar {
+        .navbar-brand {
+            font-size: 1em;
+        }
     }
 }
 
 #posts .content img {
     // width: 100%;
     max-width: 100%;
+}
+
+.boton3 {
+    color: #318aac !important;
+    transition: all 0s ease;
+    position: relative;
+}
+.boton3:hover {
+    background: #318aac;
+    color: #fff !important;
 }

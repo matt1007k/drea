@@ -19,18 +19,18 @@
             </ul>
 
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto font-weight-bold">
                 @foreach ($menus as $menu)
                 @if ($menu->submenus->count() > 0)
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown dropdown-ins">
                     <a id="dropdownInst" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         {{ $menu->titulo }}
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownInst">
+                    <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="dropdownInst">
                         @foreach ($menu->submenus as $submenu)
-                        <a class="dropdown-item" href="{{ url($submenu->ruta) }}">
+                        <a class="dropdown-item" target="_blank" href="{{ url($submenu->ruta) }}">
                             {{ $submenu->titulo }}
                         </a>
                         @endforeach
@@ -38,7 +38,7 @@
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url($menu->ruta) }}">{{ $menu->titulo }}</a>
+                    <a class="nav-link" href="{{ url($menu->ruta) }}" target="_blank">{{ $menu->titulo }}</a>
                 </li>
                 @endif
 
