@@ -3,10 +3,9 @@
 namespace Tests\Feature\Admin\Document;
 
 use App\Models\Document;
-use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UsersCanDeleteADocumentTest extends TestCase
 {
@@ -46,15 +45,16 @@ class UsersCanDeleteADocumentTest extends TestCase
         $this->assertDatabaseMissing('documentos', $this->formData());
     }
 
-
     /** data send create for user */
     public function formData($override = [])
     {
         return array_merge([
             'titulo' => 'Mi primer documento',
             'descripcion' => 'Mi primer descripcion',
-            'url' => 'document.pdf',
-            // create factory
+            'archivo' => 'document.pdf',
+            'anio' => date('Y'),
+            'fecha' => now(),
+            'publicado' => true,
         ], $override);
     }
 }

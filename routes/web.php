@@ -7,7 +7,7 @@ Route::namespace ('Pages')->group(function () {
 
     Route::get('/nosotros', 'NosotrosController@index')->name('pages.nosotros');
     Route::get('/organigrama', 'OrganigramaController@index')->name('pages.organigrama');
-    Route::get('/directorio', 'DirectorioInstitucionalController@index')->name('pages.directorio');
+    Route::get('/directorio-2019', 'DirectorioInstitucionalController@index')->name('pages.directorio');
     Route::get('/superior', 'SuperiorController@index')->name('pages.superior');
     Route::get('/documentos', 'DocumentosController@index')->name('pages.documentos.index');
     Route::get('/avisos', 'AvisosController@index')->name('pages.avisos.index');

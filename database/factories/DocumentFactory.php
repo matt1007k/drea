@@ -10,9 +10,12 @@ $factory->define(Document::class, function (Faker $faker) {
     return [
         'titulo' => $faker->sentence,
         'descripcion' => $faker->paragraph,
-        'url' => $faker->imageUrl,
+        'archivo' => $faker->imageUrl,
+        'anio' => date('Y'),
+        'fecha' => now(),
+        'publicado' => true,
         'tipo_id' => function () {
             return factory(TypeDocument::class)->create();
-        }
+        },
     ];
 });

@@ -6,10 +6,14 @@
     {{-- <div class="h4 text-custom-primary mb-4">{{ $tipo->nombre }}
   </div> --}}
   <div class="row">
-    @foreach ($tipo->newestDocuments(4) as $document)
+    @forelse ($tipo->newestDocuments(4) as $document)
     @include('admin.documents.partials._document', ['document' => $document, 'column_class' =>
     'col-md-12'])
-    @endforeach
+    @empty
+    <div class="w-100 bg-white shadow-sm mx-2 px-3 py-4">
+      <div class="h3 text-muted">Sin documentos recientes.</div>
+    </div>
+    @endforelse
   </div>
 
   <div class="d-flex justify-content-end">

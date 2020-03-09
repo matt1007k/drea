@@ -31,4 +31,37 @@
       </div>
     </div>
   </div>
+  @unless ($submenu->urlExisted())
+  <div class="row">
+    <div class="col-md-12">
+      <div class="mi-card">
+        <div class="mi-card-content text-center">
+          @if ($submenu->page()->count() > 0)
+          <a href="{{ url($submenu->ruta) }}" target="_blank" class="btn btn-primary text-uppercase">
+            Ver página
+          </a>
+          <a href="{{ route('admin.menus.submenus.pages.edit',[$menu, $submenu, $submenu->page]) }}"
+            class="btn btn-info text-uppercase">
+            Editar página
+          </a>
+          <button onclick="onDeleteSubpage({{$submenu->page->id}})" class="btn btn-danger text-uppercase">
+            Eliminar página
+          </button>
+          <form id="btn-delete-subpage{{ $submenu->page->id }}"
+            action="{{ route('admin.menus.submenus.pages.destroy',[$menu, $submenu, $submenu->page]) }}" method="POST">
+            @csrf
+            @method('DELETE')
+          </form>
+          @else
+
+          <a href="{{ route('admin.menus.submenus.pages.create', [$menu, $submenu]) }}"
+            class="btn btn-primary text-uppercase">
+            Agregar página
+          </a>
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+  @endunless
 </div>

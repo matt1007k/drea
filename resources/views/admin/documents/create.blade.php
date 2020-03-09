@@ -23,7 +23,7 @@
 @section('content')
 <div class="container">
   <div class="row flex justify-center">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class="mi-card">
         <div class="mi-card-content">
           <form action="{{ route('admin.documents.store') }}" method="POST">

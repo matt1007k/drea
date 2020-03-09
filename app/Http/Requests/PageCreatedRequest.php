@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DocumentCreatedRequest extends FormRequest
+class PageCreatedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,9 @@ class DocumentCreatedRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo' => 'required|string|max:100',
-            'descripcion' => 'required|string|max:300',
-            'archivo' => 'required|file|max:5000|mimes:pdf,docx,doc,xls,xlt,xlsx',
-            'anio' => 'required',
-            'fecha' => 'required',
-            'tipo_id' => 'required',
+            'titulo' => 'required|string|max:150',
+            'descripcion' => 'required',
+            'contenido' => 'required',
         ];
     }
 }

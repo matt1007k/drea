@@ -6,7 +6,9 @@ Route::get('dashboard', 'DashboardController@index')->name('index');
 
 Route::resource('documents', 'DocumentosController');
 Route::resource('menus', 'MenusController');
+Route::resource('menus.pages', 'MenuPagesController')->except(['index', 'show']);
 Route::resource('menus.submenus', 'SubmenusController')->except(['index', 'show']);
+Route::resource('menus.submenus.pages', 'SubmenuPagesController')->except(['index', 'show']);
 Route::resource('albums', 'AlbumesController');
 Route::resource('photos', 'PhotosController');
 Route::resource('videos', 'VideosController');
@@ -32,3 +34,4 @@ Route::put('/avisos/{post}', 'PostsController@update')->name('posts.update');
 Route::delete('/avisos/{post}', 'PostsController@destroy')->name('posts.destroy');
 
 Route::post('posts.upload', 'PostsController@upload')->name('posts.upload');
+Route::post('pages.upload', 'MenuPagesController@upload')->name('pages.upload');

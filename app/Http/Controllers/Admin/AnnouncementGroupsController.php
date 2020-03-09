@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\AnnouncementGroup;
 use App\Http\Requests\AnnouncementGroupCreatedRequest;
+use App\Models\AnnouncementGroup;
+use App\Services\UploadsService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AnnouncementGroupsController extends Controller
 {
@@ -42,7 +45,7 @@ class AnnouncementGroupsController extends Controller
         AnnouncementGroup::create([
             'nombre' => request('nombre'),
             'introduccion' => request('introduccion'),
-            'anio' => request('anio')
+            'anio' => request('anio'),
         ]);
 
         return redirect()->route('admin.announcement_groups.index')
@@ -59,7 +62,7 @@ class AnnouncementGroupsController extends Controller
         $announcement_group->update([
             'nombre' => request('nombre'),
             'introduccion' => request('introduccion'),
-            'anio' => request('anio')
+            'anio' => request('anio'),
         ]);
 
         return redirect()->route('admin.announcement_groups.index')
@@ -71,5 +74,37 @@ class AnnouncementGroupsController extends Controller
         $announcement_group->delete();
         return redirect()->route('admin.announcement_groups.index')
             ->with('msg', 'El registro se eliminó correctamente');
+    }
+
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $year = date('Y');
+            $uploadService = new UploadsService('upload', $year, 'grupos');
+
+            //get filename with extension
+            // $filenamewithextension = $request->file('upload')->getClientOriginalName();
+
+            // //get filename without extension
+            // $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+            // //get file extension
+            // $extension = $request->file('upload')->getClientOriginalExtension();
+
+            // //filename to store
+            // $filenametostore = $filename . '_' . time() . '.' . $extension;
+
+            // //Upload File
+            // $request->file('upload')->storeAs('public/uploads', $filenametostore);
+
+            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            $url = Storage::url($uploadService->getFileCreated());
+            $msg = 'El archivo se subió correctamente';
+            $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, \"$url\", '$msg')</script>";
+
+            // Render HTML output
+            @header('Content-type: text/html; charset=utf-8');
+            echo $re;
+        }
     }
 }

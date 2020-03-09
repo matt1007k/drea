@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\hasPage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Jenssegers\Date\Date;
 
 class Submenu extends Model
 {
+    use hasPage;
+
     protected $guarded = [];
 
     public function getCreatedAtAttribute($date)
@@ -32,5 +36,17 @@ class Submenu extends Model
     public function menu()
     {
         return $this->belongsTo(Menu::class);
+    }
+
+    public function urlExisted()
+    {
+        $routes = Route::getRoutes()->getRoutes();
+        $routes_uri = collect($routes)->pluck('uri')->toArray();
+        $uri = $this->ruta != "/" ? explode('/', $this->ruta)[1] : "/";
+        if (in_array($uri, $routes_uri)) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PostCreatedRequest;
 use App\Models\Post;
+use App\Services\UploadsService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -81,24 +83,27 @@ class PostsController extends Controller
     public function upload(Request $request)
     {
         if ($request->hasFile('upload')) {
+            $year = date('Y');
+            $uploadService = new UploadsService('upload', $year, 'avisos');
+
             //get filename with extension
-            $filenamewithextension = $request->file('upload')->getClientOriginalName();
+            // $filenamewithextension = $request->file('upload')->getClientOriginalName();
 
-            //get filename without extension
-            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+            // //get filename without extension
+            // $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
 
-            //get file extension
-            $extension = $request->file('upload')->getClientOriginalExtension();
+            // //get file extension
+            // $extension = $request->file('upload')->getClientOriginalExtension();
 
-            //filename to store
-            $filenametostore = $filename . '_' . time() . '.' . $extension;
+            // //filename to store
+            // $filenametostore = $filename . '_' . time() . '.' . $extension;
 
-            //Upload File
-            $request->file('upload')->storeAs('public/uploads', $filenametostore);
+            // //Upload File
+            // $request->file('upload')->storeAs('public/uploads', $filenametostore);
 
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('storage/uploads/' . $filenametostore);
-            $msg = 'Image successfully uploaded';
+            $url = Storage::url($uploadService->getFileCreated());
+            $msg = 'El archivo se subió correctamente';
             $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, \"$url\", '$msg')</script>";
 
             // Render HTML output

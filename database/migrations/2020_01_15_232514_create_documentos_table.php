@@ -15,9 +15,12 @@ class CreateDocumentosTable extends Migration
     {
         Schema::create('documentos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('titulo', 100);
+            $table->string('titulo', 250);
             $table->text('descripcion', 300);
-            $table->string('url');
+            $table->string('anio', 4);
+            $table->string('archivo');
+            $table->timestamp('fecha');
+            $table->boolean('publicado')->default(false);
 
             $table->unsignedBigInteger('tipo_id');
             $table->foreign('tipo_id')

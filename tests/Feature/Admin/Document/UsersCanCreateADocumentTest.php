@@ -2,28 +2,23 @@
 
 namespace Tests\Feature\Admin\Document;
 
-use Tests\TestCase;
 use App\Models\Document;
 use App\Models\TypeDocument;
 use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class UsersCanCreateADocumentTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
-    protected $pathLogin;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
-
-        $this->user = factory(User::class)->create();
-        factory(TypeDocument::class)->create();
+        factory(TypeDocument::class)->create(['nombre' => 'Fake']);
     }
 
     /**
@@ -44,7 +39,7 @@ class UsersCanCreateADocumentTest extends TestCase
             ->get(route('admin.documents.create'))
             ->assertViewHasAll([
                 'document',
-                'tipos'
+                'tipos',
             ])
             ->assertViewIs('admin.documents.create');
     }
@@ -63,10 +58,21 @@ class UsersCanCreateADocumentTest extends TestCase
      */
     public function users_can_create_a_document()
     {
-        $response = $this->actingAs($this->user)
-            ->post(route('admin.documents.store'), $this->formData());
+        Storage::fake('documentos');
 
-        $this->assertDatabaseHas('documentos', $this->formData());
+        $image = UploadedFile::fake()->image('document.pdf');
+        $image_url = 'documentos/' . date('Y') . '/fake/' . $image->name;
+
+        $response = $this->actingAs($this->user)
+            ->post(route('admin.documents.store'), $this->formData([
+                'archivo' => $image,
+            ]));
+
+        Storage::disk('public')->assertExists($image_url);
+
+        $this->assertDatabaseHas('documentos', $this->formData([
+            'archivo' => $image_url,
+        ]));
 
         $response->assertRedirect(route('admin.documents.index'))
             ->assertSessionHas('msg', 'El registro se guardó correctamente');
@@ -77,7 +83,7 @@ class UsersCanCreateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'titulo' => ''
+                'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -86,7 +92,7 @@ class UsersCanCreateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'tipo_id' => ''
+                'tipo_id' => '',
             ]))->assertSessionHasErrors(['tipo_id']);
     }
 
@@ -95,16 +101,16 @@ class UsersCanCreateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'titulo' => 1212
+                'titulo' => 1212,
             ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
-    public function the_titulo_may_not_be_greater_than_100_characters()
+    public function the_titulo_may_not_be_greater_than_250_characters()
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'titulo' => Str::random(101)
+                'titulo' => Str::random(251),
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -113,7 +119,7 @@ class UsersCanCreateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'descripcion' => ''
+                'descripcion' => '',
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
@@ -122,7 +128,7 @@ class UsersCanCreateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'descripcion' => 1212
+                'descripcion' => 1212,
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
@@ -131,17 +137,35 @@ class UsersCanCreateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'descripcion' => Str::random(301)
+                'descripcion' => Str::random(301),
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
-    public function the_url_is_required()
+    public function the_archivo_is_required()
     {
         $this->actingAs($this->user)
             ->post(route('admin.documents.store'), $this->formData([
-                'url' => ''
-            ]))->assertSessionHasErrors(['url']);
+                'archivo' => '',
+            ]))->assertSessionHasErrors(['archivo']);
+    }
+
+    /** @test */
+    public function the_anio_is_required()
+    {
+        $this->actingAs($this->user)
+            ->post(route('admin.documents.store'), $this->formData([
+                'anio' => '',
+            ]))->assertSessionHasErrors(['anio']);
+    }
+
+    /** @test */
+    public function the_fecha_is_required()
+    {
+        $this->actingAs($this->user)
+            ->post(route('admin.documents.store'), $this->formData([
+                'fecha' => '',
+            ]))->assertSessionHasErrors(['fecha']);
     }
 
     /** data send for user */
@@ -150,7 +174,10 @@ class UsersCanCreateADocumentTest extends TestCase
         return array_merge([
             'titulo' => 'Mi primer documento',
             'descripcion' => 'Mi primer descripcion',
-            'url' => 'document.pdf',
+            'archivo' => 'document.pdf',
+            'anio' => date('Y'),
+            'fecha' => now(),
+            'publicado' => true,
             'tipo_id' => 1,
         ], $override);
     }

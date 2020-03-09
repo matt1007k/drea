@@ -2,14 +2,13 @@
 
 namespace Tests\Feature\Admin\album;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
 use App\Models\Album;
 use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class UsersCanCreateAnAlbumTest extends TestCase
 {
@@ -29,7 +28,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     public function guest_users_cannot_see_page_create_post()
     {
         $this->get(route('admin.albums.create'))
-            ->assertRedirect('/auth/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -50,7 +49,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     public function guest_users_cannot_create_post()
     {
         $this->post(route('admin.albums.store'), $this->formData())
-            ->assertRedirect('/auth/login');
+            ->assertRedirect($this->pathLogin);
     }
 
     /**
@@ -61,17 +60,17 @@ class UsersCanCreateAnAlbumTest extends TestCase
         Storage::fake('albumes');
 
         $image = UploadedFile::fake()->image('public/img/drea/logo.png');
-        $image_url = 'albumes/' . $image->hashName();
+        $image_url = 'albumes/' . $image->name();
 
         $response = $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'imagen' => $image
+                'imagen' => $image,
             ]));
 
         // Assert the file was stored...
         Storage::disk('public')->assertExists($image_url);
         $this->assertDatabaseHas('albumes', $this->formData([
-            'imagen' => $image_url
+            'imagen' => $image_url,
         ]));
 
         $response->assertRedirect(route('admin.albums.index'))
@@ -83,7 +82,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'titulo' => ''
+                'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -92,7 +91,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'titulo' => 121
+                'titulo' => 121,
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -101,7 +100,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'titulo' => Str::random(101)
+                'titulo' => Str::random(101),
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -110,7 +109,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'descripcion' => ''
+                'descripcion' => '',
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
@@ -119,7 +118,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'descripcion' => 121
+                'descripcion' => 121,
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
@@ -128,7 +127,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'descripcion' => Str::random(251)
+                'descripcion' => Str::random(251),
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
@@ -137,7 +136,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'fecha' => ''
+                'fecha' => '',
             ]))->assertSessionHasErrors(['fecha']);
     }
 
@@ -146,7 +145,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
-                'imagen' => ''
+                'imagen' => '',
             ]))->assertSessionHasErrors(['imagen']);
     }
 
@@ -158,7 +157,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
             'descripcion' => 'Mi primer descripcion',
             'imagen' => 'image.png',
             'fecha' => '2019-12-31 00:00:00',
-            'publicado' => true
+            'publicado' => true,
         ], $override);
     }
 }

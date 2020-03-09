@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\DocumentCreatedRequest;
 use App\Http\Requests\DocumentUpdatedRequest;
 use App\Models\Document;
-use App\Http\Requests\DocumentCreatedRequest;
 use App\Models\TypeDocument;
+use App\Services\UploadsService;
+use Carbon\Carbon;
 
 class DocumentosController extends Controller
 {
@@ -59,7 +61,10 @@ class DocumentosController extends Controller
         Document::create([
             'titulo' => request('titulo'),
             'descripcion' => request('descripcion'),
-            'url' => request('url'),
+            'anio' => request('anio'),
+            'archivo' => (new UploadsService('archivo', request('anio'), 'documentos'))->getFileCreated(),
+            'fecha' => Carbon::parse(request('fecha')),
+            'publicado' => request('publicado') ? true : false,
             'tipo_id' => request('tipo_id'),
         ]);
 
@@ -78,7 +83,10 @@ class DocumentosController extends Controller
         $document->update([
             'titulo' => request('titulo'),
             'descripcion' => request('descripcion'),
-            'url' => request('url'),
+            'anio' => request('anio'),
+            'archivo' => $document->getArchivoUpdated(),
+            'fecha' => Carbon::parse(request('fecha')),
+            'publicado' => request('publicado') ? true : false,
             'tipo_id' => request('tipo_id'),
         ]);
 
@@ -88,7 +96,7 @@ class DocumentosController extends Controller
 
     public function destroy(Document $document)
     {
-        $document->delete();
+        $document->deleteDocument();
 
         return redirect()->route('admin.documents.index')
             ->with('msg', 'El registro se eliminó correctamente');

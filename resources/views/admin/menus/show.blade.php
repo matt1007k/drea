@@ -23,19 +23,50 @@
 
 @section('content')
 <div class="container">
-  <div class="row flex justify-center">
-    <div class="col-md-6">
+  <div class="row">
+    <div class="col-md-12">
       <div class="mi-card">
         <div class="mi-card-content">
-          <div class="h4 text-center text-info">{{ $menu->titulo }}</div>
+          <div class="h4 text-info">{{ $menu->titulo }}</div>
           <p><strong>Ruta:</strong> {{ $menu->ruta }}</p>
           <p><strong>Orden:</strong> {{ $menu->orden }}</p>
           <p><strong>Publicado:</strong> @include('admin.menus.partials._publicado') </p>
         </div>
       </div>
-
     </div>
   </div>
+  @unless ($menu->urlExisted() || $menu->submenus()->count() > 1)
+  <div class="row">
+    <div class="col-md-12">
+      <div class="mi-card">
+        <div class="mi-card-content text-center">
+          @if ($menu->page()->count() > 0)
+          <a href="{{ url($menu->ruta) }}" target="_blank" class="btn btn-primary text-uppercase">
+            Ver página
+          </a>
+          <a href="{{ route('admin.menus.pages.edit',[$menu, $menu->page]) }}" class="btn btn-info text-uppercase">
+            Editar página
+          </a>
+          <button onclick="onDeletePage({{$menu->page->id}})" class="btn btn-danger text-uppercase">
+            Eliminar página
+          </button>
+          <form id="btn-delete-page{{ $menu->page->id }}"
+            action="{{ route('admin.menus.pages.destroy',[$menu, $menu->page]) }}" method="POST">
+            @csrf
+            @method('DELETE')
+          </form>
+          @else
+
+          <a href="{{ route('admin.menus.pages.create', $menu) }}" class="btn btn-primary text-uppercase">
+            Agregar página
+          </a>
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+  @endunless
+
   <div class="row">
     <div class="col-md-12 rounded-lg bg-gray-500 px-3 py-4 mt-3 mb-8">
 
@@ -83,6 +114,44 @@
       }).then((result) => {
           if (result.value) {
               $("#btn-delete-"+ id).click();
+
+          }
+      })
+  }
+
+  function onDeletePage(pageId) {
+      swal({
+          title: 'Estás seguro de eliminar el registro?',
+          type: 'warning',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          focusConfirm: false,
+          confirmButtonText: '<i class="fa fa-check"></i> Si, eliminar',
+          cancelButtonText: '<i class="fa fa-ban"></i> Cancelar',
+      }).then((result) => {
+          if (result.value) {
+              $("#btn-delete-page"+ pageId).submit();
+
+          }
+      })
+  }
+
+  function onDeleteSubpage(subPageId) {
+      swal({
+          title: 'Estás seguro de eliminar el registro?',
+          type: 'warning',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          focusConfirm: false,
+          confirmButtonText: '<i class="fa fa-check"></i> Si, eliminar',
+          cancelButtonText: '<i class="fa fa-ban"></i> Cancelar',
+      }).then((result) => {
+          if (result.value) {
+              $("#btn-delete-subpage"+ subPageId).submit();
 
           }
       })

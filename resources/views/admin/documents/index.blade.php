@@ -54,8 +54,10 @@
                 <th class="text-center th-lg font-weight-bold">#</th>
                 <th class="text-center th-lg font-weight-bold">Tipo</th>
                 <th class="text-center th-lg font-weight-bold">Titulo</th>
-                <th class="text-center th-lg font-weight-bold">Url</th>
+                <th class="text-center th-lg font-weight-bold">Archivo</th>
                 <th class="text-center th-lg font-weight-bold">Descripción</th>
+                <th class="text-center th-lg font-weight-bold">Fecha de publicación</th>
+                <th class="text-center th-lg font-weight-bold">Publicado</th>
                 <th class="text-right th-lg disabled-sorting"></th>
               </tr>
             </thead>
@@ -68,8 +70,13 @@
                 <td class="text-center font-weight-bold">{{ $document->id }}</td>
                 <td>{{ $document->tipo->nombre }}</td>
                 <td>{{ $document->titulo }}</td>
-                <td><a href="{{ $document->url }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a></td>
+                <td><a href="{{ $document->pathFile() }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a>
+                </td>
                 <td>{{ $document->descripcion }}</td>
+                <td>{{ $document->fecha->format('d F, Y') }}</td>
+                <td class="text-center">
+                  @include('admin.documents.partials._publicado')
+                </td>
                 <td>
                   <a href="{{ route('admin.documents.show', $document) }}" class="px-2 btn btn-dark btn-sm"
                     data-balloon-pos="down" aria-label="Ver registro">

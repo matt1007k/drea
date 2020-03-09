@@ -4,27 +4,24 @@ namespace Tests\Feature\Admin\Document;
 
 use App\Models\Document;
 use App\Models\TypeDocument;
-use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class UsersCanUpdateADocumentTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
     protected $document;
-    protected $pathLogin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->pathLogin = '/auth/login';
 
-        $this->user = factory(User::class)->create();
-        $this->document = factory(Document::class)->create();
+        $tipo = factory(TypeDocument::class)->create(['nombre' => 'Fake']);
+        $this->document = factory(Document::class)->create(['tipo_id' => $tipo->id]);
     }
 
     /**
@@ -47,7 +44,7 @@ class UsersCanUpdateADocumentTest extends TestCase
             ->get(route('admin.documents.edit', $this->document))
             ->assertViewHasAll([
                 'document',
-                'tipos'
+                'tipos',
             ])
             ->assertViewIs('admin.documents.edit');
     }
@@ -66,12 +63,30 @@ class UsersCanUpdateADocumentTest extends TestCase
      */
     public function users_can_update_a_document()
     {
-        factory(TypeDocument::class)->create();
+        Storage::fake('documentos');
+
+        $old_image = UploadedFile::fake()->image('document.pdf');
+        $old_image_url = 'documentos/' . date('Y') . '/fake/' . $old_image->name;
+
+        $this->document = factory(Document::class)->create($this->formData([
+            'archivo' => $old_image_url,
+        ]));
+
+        $image = UploadedFile::fake()->image('document1.pdf');
+        $image_url = 'documentos/' . date('Y') . '/fake/' . $image->name;
 
         $response = $this->actingAs($this->user)
-            ->put(route('admin.documents.update', $this->document), $this->formData());
+            ->put(route('admin.documents.update', $this->document), $this->formData([
+                'archivo' => $image,
+            ]));
+        // Assert a file does not exist...
+        Storage::disk('public')->assertMissing($old_image_url);
 
-        $this->assertDatabaseHas('documentos', $this->formData());
+        Storage::disk('public')->assertExists($image_url);
+
+        $this->assertDatabaseHas('documentos', $this->formData([
+            'archivo' => $image_url,
+        ]));
 
         $response->assertRedirect(route('admin.documents.index'))
             ->assertSessionHas('msg', 'El registro se editó correctamente');
@@ -82,7 +97,7 @@ class UsersCanUpdateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'titulo' => ''
+                'titulo' => '',
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -91,7 +106,7 @@ class UsersCanUpdateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'tipo_id' => ''
+                'tipo_id' => '',
             ]))->assertSessionHasErrors(['tipo_id']);
     }
 
@@ -100,16 +115,16 @@ class UsersCanUpdateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'titulo' => 1212
+                'titulo' => 1212,
             ]))->assertSessionHasErrors(['titulo']);
     }
 
     /** @test */
-    public function the_titulo_may_not_be_greater_than_100_characters()
+    public function the_titulo_may_not_be_greater_than_250_characters()
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'titulo' => Str::random(101)
+                'titulo' => Str::random(251),
             ]))->assertSessionHasErrors(['titulo']);
     }
 
@@ -118,7 +133,7 @@ class UsersCanUpdateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'descripcion' => ''
+                'descripcion' => '',
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
@@ -127,7 +142,7 @@ class UsersCanUpdateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'descripcion' => 1212
+                'descripcion' => 1212,
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
@@ -136,17 +151,26 @@ class UsersCanUpdateADocumentTest extends TestCase
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'descripcion' => Str::random(301)
+                'descripcion' => Str::random(301),
             ]))->assertSessionHasErrors(['descripcion']);
     }
 
     /** @test */
-    public function the_url_is_required()
+    public function the_anio_is_required()
     {
         $this->actingAs($this->user)
             ->put(route('admin.documents.update', $this->document), $this->formData([
-                'url' => ''
-            ]))->assertSessionHasErrors(['url']);
+                'anio' => '',
+            ]))->assertSessionHasErrors(['anio']);
+    }
+
+    /** @test */
+    public function the_fecha_is_required()
+    {
+        $this->actingAs($this->user)
+            ->put(route('admin.documents.update', $this->document), $this->formData([
+                'fecha' => '',
+            ]))->assertSessionHasErrors(['fecha']);
     }
 
     /** data send create for user */
@@ -155,7 +179,10 @@ class UsersCanUpdateADocumentTest extends TestCase
         return array_merge([
             'titulo' => 'Mi primer documento',
             'descripcion' => 'Mi primer descripcion',
-            'url' => 'document.pdf',
+            'archivo' => 'document.pdf',
+            'anio' => date('Y'),
+            'fecha' => now(),
+            'publicado' => true,
             'tipo_id' => 1,
         ], $override);
     }

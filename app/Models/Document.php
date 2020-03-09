@@ -2,17 +2,37 @@
 
 namespace App\Models;
 
+use App\Services\UploadsService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Jenssegers\Date\Date;
 
 class Document extends Model
 {
     protected $table = 'documentos';
     protected $guarded = [];
+    protected $dates = ['fecha'];
 
-    public function getCreatedAtAttribute($date)
+    public function getFechaAttribute($date)
     {
         return new Date($date);
+    }
+
+    public function getArchivoUpdated()
+    {
+        if (request()->file('archivo')) {
+            $this->deleteStorageFile();
+            return (new UploadsService('archivo', request('anio'), 'documentos'))->getFileCreated();
+        } else {
+            return $this->archivo;
+        }
+    }
+
+    public function pathFile()
+    {
+        return Storage::disk('public')->exists($this->archivo)
+        ? Storage::url($this->archivo)
+        : "";
     }
 
     public function tipo()
@@ -36,5 +56,18 @@ class Document extends Model
     {
         return $query->where('titulo', 'LIKE', "%$search%")
             ->orWhere('descripcion', 'LIKE', "%$search%");
+    }
+
+    public function deleteStorageFile()
+    {
+        if (Storage::disk('public')->exists($this->archivo)) {
+            Storage::disk('public')->delete($this->archivo);
+        }
+    }
+
+    public function deleteDocument()
+    {
+        $this->delete();
+        $this->deleteStorageFile();
     }
 }

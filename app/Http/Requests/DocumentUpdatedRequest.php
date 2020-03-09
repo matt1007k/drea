@@ -26,8 +26,10 @@ class DocumentUpdatedRequest extends FormRequest
         return [
             'titulo' => 'required|string|max:100',
             'descripcion' => 'required|string|max:300',
-            'url' => 'required',
-            'tipo_id' => 'required'
+            'archivo' => 'file|max:5000|mimes:pdf,docx,doc,xls,xlt,xlsx',
+            'anio' => 'required',
+            'fecha' => 'required',
+            'tipo_id' => 'required',
         ];
     }
 }
