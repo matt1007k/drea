@@ -2,15 +2,14 @@
 
 namespace Tests\Feature\Admin\Slideshow;
 
+use App\Models\Slideshow;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use App\Models\Slideshow;
-use App\Models\User;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UsersCanDeleteAnSlideshowTest extends TestCase
+class UsersCanDeleteASlideshowTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -29,7 +28,7 @@ class UsersCanDeleteAnSlideshowTest extends TestCase
         $this->image_name_old = 'slideshows/' . $image_old->hashName();
         $this->user = factory(User::class)->create();
         $this->slideshow = factory(Slideshow::class)->create($this->formData([
-            'imagen' => $this->image_name_old
+            'imagen' => $this->image_name_old,
         ]));
     }
 
@@ -54,7 +53,7 @@ class UsersCanDeleteAnSlideshowTest extends TestCase
         Storage::disk('public')->assertMissing($this->image_name_old);
 
         $this->assertDatabaseMissing('slideshows', $this->formData([
-            'imagen' => $this->image_name_old
+            'imagen' => $this->image_name_old,
         ]));
 
         $response->assertRedirect(route('admin.slideshows.index'))
@@ -66,10 +65,10 @@ class UsersCanDeleteAnSlideshowTest extends TestCase
     {
         return array_merge([
             'titulo' => 'Mi primer slideshow',
-            'descripcion' => 'Mi primer descripcion',
+            'url' => '/mi-primer-slideshow',
             'imagen' => 'image.png',
             'fecha' => '2019-12-31 00:00:00',
-            'publicado' => true
+            'publicado' => true,
         ], $override);
     }
 }

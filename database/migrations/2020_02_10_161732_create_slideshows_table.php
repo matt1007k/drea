@@ -17,6 +17,7 @@ class CreateSlideshowsTable extends Migration
             $table->bigIncrements('id');
             $table->string('titulo', 100);
             $table->string('slug')->unique();
+            $table->string('url');
             $table->string('imagen');
             $table->timestamp('fecha');
             $table->boolean('publicado')->default(false);

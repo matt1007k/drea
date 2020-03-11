@@ -17,7 +17,7 @@ class InicioController extends Controller
         $anuncios = Ad::latest()->published()->get();
         $tipoDocumentos = TypeDocument::all();
         $slideshows = Slideshow::orderLatestDate()->published()->get();
-        $externalLinks = ExternalLink::order('ASC')->published()->get();
+        $externalLinks = ExternalLink::order('DESC')->published()->get();
 
         return view('pages.inicio.index', compact(
             'avisos',

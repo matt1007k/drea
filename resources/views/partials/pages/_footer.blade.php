@@ -23,23 +23,25 @@
             <!-- Grid column -->
             <div class="col-md-4 col-lg-3 col-xl-3 mr-auto mt-3">
 
-                <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+                <h6 class="text-uppercase mb-4 font-weight-bold">Contáctanos</h6>
+
+                <p class="d-flex">
+                    <i class="fas fa-home mr-3"></i>
+                    <span>Jr. 28 de Julio N° 383, Ayacucho, Huamanga, Ayacucho</span>
+                </p>
+                <p class="d-flex">
+                    <i class="fa fa-clock mr-3"></i>
+                    <span>Lunes a Viernes de 8:00 a.m. - 5:30 p.m.</span>
+                </p>
+                <p>
+                    <i class="fas fa-envelope mr-3"></i>
+                    dreayac@gmail.com
+                </p>
 
                 <p>
-
-                    <i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-
-                <p>
-
-                    <i class="fas fa-envelope mr-3"></i> info@example.com</p>
-
-                <p>
-
-                    <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-
-                <p>
-
-                    <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                    <i class="fas fa-phone mr-3"></i>
+                    066 311395 (Central)
+                </p>
 
             </div>
             <!-- Grid column -->
@@ -94,25 +96,14 @@
 
                         <li class="list-inline-item">
 
-                            <a class="btn-floating btn-sm rgba-white-slight">
+                            <a href="https://www.facebook.com/Dre-Ayacucho-332681333522589" target="_blank"
+                                class="btn-floating btn-sm rgba-white-slight">
 
                                 <i class="fab fa-facebook-f"></i>
 
                             </a>
 
                         </li>
-
-                        <li class="list-inline-item">
-
-                            <a class="btn-floating btn-sm rgba-white-slight">
-
-                                <i class="fab fa-twitter"></i>
-
-                            </a>
-
-                        </li>
-
-
 
                     </ul>
 

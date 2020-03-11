@@ -5,8 +5,10 @@
       <div class="card-body">
         <section class="customer-logos slider">
           @foreach ($externalLinks as $extLink)
-          <div class="slide"><img
-              src="http://www.dreayacucho.gob.pe/system/external_links/images/000/000/005/original/mh.jpg?1496253474">
+          <div class="slide">
+            <a href="{{ $extLink->url }}">
+              <img src="{{ $extLink->pathImage() }}" alt="Links" />
+            </a>
           </div>
           @endforeach
           {{-- <div class="slide"><img

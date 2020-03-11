@@ -111,6 +111,15 @@ class UsersCanUpdateASlideshowTest extends TestCase
     }
 
     /** @test */
+    public function the_url_is_required()
+    {
+        $this->actingAs($this->user)
+            ->put(route('admin.slideshows.update', $this->slideshow), $this->formData([
+                'url' => '',
+            ]))->assertSessionHasErrors(['url']);
+    }
+
+    /** @test */
     public function the_fecha_is_required()
     {
         $this->actingAs($this->user)
@@ -124,6 +133,7 @@ class UsersCanUpdateASlideshowTest extends TestCase
     {
         return array_merge([
             'titulo' => 'Mi primer slideshow',
+            'url' => '/mi-primer-slideshow',
             'imagen' => 'image.png',
             'fecha' => '2019-12-31 00:00:00',
             'publicado' => true,

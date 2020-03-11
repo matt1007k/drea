@@ -33,5 +33,6 @@ Route::get('/avisos/{post}/edit', 'PostsController@edit')->name('posts.edit');
 Route::put('/avisos/{post}', 'PostsController@update')->name('posts.update');
 Route::delete('/avisos/{post}', 'PostsController@destroy')->name('posts.destroy');
 
-Route::post('posts.upload', 'PostsController@upload')->name('posts.upload');
-Route::post('pages.upload', 'MenuPagesController@upload')->name('pages.upload');
+Route::post('posts/upload', 'PostsController@upload')->name('posts.upload');
+Route::post('pages/upload', 'MenuPagesController@upload')->name('pages.upload');
+Route::post('groups/upload', 'AnnouncementGroupsController@upload')->name('groups.upload');

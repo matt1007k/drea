@@ -14,73 +14,74 @@
 </div>
 
 <div class="form-group">
-  <div class="mi-input @error('descripcion') mi-error @enderror">
-    <label for="descripcion" class="mi-input-label">Descripcion</label>
-    <textarea rows="3" id="descripcion" name="descripcion" class="form-control" value="" autocomplete="descripcion"
-      autofocus>{{ old('descripcion', $slideshow->descripcion) }}</textarea>
-    @error('descripcion')
-    <div class="error" dusk="error-descripcion">
-      {{ $message }}
-    </div>
-    @enderror
+  <div class="mi-input @error('url') mi-error @enderror">
+    <label for="url" class="mi-input-label">Url a visitar</label>
+    <input type="text" name="url" id="url" class="form-control @error('url') is-invalid @enderror "
+      value="{{ old('url', $slideshow->url) }}" autocomplete="url" autofocus>
   </div>
-
-  <div class="form-group">
-    <label for="imagen">Imagen</label><br>
-    @if ($slideshow->imagen)
-    <img src="{{ $slideshow->pathImage() }}" alt="imagen" width="200">
-    @endif
-    <input type="file" id="imagen" name="imagen" class="form-control @error('imagen') is-invalid @enderror"
-      value="{{ old('imagen', $slideshow->imagen) }}">
-    @error('imagen')
-    <div class="error" dusk="error-imagen">
-      {{ $message }}
-    </div>
-    @enderror
+  @error('url')
+  <div class="error" dusk="error-url">
+    {{ $message }}
   </div>
+  @enderror
+</div>
 
-
-  <div class="form-group">
-    <div class="mi-input @error('fecha') mi-error @enderror">
-      <div class="font-weigth-bold">Fecha y hora de publicación</div>
-      <input placeholder="Seleccionar fecha" type="text" id="fecha" name="fecha" class="form-control"
-        value="{{ old('fecha', $slideshow->fecha) }}" autocomplete="fecha" autofocus>
-    </div>
-    @error('fecha')
-    <div id="fecha-error" class="text-danger">
-      {{ $message }}
-    </div>
-    @enderror
+<div class="form-group">
+  <label for="imagen">Imagen</label><br>
+  @if ($slideshow->imagen)
+  <img src="{{ $slideshow->pathImage() }}" alt="imagen" width="200">
+  @endif
+  <input type="file" id="imagen" name="imagen" class="form-control @error('imagen') is-invalid @enderror"
+    value="{{ old('imagen', $slideshow->imagen) }}">
+  @error('imagen')
+  <div class="error" dusk="error-imagen">
+    {{ $message }}
   </div>
+  @enderror
+</div>
 
-  <h6 class="mb-0">Publicado</h6>
-  <div class="form-group mt-0">
-    <div class="mi-switch">
-      <label>
-        No
-        <input type="checkbox" name="publicado" @if(old('publicado', $slideshow->publicado) == 1) checked
-        @endif
-        >
-        <span class="lever"></span> Si
-      </label>
-    </div>
+
+<div class="form-group">
+  <div class="mi-input @error('fecha') mi-error @enderror">
+    <div class="font-weigth-bold">Fecha y hora de publicación</div>
+    <input placeholder="Seleccionar fecha" type="text" id="fecha" name="fecha" class="form-control"
+      value="{{ old('fecha', $slideshow->fecha) }}" autocomplete="fecha" autofocus>
   </div>
-
-  <div class="d-flex justify-content-between mt-4">
-    <button class="btn btn-success text-uppercase" dusk="btn-registrar">
-      {{ $btnText }}
-      <i class="fa fa-check ml-1"></i>
-    </button>
-    <a href="{{ route('admin.slideshows.index') }} " class="btn btn-danger text-uppercase">
-      Cancelar
-      <i class="fa fa-ban ml-1"></i>
-    </a>
+  @error('fecha')
+  <div id="fecha-error" class="text-danger">
+    {{ $message }}
   </div>
+  @enderror
+</div>
 
-  @push('scripts')
-  <script src="https://kendo.cdn.telerik.com/2019.2.514/js/cultures/kendo.culture.es-ES.min.js"></script>
-  <script>
-    // Data Picker Initialization
+<h6 class="mb-0">Publicado</h6>
+<div class="form-group mt-0">
+  <div class="mi-switch">
+    <label>
+      No
+      <input type="checkbox" name="publicado" @if(old('publicado', $slideshow->publicado) == 1) checked
+      @endif
+      >
+      <span class="lever"></span> Si
+    </label>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+  <button class="btn btn-success text-uppercase" dusk="btn-registrar">
+    {{ $btnText }}
+    <i class="fa fa-check ml-1"></i>
+  </button>
+  <a href="{{ route('admin.slideshows.index') }} " class="btn btn-danger text-uppercase">
+    Cancelar
+    <i class="fa fa-ban ml-1"></i>
+  </a>
+</div>
+
+@push('scripts')
+<script src="https://kendo.cdn.telerik.com/2019.2.514/js/cultures/kendo.culture.es-ES.min.js"></script>
+<script>
+  // Data Picker Initialization
   $('#fecha').kendoDateTimePicker({
       culture: "es-ES",
       timeFormat: "HH:mm",
@@ -97,5 +98,5 @@
       max: new Date()
   });
 
-  </script>
-  @endpush
+</script>
+@endpush

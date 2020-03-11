@@ -54,7 +54,10 @@
 @push('scripts')
 <script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script>
 <script>
-  CKEDITOR.replace( 'introduccion' );
+  CKEDITOR.replace( 'introduccion' , {
+    filebrowserUploadUrl: "{{route('admin.groups.upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+  } );
   CKEDITOR.editorConfig = function( config ) {
     config.language = 'es';
     config.uiColor = '#F7B42C';

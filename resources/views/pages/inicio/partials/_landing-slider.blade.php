@@ -9,9 +9,10 @@
         <!-- Slide One - Set the background image for this slide in the line below -->
         @foreach ($slideshows as $key => $slide)
         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}"
-            style="background-image: url('https://source.unsplash.com/LAaSoL0LrYs/1920x1080')">
+            style="background-image: url('{{ $slide->pathImage() }}');background-size:cover;">
             <div class="carousel-caption d-none d-md-block">
-                <a href="{{ url($slide->slug) }}" class="h3 text-white">{{ $slide->titulo }}</a>
+                <a href="{{ url($slide->slug) }}"
+                    class="h3 text-white  bg-dark px-3 py-2 rounded">{{ $slide->titulo }}</a>
                 {{-- <p class="lead">This is a description for the first slide.</p> --}}
             </div>
         </div>

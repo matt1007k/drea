@@ -31,47 +31,6 @@
                         <div>No tienes vídeos...</div>
                         @endforelse
 
-                        <div class="grid-item video bg-light">
-                            <a class="venobox  text-dark" data-gall="playlist01" data-title="text test"
-                                data-autoplay="true" data-vbtype="video" href="https://youtu.be/KmWm6YxC2KY">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <i class="fa fa-play fa-2x"></i>
-                            </a>
-                        </div>
-                        <div class="grid-item video bg-light">
-                            <a class="venobox text-dark" data-gall="playlist01" data-title="text test"
-                                data-autoplay="true" data-vbtype="video" href="https://youtu.be/KmWm6YxC2KY">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <i class="fa fa-play fa-2x"></i>
-                            </a>
-                        </div>
-
-                        <div class="grid-item video bg-light">
-                            <a class="venobox text-dark" data-gall="playlist01" data-title="text test"
-                                data-autoplay="true" data-vbtype="video" href="https://youtu.be/KmWm6YxC2KY">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <i class="fa fa-play fa-2x"></i>
-                            </a>
-                        </div>
-                        <div class="grid-item video bg-light">
-                            <a class="venobox text-dark" data-gall="playlist01" data-title="text test"
-                                data-autoplay="true" data-vbtype="video" href="https://youtu.be/KmWm6YxC2KY">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <i class="fa fa-play fa-2x"></i>
-                            </a>
-                        </div>
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -116,6 +75,7 @@
         background-color: rgba(0, 0, 0, .8);
         bottom: 0;
         margin-bottom: 1em;
+        border-radius: 4px;
         left: 0;
     }
 

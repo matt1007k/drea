@@ -60,56 +60,7 @@
                         <div>No tienes fotos...</div>
                         @endforelse
 
-                        <div class="grid-item">
-                            <a class="venobox" data-gall="gallery01" data-title="text test"
-                                href="http://www.dreayacucho.gob.pe/system/photos/images/000/000/001/original/ministro_coar.jpg?1550845999">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <img src="http://www.dreayacucho.gob.pe/system/photos/images/000/000/001/original/ministro_coar.jpg?1550845999"
-                                    alt="image alt" />
-                            </a>
-                        </div>
-                        <div class="grid-item">
-                            <a class="venobox" data-gall="gallery01" data-title="text test"
-                                href="http://www.dreayacucho.gob.pe/system/photos/images/000/000/005/original/mercedes3.jpg?1550847440">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <img src="http://www.dreayacucho.gob.pe/system/photos/images/000/000/005/original/mercedes3.jpg?1550847440"
-                                    alt="image alt" />
-                            </a>
-                        </div>
-                        <div class="grid-item">
-                            <a class="venobox" data-gall="gallery01" data-title="text test"
-                                href="http://www.dreayacucho.gob.pe/system/photos/images/000/000/004/original/mercedes2.jpg?1550847271">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <img src="http://www.dreayacucho.gob.pe/system/photos/images/000/000/004/original/mercedes2.jpg?1550847271"
-                                    alt="image alt" />
-                            </a>
-                        </div>
-                        <div class="grid-item">
-                            <a class="venobox" data-gall="gallery01" data-title="text test"
-                                href="http://www.dreayacucho.gob.pe/system/photos/images/000/000/003/original/52111522_1078952455562136_5664431435239391232_o.jpg?1550847065">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <img src="http://www.dreayacucho.gob.pe/system/photos/images/000/000/003/original/52111522_1078952455562136_5664431435239391232_o.jpg?1550847065"
-                                    alt="image alt" />
-                            </a>
-                        </div>
-                        <div class="grid-item">
-                            <a class="venobox" data-gall="gallery01" data-title="text test"
-                                href="http://www.dreayacucho.gob.pe/system/photos/images/000/000/002/original/mercedes1.jpg?1550846984">
-                                <div class="content">
-                                    <div class="title">text test</div>
-                                </div>
-                                <img src="http://www.dreayacucho.gob.pe/system/photos/images/000/000/002/original/mercedes1.jpg?1550846984"
-                                    alt="image alt" />
-                            </a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -146,6 +97,7 @@
         position: absolute;
         color: #fff;
         background-color: rgba(0, 0, 0, .8);
+        border-radius: 4px;
     }
 
     .grid-item .content .title {
@@ -158,6 +110,7 @@
     .grid-col--3 {
         display: none
     }
+
 
     /* 3 columns at medium size */
     @media (min-width: 768px) {

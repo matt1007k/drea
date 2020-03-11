@@ -38,6 +38,7 @@ class SlideshowsController extends Controller
     {
         Slideshow::create([
             'titulo' => request('titulo'),
+            'url' => request('url'),
             'imagen' => request()->file('imagen')->store('slideshows', 'public'),
             'fecha' => Carbon::parse(request('fecha')),
             'publicado' => request('publicado') ? true : false,
@@ -61,6 +62,7 @@ class SlideshowsController extends Controller
     {
         $slideshow->update([
             'titulo' => request('titulo'),
+            'url' => request('url'),
             'imagen' => $slideshow->getImagenUpdated(),
             'fecha' => Carbon::parse(request('fecha')),
             'publicado' => request('publicado') ? true : false,
