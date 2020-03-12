@@ -1,6 +1,7 @@
 <?php
 
 use Caffeinated\Shinobi\Models\Permission;
+use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Database\Seeder;
 
 class PermissionsTableSeeder extends Seeder
@@ -118,7 +119,19 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'documentos.registrar.resolucion',
             'description' => 'Crear un resolución (documento) en el sistema',
         ]);
-
+        Permission::create([
+            'name' => 'Editar un resolución',
+            'slug' => 'documentos.editar.resolucion',
+            'description' => 'Editar un resolución (documento) en el sistema',
+        ]);
+        $roleResolucion = Role::where('slug', 'resolucion')->first();
+        $roleResolucion->givePermissionTo(
+            'documentos.lista',
+            'documentos.ver',
+            'documentos.registrar.resolucion',
+            'documentos.editar.resolucion',
+            'documentos.eliminar'
+        );
         //tipo de documentos
         Permission::create([
             'name' => 'Crear un tipo de documento',

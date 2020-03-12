@@ -21,12 +21,14 @@
 
           </select>
         </div>
+        @can('tipo-documento.registrar')
         <div class="ml-2">
           <a href="{{ route('admin.types.create') }}" class="rl-2 btn btn-primary btn-sm" dusk="btn-create-type"
-            data-balloon-pos="down" aria-label="Lista de tipos de documentos">
+            data-balloon-pos="down" aria-label="Registrar tipo de documento">
             <i class="mt-0 fas fa-list"></i>
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- Grid column -->

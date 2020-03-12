@@ -11,42 +11,71 @@ use Carbon\Carbon;
 
 class DocumentosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:documentos.lista')->only(['index']);
+        $this->middleware('can:documentos.ver')->only(['show']);
+        $this->middleware('can:documentos.registrar')->only(['create', 'store']);
+        $this->middleware('can:documentos.editar')->only(['edit', 'update']);
+        $this->middleware('can:documentos.registrar.resolucion')->only(['resolucionCreate', 'store']);
+        $this->middleware('can:documentos.editar.resolucion')->only(['resolucionEdit', 'update']);
+        $this->middleware('can:documentos.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
-        $tipo = request('tipo') ? request('tipo') : 'todos';
-        $search = request('search') ? request('search') : '';
+        if (auth()->user()->hasRole('resolucion')) {
+            $documents = Document::with('tipo')->byTipo('resolucion')->latest()->get();
+            return view(
+                'admin.documents.index',
+                compact(
+                    'documents'
+                )
+            );
+        } else {
+            $tipo = request('tipo') ? request('tipo') : 'todos';
+            $search = request('search') ? request('search') : '';
 
-        if ($tipo == 'todos') {
-            if ($search != '') {
-                $documents = Document::with('tipo')
-                    ->search($search)->latest()->get();
-            } else {
-                $documents = Document::with('tipo')->latest()->get();
+            if ($tipo == 'todos') {
+                if ($search != '') {
+                    $documents = Document::with('tipo')
+                        ->search($search)->latest()->get();
+                } else {
+                    $documents = Document::with('tipo')->latest()->get();
+                }
+            } elseif ($tipo != 'todos') {
+                if ($search != '') {
+                    $documents = Document::with('tipo')
+                        ->byTipo($tipo)->search($search)->latest()->get();
+                } else {
+                    $documents = Document::with('tipo')->byTipo($tipo)
+                        ->latest()->get();
+                }
             }
-        } elseif ($tipo != 'todos') {
-            if ($search != '') {
-                $documents = Document::with('tipo')
-                    ->byTipo($tipo)->search($search)->latest()->get();
-            } else {
-                $documents = Document::with('tipo')->byTipo($tipo)
-                    ->latest()->get();
-            }
+            $tipos = TypeDocument::orderBy('nombre', 'ASC')->get();
+            return view(
+                'admin.documents.index',
+                compact(
+                    'documents',
+                    'tipo',
+                    'tipos',
+                    'search'
+                )
+            );
         }
-        $tipos = TypeDocument::orderBy('nombre', 'ASC')->get();
-        return view(
-            'admin.documents.index',
-            compact(
-                'documents',
-                'tipo',
-                'tipos',
-                'search'
-            )
-        );
+
     }
 
     public function show(Document $document)
     {
         return view('admin.documents.show', compact('document'));
+    }
+
+    public function resolucionCreate()
+    {
+        $document = new Document();
+        $tipo = TypeDocument::where('nombre', 'Resolución')->first();
+        return view('admin.documents.resolucion.create', compact('document', 'tipo'));
     }
 
     public function create()
@@ -70,6 +99,12 @@ class DocumentosController extends Controller
 
         return redirect()->route('admin.documents.index')
             ->with('msg', 'El registro se guardó correctamente');
+    }
+
+    public function resolucionEdit(Document $document)
+    {
+        $tipo = TypeDocument::where('nombre', 'Resolución')->first();
+        return view('admin.documents.resolucion.edit', compact('document', 'tipo'));
     }
 
     public function edit(Document $document)

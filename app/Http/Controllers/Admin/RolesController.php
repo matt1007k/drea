@@ -6,17 +6,16 @@ use App\Http\Requests\RoleCreatedRequest;
 use App\Http\Requests\RoleUpdatedRequest;
 use Caffeinated\Shinobi\Models\Permission;
 use Caffeinated\Shinobi\Models\Role;
-use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:roles.index')->only(['index']);
-        $this->middleware('can:roles.show')->only(['show']);
-        $this->middleware('can:roles.create')->only(['create', 'store']);
-        $this->middleware('can:roles.edit')->only(['edit', 'update']);
-        $this->middleware('can:roles.destroy')->only(['destroy']);
+        $this->middleware('can:roles.lista')->only(['index']);
+        $this->middleware('can:roles.ver')->only(['show']);
+        $this->middleware('can:roles.registrar')->only(['create', 'store']);
+        $this->middleware('can:roles.editar')->only(['edit', 'update']);
+        $this->middleware('can:roles.eliminar')->only(['destroy']);
     }
 
     public function index()
@@ -40,8 +39,9 @@ class RolesController extends Controller
     public function store(RoleCreatedRequest $request)
     {
         $role = Role::create($request->all());
-        if ($request->has('permissions')) $role->syncPermissions($request->permissions);
-
+        if ($request->has('permissions')) {
+            $role->syncPermissions($request->permissions);
+        }
 
         return redirect()->route('admin.roles.index')
             ->with('msg', 'El registro se guardó correctamente');
@@ -56,8 +56,13 @@ class RolesController extends Controller
     public function update(RoleUpdatedRequest $request, Role $role)
     {
         $role->update($request->all());
-        if (empty($request->get('permissions'))) $role->revokePermissionTo($role->permissions->pluck('slug'));
-        if ($request->has('permissions')) $role->syncPermissions($request->permissions);
+        if (empty($request->get('permissions'))) {
+            $role->revokePermissionTo($role->permissions->pluck('slug'));
+        }
+
+        if ($request->has('permissions')) {
+            $role->syncPermissions($request->permissions);
+        }
 
         return redirect()->route('admin.roles.index')
             ->with('msg', 'El registro se editó correctamente');

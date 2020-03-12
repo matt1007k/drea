@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:avisos.lista')->only(['index']);
+        $this->middleware('can:avisos.ver')->only(['show']);
+        $this->middleware('can:avisos.registrar')->only(['create', 'store']);
+        $this->middleware('can:avisos.editar')->only(['edit', 'update']);
+        $this->middleware('can:avisos.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $search = request('search') ? request('search') : '';

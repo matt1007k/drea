@@ -24,7 +24,9 @@
 
   <section>
 
+    @can('admin')
     @include('admin.documents.partials._form-search')
+    @endcan
     <div class="mi-card">
 
       <!-- Card image -->
@@ -32,13 +34,23 @@
 
         {{-- <div class="mx-3 h4 white-text">Lista de documentos</div> --}}
 
+        @can('documentos.registrar')
         <div class="p-6">
           <a href="{{ route('admin.documents.create') }}" class="btn btn-success text-uppercase waves-effect">
             <i class="mt-0 fas fa-plus"></i>
             Registrar documento
           </a>
         </div>
-
+        @endcan
+        @can('documentos.registrar.resolucion')
+        <div class="p-6">
+          <a href="{{ route('admin.documents.resolucion.create') }}"
+            class="btn btn-success text-uppercase waves-effect">
+            <i class="mt-0 fas fa-plus"></i>
+            Registrar resolución
+          </a>
+        </div>
+        @endcan
       </div>
       <!-- /Card image -->
 
@@ -70,7 +82,9 @@
                 <td class="text-center font-weight-bold">{{ $document->id }}</td>
                 <td>{{ $document->tipo->nombre }}</td>
                 <td>{{ $document->titulo }}</td>
-                <td><a href="{{ $document->pathFile() }}" dusk="url-{{$document->id}}"><i class="fa fa-file"></i></a>
+                <td class="text-center">
+                  <a href="{{ $document->pathFile() }}" target="_blank"><img alt="{{ $document->titulo }}"
+                      src="{{ asset('/img/icons/content_download.png') }}" style="width: 45px; height: 45px;"></a>
                 </td>
                 <td>{{ $document->descripcion }}</td>
                 <td>{{ $document->fecha->format('d F, Y') }}</td>
@@ -78,14 +92,28 @@
                   @include('admin.documents.partials._publicado')
                 </td>
                 <td>
+                  @can('documentos.ver')
                   <a href="{{ route('admin.documents.show', $document) }}" class="px-2 btn btn-dark btn-sm"
                     data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+
+                  @can('documentos.editar')
                   <a href="{{ route('admin.documents.edit', $document) }}" class="px-2 btn btn-info btn-sm"
                     data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+
+                  @can('documentos.editar.resolucion')
+                  <a href="{{ route('admin.documents.resolucion.edit', $document) }}" class="px-2 btn btn-info btn-sm"
+                    data-balloon-pos="down" aria-label="Editar registro">
+                    <i class="mt-0 fas fa-pencil-alt"></i>
+                  </a>
+                  @endcan
+
+                  @can('documentos.eliminar')
                   <button type="button" onclick="onDelete({{ $document->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -95,6 +123,8 @@
                     @method('DELETE')
                     <button type="submit" id="btn-delete-{{ $document->id }}"></button>
                   </form>
+                  @endcan
+
                 </td>
               </tr>
               @endforeach
@@ -124,7 +154,12 @@
 <script>
   $('#documentsTable').DataTable({
     "sort":  [[ 3, "asc" ]],
+    @can('resolucion')
+    "searching": true,
+    @endcan
+    @can('admin')
     "searching": false,
+    @endcan
     language: {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",

@@ -48,56 +48,57 @@
     </div>
     <ul class="mi-menu-nav">
       <li class="header">MANTENIMIENTO</li>
-      <li class="{{ request()->is('admin') ? 'active' : '' }}" data-mi-color="col-blue">
+      <li class="{{ setActive('admin.index') }}" data-mi-color="col-blue">
         <a href="{{ route('admin.index') }}">
           <i class="mi mi-icon_dashboard"></i>
           <span>Tablero de resumen</span>
         </a>
       </li>
 
+      @can('avisos.lista')
       <li class="mi-menu-toggle @if(request()->is('admin/avisos*')) active @endif" data-mi-color="col-cyan">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_layers"></i>
           <span>Avisos</span>
         </a>
         <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/avisos') ? 'active' : '' }}">
+          @can('avisos.lista')
+          <li class="{{ setActive('admin.posts.index') }}">
             <a href="{{ route('admin.posts.index') }}">Lista de avisos</a>
           </li>
-          <li class="{{ request()->is('admin/avisos/create') ? 'active' : '' }}">
+          @endcan
+          @can('avisos.registrar')
+          <li class="{{ setActive('admin.posts.create') }}">
             <a href="{{ route('admin.posts.create') }}">Registrar aviso</a>
           </li>
+          @endcan
         </ul>
       </li>
+      @endcan
+
+      @can('menus.lista')
       <li class="mi-menu-toggle @if(request()->is('admin/menus*')) active @endif" data-mi-color="col-red">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_border_left"></i>
           <span>Menús</span>
         </a>
         <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/menus') ? 'active' : '' }}">
+          @can('menus.lista')
+          <li class="{{ setActive('admin.menus.index') }}">
             <a href="{{ route('admin.menus.index') }}">Lista de menús</a>
           </li>
-          <li class="{{ request()->is('admin/menus/create') ? 'active' : '' }}">
+          @endcan
+          @can('menus.registrar')
+          <li class="{{ setActive('admin.menus.create') }}">
             <a href="{{ route('admin.menus.create') }}">Registrar menú</a>
           </li>
+          @endcan
         </ul>
       </li>
-      <li class="mi-menu-toggle" data-mi-color="col-teal">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_insert_drive_file"></i>
-          <span>Documentos</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/documents') ? 'active' : '' }}">
-            <a href="{{ route('admin.documents.index') }}">Lista de documentos</a>
-          </li>
-          <li class="{{ request()->is('admin/documents') ? 'active' : '' }}">
-            <a href="{{ route('admin.documents.create') }}">Registrar documento</a>
-          </li>
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-teal">
+      @endcan
+
+
+      <li class="mi-menu-toggle @if(request()->is('admin/ads*')) active @endif" data-mi-color="col-teal">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_speaker_notes"></i>
           <span>Anuncios</span>
@@ -143,127 +144,159 @@
 
         </ul>
       </li>
-      <li class="header">BIBLIOTECA</li>
-      <li class="mi-menu-toggle" data-mi-color="col-pink">
+      <li class="header">DOCUMENTOS</li>
+      @can('documentos.lista')
+      <li class="mi-menu-toggle" data-mi-color="col-teal">
         <a href="javascript:void(0);">
-          <i class="mi mi-icon_contacts"></i>
-          <span>Albumes</span>
+          <i class="mi mi-icon_insert_drive_file"></i>
+          <span>Documentos</span>
         </a>
         <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/albums') ? 'active' : '' }}">
-            <a href="{{ route('admin.albums.index') }}">Lista de álbumes</a>
+          @can('documentos.lista')
+          <li class="{{ setActive('admin.documents.index') }}">
+            <a href="{{ route('admin.documents.index') }}">Lista de documentos</a>
           </li>
-          <li class="{{ request()->is('admin/albums/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.albums.create') }}">Registrar álbum</a>
+          @endcan
+          @can('documentos.registrar')
+          <li class="{{ setActive('admin.documents.create') }}">
+            <a href="{{ route('admin.documents.create') }}">Registrar documento</a>
           </li>
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-light-blue">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_mail"></i>
-          <span>Fotos</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/photos') ? 'active' : '' }}">
-            <a href="{{ route('admin.photos.index') }}">Lista de fotos</a>
-          </li>
-          <li class="{{ request()->is('admin/photos/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.photos.create') }}">Registrar fotos</a>
-          </li>
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-pink">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_assignment_turned_in"></i>
-          <span>Videos</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/videos') ? 'active' : '' }}">
-            <a href="{{ route('admin.videos.index') }}">Lista de vídeos</a>
-          </li>
-          <li class="{{ request()->is('admin/videos/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.videos.create') }}">Registrar vídeo</a>
-          </li>
-        </ul>
-      </li>
-      <li class="header">INTERFAZ DE USUARIO</li>
-      <li class="mi-menu-toggle" data-mi-color="col-indigo">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_settings_input_component"></i>
-          <span>Slideshows</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/slideshows') ? 'active' : '' }}">
-            <a href="{{ route('admin.slideshows.index') }}">Lista de slideshows</a>
-          </li>
-          <li class="{{ request()->is('admin/slideshows/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.slideshows.create') }}">Registrar slideshow</a>
-          </li>
+          @endcan
 
-        </ul>
+          {{-- @can('documentos.resolucion.lista')
+          <li class="{{ setActive('admin.documents.resolucion.index') }}">
+          <a href="{{ route('admin.documents.resolucion.index') }}">Lista de documentos</a>
       </li>
-      <li class="mi-menu-toggle" data-mi-color="col-pink">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_view_list"></i>
-          <span>Enlaces externos</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/external_links') ? 'active' : '' }}">
-            <a href="{{ route('admin.external_links.index') }}">Lista de enlaces externos</a>
-          </li>
-          <li class="{{ request()->is('admin/external_links/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.external_links.create') }}">Registrar enlace externo</a>
-          </li>
-        </ul>
+      @endcan --}}
+      @can('documentos.registrar.resolucion')
+      <li class="{{ setActive('admin.documents.resolucion.create') }}">
+        <a href="{{ route('admin.documents.resolucion.create') }}">Registrar resolución</a>
       </li>
+      @endcan
+    </ul>
+    </li>
+    @endcan
+    <li class="header">BIBLIOTECA</li>
+    <li class="mi-menu-toggle" data-mi-color="col-pink">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_contacts"></i>
+        <span>Albumes</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/albums') ? 'active' : '' }}">
+          <a href="{{ route('admin.albums.index') }}">Lista de álbumes</a>
+        </li>
+        <li class="{{ request()->is('admin/albums/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.albums.create') }}">Registrar álbum</a>
+        </li>
+      </ul>
+    </li>
+    <li class="mi-menu-toggle" data-mi-color="col-light-blue">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_mail"></i>
+        <span>Fotos</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/photos') ? 'active' : '' }}">
+          <a href="{{ route('admin.photos.index') }}">Lista de fotos</a>
+        </li>
+        <li class="{{ request()->is('admin/photos/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.photos.create') }}">Registrar fotos</a>
+        </li>
+      </ul>
+    </li>
+    <li class="mi-menu-toggle" data-mi-color="col-pink">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_assignment_turned_in"></i>
+        <span>Videos</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/videos') ? 'active' : '' }}">
+          <a href="{{ route('admin.videos.index') }}">Lista de vídeos</a>
+        </li>
+        <li class="{{ request()->is('admin/videos/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.videos.create') }}">Registrar vídeo</a>
+        </li>
+      </ul>
+    </li>
+    <li class="header">INTERFAZ DE USUARIO</li>
+    <li class="mi-menu-toggle" data-mi-color="col-indigo">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_settings_input_component"></i>
+        <span>Slideshows</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/slideshows') ? 'active' : '' }}">
+          <a href="{{ route('admin.slideshows.index') }}">Lista de slideshows</a>
+        </li>
+        <li class="{{ request()->is('admin/slideshows/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.slideshows.create') }}">Registrar slideshow</a>
+        </li>
+
+      </ul>
+    </li>
+    <li class="mi-menu-toggle" data-mi-color="col-pink">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_view_list"></i>
+        <span>Enlaces externos</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/external_links') ? 'active' : '' }}">
+          <a href="{{ route('admin.external_links.index') }}">Lista de enlaces externos</a>
+        </li>
+        <li class="{{ request()->is('admin/external_links/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.external_links.create') }}">Registrar enlace externo</a>
+        </li>
+      </ul>
+    </li>
 
 
-      <li class="header">SEGURIDAD</li>
-      <li class="mi-menu-toggle" data-mi-color="col-purple">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_security"></i>
-          <span>Permisos</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/permissions') ? 'active' : '' }}">
-            <a href="{{ route('admin.permissions.index') }}">Lista de permisos</a>
-          </li>
-          <li class="{{ request()->is('admin/permissions/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.permissions.create') }}">Registrar permiso</a>
-          </li>
+    <li class="header">SEGURIDAD</li>
+    <li class="mi-menu-toggle" data-mi-color="col-purple">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_security"></i>
+        <span>Permisos</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/permissions') ? 'active' : '' }}">
+          <a href="{{ route('admin.permissions.index') }}">Lista de permisos</a>
+        </li>
+        <li class="{{ request()->is('admin/permissions/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.permissions.create') }}">Registrar permiso</a>
+        </li>
 
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-purple">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_verified_user"></i>
-          <span>Roles</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/roles') ? 'active' : '' }}">
-            <a href="{{ route('admin.roles.index') }}">Lista de roles</a>
-          </li>
-          <li class="{{ request()->is('admin/roles/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.roles.create') }}">Registrar rol</a>
-          </li>
+      </ul>
+    </li>
+    <li class="mi-menu-toggle" data-mi-color="col-purple">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_verified_user"></i>
+        <span>Roles</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/roles') ? 'active' : '' }}">
+          <a href="{{ route('admin.roles.index') }}">Lista de roles</a>
+        </li>
+        <li class="{{ request()->is('admin/roles/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.roles.create') }}">Registrar rol</a>
+        </li>
 
-        </ul>
-      </li>
-      <li class="mi-menu-toggle" data-mi-color="col-purple">
-        <a href="javascript:void(0);">
-          <i class="mi mi-icon_people"></i>
-          <span>Usuarios</span>
-        </a>
-        <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/users') ? 'active' : '' }}">
-            <a href="{{ route('admin.users.index') }}">Lista de usuarios</a>
-          </li>
-          <li class="{{ request()->is('admin/users/create') ? 'active' : '' }}">
-            <a href="{{ route('admin.users.create') }}">Registrar usuario</a>
-          </li>
+      </ul>
+    </li>
+    <li class="mi-menu-toggle" data-mi-color="col-purple">
+      <a href="javascript:void(0);">
+        <i class="mi mi-icon_people"></i>
+        <span>Usuarios</span>
+      </a>
+      <ul class="mi-menu-sub">
+        <li class="{{ request()->is('admin/users') ? 'active' : '' }}">
+          <a href="{{ route('admin.users.index') }}">Lista de usuarios</a>
+        </li>
+        <li class="{{ request()->is('admin/users/create') ? 'active' : '' }}">
+          <a href="{{ route('admin.users.create') }}">Registrar usuario</a>
+        </li>
 
-        </ul>
-      </li>
+      </ul>
+    </li>
 
     </ul>
   </div>

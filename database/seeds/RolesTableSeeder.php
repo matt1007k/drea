@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Database\Seeder;
 use Caffeinated\Shinobi\Models\Role;
+use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
 {
@@ -31,6 +31,11 @@ class RolesTableSeeder extends Seeder
             'name' => 'Consulta',
             'description' => 'Acceso a los módulos pero solo vista del sistema',
             'slug' => 'consulta',
+        ]);
+        Role::create([
+            'name' => 'Resolución',
+            'description' => 'Acceso a los módulos de documentos (sólo de resoluciones) del sistema',
+            'slug' => 'resolucion',
         ]);
 
         $user = User::first();

@@ -43,7 +43,8 @@
             "database/factories"
         ],
         "files": [
-            "app/helpers/formatDateTime.php"
+            "app/helpers/formatDateTime.php",
+            "app/helpers/route.php"
         ]
     },
     "autoload-dev": {

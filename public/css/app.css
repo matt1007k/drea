@@ -13003,3 +13003,7 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   background: #318aac;
   color: #fff !important;
 }
+
+.h-100vh {
+  height: 100vh;
+}
