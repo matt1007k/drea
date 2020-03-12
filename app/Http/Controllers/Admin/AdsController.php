@@ -9,6 +9,15 @@ use App\Models\Ad;
 
 class AdsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:anuncios.lista')->only(['index']);
+        $this->middleware('can:anuncios.ver')->only(['show']);
+        $this->middleware('can:anuncios.registrar')->only(['create', 'store']);
+        $this->middleware('can:anuncios.editar')->only(['edit', 'update']);
+        $this->middleware('can:anuncios.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $ads = Ad::all();

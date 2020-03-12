@@ -8,6 +8,15 @@ use Carbon\Carbon;
 
 class VideosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:videos.lista')->only(['index']);
+        $this->middleware('can:videos.ver')->only(['show']);
+        $this->middleware('can:videos.registrar')->only(['create', 'store']);
+        $this->middleware('can:videos.editar')->only(['edit', 'update']);
+        $this->middleware('can:videos.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $search = request('search') ? request('search') : '';

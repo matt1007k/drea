@@ -31,13 +31,14 @@
       <div class="flex justify-between mi-card-content align-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de roles</div> --}}
-
+        @can('roles.registrar')
         <div>
           <a href="{{ route('admin.roles.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mr-2 fas fa-plus"></i>
             Registrar rol
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -69,14 +70,19 @@
                 <td>@include('admin.roles.partials._slug')</td>
                 <td>{{ $role->description }}</td>
                 <td>
+                  @can('roles.ver')
                   <a href="{{ route('admin.roles.show', $role) }}" class="px-2 btn btn-light btn-sm"
                     data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('roles.editar')
                   <a href="{{ route('admin.roles.edit', $role) }}" class="px-2 btn btn-info btn-sm"
                     data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('roles.eliminar')
                   <button type="button" onclick="onDelete({{ $role->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -86,6 +92,7 @@
                     @method('DELETE')
                     <button type="submit" class="none" id="btn-delete-{{ $role->id }}"></button>
                   </form>
+                  @endcan
                 </td>
               </tr>
               @endforeach

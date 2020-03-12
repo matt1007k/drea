@@ -26,7 +26,7 @@
     <div class="col-md-12">
       <div class="mi-card">
         <div class="mi-card-content">
-          <div class="h3 text-dark">Registrar resolución</div>
+          <div class="h3 text-dark text-center mb-4">Registrar resolución</div>
           <form action="{{ route('admin.documents.store') }}" method="POST">
             @include('admin.documents.partials._formResolucion', ['btnText' => 'Guardar'])
           </form>

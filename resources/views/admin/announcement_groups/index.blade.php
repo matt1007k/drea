@@ -31,7 +31,7 @@
       <div class="d-flex justify-content-between align-items-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de grupos de convocatorias</div> --}}
-
+        @can('grupos.registrar')
         <div class="p-6">
           <a href="{{ route('admin.announcement_groups.create') }}"
             class="btn btn-success text-uppercase waves-effect waves-light">
@@ -39,6 +39,7 @@
             Registrar grupo
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -70,14 +71,19 @@
                 <td class="text-center">{{ $announcement_group->anio }}</td>
                 <td></td>
                 <td>
+                  @can('grupos.ver')
                   <a href="{{ route('admin.announcement_groups.show', $announcement_group) }}"
                     class="px-2 btn btn-light btn-sm" data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('grupos.editar')
                   <a href="{{ route('admin.announcement_groups.edit', $announcement_group) }}"
                     class="px-2 btn btn-info btn-sm" data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('grupos.eliminar')
                   <button type="button" onclick="onDelete({{ $announcement_group->id }})"
                     class="px-2 btn btn-danger btn-sm" data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -87,6 +93,7 @@
                     @method('DELETE')
                     <button type="submit" id="btn-delete-{{ $announcement_group->id }}"></button>
                   </form>
+                  @endcan
                 </td>
               </tr>
               @endforeach

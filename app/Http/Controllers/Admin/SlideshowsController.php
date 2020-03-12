@@ -9,6 +9,15 @@ use Carbon\Carbon;
 
 class SlideshowsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:slideshows.lista')->only(['index']);
+        $this->middleware('can:slideshows.ver')->only(['show']);
+        $this->middleware('can:slideshows.registrar')->only(['create', 'store']);
+        $this->middleware('can:slideshows.editar')->only(['edit', 'update']);
+        $this->middleware('can:slideshows.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $search = request('search') ? request('search') : '';

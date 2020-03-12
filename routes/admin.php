@@ -34,8 +34,8 @@ Route::put('/avisos/{post}', 'PostsController@update')->name('posts.update');
 Route::delete('/avisos/{post}', 'PostsController@destroy')->name('posts.destroy');
 
 // Route:get('/documents/resoluciones', 'DocumentResolucionsController@index')->name('documents.resolucion.index');
-Route::get('/documents/resolucion/create', 'DocumentosController@create')->name('documents.resolucion.create');
-Route::get('/documents/resolucion/{document}/edit', 'DocumentosController@edit')->name('documents.resolucion.edit');
+Route::get('/documents/resolucion/create', 'DocumentosController@resolucionCreate')->name('documents.resolucion.create');
+Route::get('/documents/resolucion/{document}/edit', 'DocumentosController@resolucionEdit')->name('documents.resolucion.edit');
 
 Route::post('posts/upload', 'PostsController@upload')->name('posts.upload');
 Route::post('pages/upload', 'MenuPagesController@upload')->name('pages.upload');

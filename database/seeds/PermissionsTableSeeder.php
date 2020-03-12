@@ -62,6 +62,11 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'permisos.eliminar',
             'description' => 'Eliminar los datos de cualquier permiso del sistema',
         ]);
+        Permission::create([
+            'name' => 'Registrar un permiso',
+            'slug' => 'permisos.registrar',
+            'description' => 'Registrar un permiso del sistema',
+        ]);
         //usuarios
         Permission::create([
             'name' => 'Registrar un usuario',

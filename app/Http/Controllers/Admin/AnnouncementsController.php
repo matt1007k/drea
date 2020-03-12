@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\AnnouncementCreatedRequest;
 use App\Models\Announcement;
 use App\Models\AnnouncementGroup;
-use App\Http\Requests\AnnouncementCreatedRequest;
 use Carbon\Carbon;
 
 class AnnouncementsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:convocatorias.lista')->only(['index']);
+        $this->middleware('can:convocatorias.ver')->only(['show']);
+        $this->middleware('can:convocatorias.registrar')->only(['create', 'store']);
+        $this->middleware('can:convocatorias.editar')->only(['edit', 'update']);
+        $this->middleware('can:convocatorias.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $grupo = request('grupo') ? request('grupo') : 'todos';
@@ -56,7 +65,7 @@ class AnnouncementsController extends Controller
             'numero' => request('numero'),
             'fecha' => Carbon::parse(request('fecha')),
             'estado' => request('estado'),
-            'grupo_id' => request('grupo_id')
+            'grupo_id' => request('grupo_id'),
         ]);
 
         return redirect()->route('admin.announcements.index')
@@ -81,7 +90,7 @@ class AnnouncementsController extends Controller
             'numero' => request('numero'),
             'fecha' => Carbon::parse(request('fecha')),
             'estado' => request('estado'),
-            'grupo_id' => request('grupo_id')
+            'grupo_id' => request('grupo_id'),
         ]);
 
         return redirect()->route('admin.announcements.index')

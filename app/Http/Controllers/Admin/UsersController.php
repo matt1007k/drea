@@ -11,11 +11,11 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:users.index')->only(['index']);
-        $this->middleware('can:users.show')->only(['show']);
-        $this->middleware('can:users.create')->only(['store', 'create']);
-        $this->middleware('can:users.edit')->only(['update', 'edit']);
-        $this->middleware('can:users.destroy')->only(['destroy']);
+        $this->middleware('can:usuarios.lista')->only(['index']);
+        $this->middleware('can:usuarios.ver')->only(['show']);
+        $this->middleware('can:usuarios.registrar')->only(['store', 'create']);
+        $this->middleware('can:usuarios.editar')->only(['update', 'edit']);
+        $this->middleware('can:usuarios.eliminar')->only(['destroy']);
     }
 
     public function index()
@@ -55,8 +55,13 @@ class UsersController extends Controller
     public function update(UserUpdatedRequest $request, User $user)
     {
         $user->update($request->all());
-        if (empty($request->get('roles'))) $user->deleteRoles();
-        if ($request->has('roles')) $user->syncRoles($request->roles);
+        if (empty($request->get('roles'))) {
+            $user->deleteRoles();
+        }
+
+        if ($request->has('roles')) {
+            $user->syncRoles($request->roles);
+        }
 
         return redirect()->route('admin.users.index')
             ->with('msg', 'El registro se editó correctamente');

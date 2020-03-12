@@ -72,19 +72,22 @@
 
       <div class="h4 text-gray-800">
         Submenús
+        @can('submenus.registrar')
         <a href="{{ route('admin.menus.submenus.create', $menu) }}" class="btn btn-success" data-balloon-pos="down"
           aria-label="Registrar submenú">
           <i class="fa fa-plus"></i>
         </a>
+        @endcan
       </div>
 
     </div>
+    @can('submenus.lista')
     @forelse ($menu->submenus as $submenu)
     @include('admin.submenus.partials._submenu', ['column_class' => 'col-12 mt-3'])
     @empty
     <div class="bg-white p-4 text-center font-normal text-muted text-4xl ">Sin submenús...</div>
     @endforelse
-
+    @endcan
 
   </div>
   <div class="row">

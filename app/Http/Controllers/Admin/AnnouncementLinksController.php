@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\AnnouncementLinkCreatedRequest;
 use App\Models\Announcement;
 use App\Models\AnnouncementLink;
-use App\Http\Requests\AnnouncementLinkCreatedRequest;
 use Carbon\Carbon;
 
 class AnnouncementLinksController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('can:cv.enlaces.lista')->only(['index']);
+        // $this->middleware('can:cv.enlaces.ver')->only(['show']);
+        $this->middleware('can:cv.enlaces.registrar')->only(['create', 'store']);
+        $this->middleware('can:cv.enlaces.editar')->only(['edit', 'update']);
+        $this->middleware('can:cv.enlaces.eliminar')->only(['destroy']);
+    }
+
     public function create(Announcement $announcement)
     {
         $link = new AnnouncementLink(['fecha' => now()]);
@@ -20,7 +29,7 @@ class AnnouncementLinksController extends Controller
         $announcement->links()->create([
             'titulo' => request('titulo'),
             'url' => request('url'),
-            'fecha' => Carbon::parse(request('fecha'))
+            'fecha' => Carbon::parse(request('fecha')),
         ]);
 
         return redirect()->route('admin.announcements.show', $announcement)
@@ -37,7 +46,7 @@ class AnnouncementLinksController extends Controller
         $link->update([
             'titulo' => request('titulo'),
             'url' => request('url'),
-            'fecha' => Carbon::parse(request('fecha'))
+            'fecha' => Carbon::parse(request('fecha')),
         ]);
 
         return redirect()->route('admin.announcements.show', $announcement)

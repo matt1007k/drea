@@ -31,13 +31,14 @@
       <div class="d-flex justify-content-between align-items-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de anuncios</div> --}}
-
+        @can('anuncios.registrar')
         <div class="p-6">
           <a href="{{ route('admin.ads.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mt-0 fas fa-plus"></i>
             Registrar anuncio
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -73,14 +74,21 @@
                   @include('admin.ads.partials._publicado')
                 </td>
                 <td>
+                  @can('anuncios.ver')
                   <a href="{{ route('admin.ads.show', $ad) }}" class="px-2 btn btn-light btn-sm" data-balloon-pos="down"
                     aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+
+                  @can('anuncios.editar')
                   <a href="{{ route('admin.ads.edit', $ad) }}" class="px-2 btn btn-info btn-sm" data-balloon-pos="down"
                     aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+
+                  @can('anuncios.eliminar')
                   <button type="button" onclick="onDelete({{ $ad->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -90,6 +98,8 @@
                     @method('DELETE')
                     <button type="submit" id="btn-delete-{{ $ad->id }}"></button>
                   </form>
+                  @endcan
+
                 </td>
               </tr>
               @endforeach

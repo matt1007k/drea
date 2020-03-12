@@ -32,13 +32,14 @@
         class="py-2 mx-4 mb-3 view view-cascade gradient-card-header blue-gradient narrower d-flex justify-content-between align-items-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de slideshowes</div> --}}
-
+        @can('slideshows.registrar')
         <div class="py-3">
           <a href="{{ route('admin.slideshows.create') }}" class="btn btn-success btn-sm waves-effect text-uppercase">
             <i class="mt-0 fas fa-plus"></i>
             Registrar slideshow
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -76,14 +77,19 @@
                   @include('admin.slideshows.partials._publicado')
                 </td>
                 <td>
+                  @can('slideshows.ver')
                   <a href="{{ route('admin.slideshows.show', $slideshow) }}" class="px-2 btn
                   btn-dark btn-sm" data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('slideshows.editar')
                   <a href="{{ route('admin.slideshows.edit', $slideshow) }}" class="px-2 btn
                   btn-info btn-sm" data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('slideshows.eliminar')
                   <button type="button" onclick="onDelete({{ $slideshow->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -93,6 +99,7 @@
                     @method('DELETE')
                     <button type="submit" id="btn-delete-{{ $slideshow->id }}"></button>
                   </form>
+                  @endcan
                 </td>
               </tr>
               @endforeach

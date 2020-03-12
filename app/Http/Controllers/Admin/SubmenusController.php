@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Menu;
-use App\Models\Submenu;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmenuCreatedRequest;
 use App\Http\Requests\SubmenuUpdatedRequest;
+use App\Models\Menu;
+use App\Models\Submenu;
 
 class SubmenusController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('can:submenus.lista')->only(['index']);
+        // $this->middleware('can:submenus.ver')->only(['show']);
+        $this->middleware('can:submenus.registrar')->only(['create', 'store']);
+        $this->middleware('can:submenus.editar')->only(['edit', 'update']);
+        $this->middleware('can:submenus.eliminar')->only(['destroy']);
+    }
+
     public function create(Menu $menu)
     {
         $submenu = new Submenu();

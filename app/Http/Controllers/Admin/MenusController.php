@@ -8,6 +8,15 @@ use App\Models\Menu;
 
 class MenusController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:menus.lista')->only(['index']);
+        $this->middleware('can:menus.ver')->only(['show']);
+        $this->middleware('can:menus.registrar')->only(['create', 'store']);
+        $this->middleware('can:menus.editar')->only(['edit', 'update']);
+        $this->middleware('can:menus.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $search = request('search') ? request('search') : '';

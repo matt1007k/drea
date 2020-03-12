@@ -33,22 +33,26 @@
     <div class="col-md-12 rounded-lg bg-gray-500 px-3 py-4 mt-3">
 
       <div class="h4 text-gray-800">
+        @can('cv.enlaces.registrar')
         Enlaces
         <a href="{{ route('admin.announcements.links.create', $announcement) }}" class="btn btn-success"
           data-balloon-pos="down" aria-label="Registrar enlace">
           <i class="fa fa-plus"></i>
         </a>
+        @endcan
       </div>
 
 
     </div>
 
     <div class="col-md-12 links">
+      @can('cv.enlaces.lista')
       @forelse ($announcement->links as $link)
       @include('admin.announcement_links.partials._announcement_link', ['column_class' => 'link-item'])
       @empty
       <div class="bg-white p-4 text-center text-4xl font-normal text-gray-800">Sin enlaces</div>
       @endforelse
+      @endcan
     </div>
   </div>
   <div class="row">

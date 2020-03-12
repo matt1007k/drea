@@ -16,13 +16,13 @@
     </p>
     <div class="mt-4 mb-3 flex justify-between items-center">
       <div>
-
+        @can('cv.enlaces.editar')
         <a href="{{ route('admin.announcements.links.edit', [$announcement, $link]) }}"
           class="btn btn-info text-uppercase">Editar</a>
-
+        @endcan
       </div>
       <div class="h-10">
-
+        @can('cv.enlaces.eliminar')
         <button type="button" onclick="onDelete({{ $link->id }})" class="btn btn-danger text-uppercase">
           Eliminar
         </button>
@@ -32,6 +32,7 @@
           @method('DELETE')
           <button type="submit" class="none" id="btn-delete-{{ $link->id }}"></button>
         </form>
+        @endcan
 
       </div>
     </div>

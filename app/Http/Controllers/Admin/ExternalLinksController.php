@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ExternalLink;
 use App\Http\Requests\ExternalLinkCreatedRequest;
 use App\Http\Requests\ExternalLinkUpdatedRequest;
+use App\Models\ExternalLink;
 
 class ExternalLinksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:enlaces.externos.lista')->only(['index']);
+        $this->middleware('can:enlaces.externos.ver')->only(['show']);
+        $this->middleware('can:enlaces.externos.registrar')->only(['create', 'store']);
+        $this->middleware('can:enlaces.externos.editar')->only(['edit', 'update']);
+        $this->middleware('can:enlaces.externos.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $search = request('search') ? request('search') : '';

@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Storage;
 
 class AnnouncementGroupsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:grupos.lista')->only(['index']);
+        $this->middleware('can:grupos.ver')->only(['show']);
+        $this->middleware('can:grupos.registrar')->only(['create', 'store']);
+        $this->middleware('can:grupos.editar')->only(['edit', 'update']);
+        $this->middleware('can:grupos.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $search = request('search') ? request('search') : '';

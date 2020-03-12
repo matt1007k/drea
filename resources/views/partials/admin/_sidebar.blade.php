@@ -97,56 +97,71 @@
       </li>
       @endcan
 
-
+      @can('anuncios.lista')
       <li class="mi-menu-toggle @if(request()->is('admin/ads*')) active @endif" data-mi-color="col-teal">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_speaker_notes"></i>
           <span>Anuncios</span>
         </a>
         <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/ads') ? 'active' : '' }}">
+          @can('anuncios.lista')
+          <li class="{{ isActive('admin.ads.index') }}">
             <a href="{{ route('admin.ads.index') }}">Lista de anuncios</a>
           </li>
-          <li class="{{ request()->is('admin/ads/create') ? 'active' : '' }}">
+          @endcan
+          @can('anuncios.registrar')
+          <li class="{{ isActive('admin.ads.create') }}">
             <a href="{{ route('admin.ads.create') }}">Registrar anuncio</a>
           </li>
-
+          @endcan
         </ul>
       </li>
+      @endcan
+      @can('grupos.index')
       <li class="header">CONVOCATORIAS</li>
-      <li class="mi-menu-toggle" data-mi-color="col-teal">
+      <li class="mi-menu-toggle @if(request()->is('admin/announcement_groups*')) active @endif"
+        data-mi-color="col-teal">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_view_column"></i>
           <span>Grupo de convocatorias</span>
         </a>
         <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/announcement_groups') ? 'active' : '' }}">
+          @can('grupos.index')
+          <li class="{{ isActive('admin.announcement_groups.index') }}">
             <a href="{{ route('admin.announcement_groups.index') }}">Lista de grupos de convocatorias</a>
           </li>
-          <li class="{{ request()->is('admin/announcement_groups/create') ? 'active' : '' }}">
+          @endcan
+          @can('grupos.create')
+          <li class="{{ isActive('admin.announcement_groups.create') }}">
             <a href="{{ route('admin.announcement_groups.create') }}">Registrar grupos de convocatoria</a>
           </li>
-
+          @endcan
         </ul>
       </li>
-      <li class="mi-menu-toggle" data-mi-color="col-teal">
+      @endcan
+      @can('convocatorias.lista')
+      <li class="mi-menu-toggle @if(request()->is('admin/announcements*')) active @endif" data-mi-color="col-teal">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_chat"></i>
           <span>Convocatorias</span>
         </a>
         <ul class="mi-menu-sub">
-          <li class="{{ request()->is('admin/announcements') ? 'active' : '' }}">
+          @can('convocatorias.lista')
+          <li class="{{ isActive('admin.announcements.index') }}">
             <a href="{{ route('admin.announcements.index') }}">Lista de convocatorias</a>
           </li>
-          <li class="{{ request()->is('admin/announcements/create') ? 'active' : '' }}">
+          @endcan
+          @can('convocatorias.registrar')
+          <li class="{{ isActive('admin.announcements.create') }}">
             <a href="{{ route('admin.announcements.create') }}">Registrar convocatoria</a>
           </li>
-
+          @endcan
         </ul>
       </li>
-      <li class="header">DOCUMENTOS</li>
+      @endcan
       @can('documentos.lista')
-      <li class="mi-menu-toggle" data-mi-color="col-teal">
+      <li class="header">DOCUMENTOS</li>
+      <li class="mi-menu-toggle @if(request()->is('admin/documents*')) active @endif" data-mi-color="col-teal">
         <a href="javascript:void(0);">
           <i class="mi mi-icon_insert_drive_file"></i>
           <span>Documentos</span>
@@ -176,127 +191,170 @@
     </ul>
     </li>
     @endcan
+    @can('albumes.lista')
     <li class="header">BIBLIOTECA</li>
-    <li class="mi-menu-toggle" data-mi-color="col-pink">
+    <li class="mi-menu-toggle @if(request()->is('admin/albums*')) active @endif" data-mi-color="col-pink">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_contacts"></i>
-        <span>Albumes</span>
+        <span>Álbumes</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/albums') ? 'active' : '' }}">
+        @can('albumes.lista')
+        <li class="{{ isActive('admin.albums.index') }}">
           <a href="{{ route('admin.albums.index') }}">Lista de álbumes</a>
         </li>
-        <li class="{{ request()->is('admin/albums/create') ? 'active' : '' }}">
+        @endcan
+        @can('albumes.registrar')
+        <li class="{{ isActive('admin.albums.create') }}">
           <a href="{{ route('admin.albums.create') }}">Registrar álbum</a>
         </li>
+        @endcan
       </ul>
     </li>
-    <li class="mi-menu-toggle" data-mi-color="col-light-blue">
+    @endcan
+    @can('fotos.lista')
+    <li class="mi-menu-toggle @if(request()->is('admin/photos*')) active @endif" data-mi-color="col-light-blue">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_mail"></i>
         <span>Fotos</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/photos') ? 'active' : '' }}">
+        @can('fotos.lista')
+        <li class="{{ isActive('admin.photos.index') }}">
           <a href="{{ route('admin.photos.index') }}">Lista de fotos</a>
         </li>
-        <li class="{{ request()->is('admin/photos/create') ? 'active' : '' }}">
+        @endcan
+        @can('fotos.registrar')
+        <li class="{{ isActive('admin.photos.create') }}">
           <a href="{{ route('admin.photos.create') }}">Registrar fotos</a>
         </li>
+        @endcan
       </ul>
     </li>
-    <li class="mi-menu-toggle" data-mi-color="col-pink">
+    @endcan
+    @can('videos.lista')
+    <li class="mi-menu-toggle @if(request()->is('admin/videos*')) active @endif" data-mi-color="col-pink">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_assignment_turned_in"></i>
         <span>Videos</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/videos') ? 'active' : '' }}">
+        @can('videos.lista')
+        <li class="{{ isActive('admin.videos.index') }}">
           <a href="{{ route('admin.videos.index') }}">Lista de vídeos</a>
         </li>
-        <li class="{{ request()->is('admin/videos/create') ? 'active' : '' }}">
+        @endcan
+        @can('videos.registrar')
+        <li class="{{ isActive('admin.videos/create') }}">
           <a href="{{ route('admin.videos.create') }}">Registrar vídeo</a>
         </li>
+        @endcan
       </ul>
     </li>
+    @endcan
+    @can('slideshows.lista')
     <li class="header">INTERFAZ DE USUARIO</li>
-    <li class="mi-menu-toggle" data-mi-color="col-indigo">
+    <li class="mi-menu-toggle @if(request()->is('admin/slideshows*')) active @endif" data-mi-color="col-indigo">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_settings_input_component"></i>
         <span>Slideshows</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/slideshows') ? 'active' : '' }}">
+        @can('slideshows.lista')
+        <li class="{{ isActive('admin.slideshows.index') }}">
           <a href="{{ route('admin.slideshows.index') }}">Lista de slideshows</a>
         </li>
-        <li class="{{ request()->is('admin/slideshows/create') ? 'active' : '' }}">
+        @endcan
+        @can('slideshows.registrar')
+        <li class="{{ isActive('admin.slideshows.create') }}">
           <a href="{{ route('admin.slideshows.create') }}">Registrar slideshow</a>
         </li>
-
+        @endcan
       </ul>
     </li>
-    <li class="mi-menu-toggle" data-mi-color="col-pink">
+    @endcan
+    @can('enlaces.externos.lista')
+    <li class="mi-menu-toggle @if(request()->is('admin/external_links*')) active @endif" data-mi-color="col-pink">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_view_list"></i>
         <span>Enlaces externos</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/external_links') ? 'active' : '' }}">
+        @can('enlaces.externos.lista')
+        <li class="{{ isActive('admin.external_links.index') }}">
           <a href="{{ route('admin.external_links.index') }}">Lista de enlaces externos</a>
         </li>
-        <li class="{{ request()->is('admin/external_links/create') ? 'active' : '' }}">
+        @endcan
+        @can('enlaces.externos.registrar')
+        <li class="{{ isActive('admin.external_links.create') }}">
           <a href="{{ route('admin.external_links.create') }}">Registrar enlace externo</a>
         </li>
+        @endcan
       </ul>
     </li>
+    @endcan
 
-
+    @can('permisos.lista')
     <li class="header">SEGURIDAD</li>
-    <li class="mi-menu-toggle" data-mi-color="col-purple">
+    <li class="mi-menu-toggle @if(request()->is('admin/permissions*')) active @endif" data-mi-color="col-purple">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_security"></i>
         <span>Permisos</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/permissions') ? 'active' : '' }}">
+        @can('permisos.lista')
+        <li class="{{ isActive('admin.permissions.index') }}">
           <a href="{{ route('admin.permissions.index') }}">Lista de permisos</a>
         </li>
-        <li class="{{ request()->is('admin/permissions/create') ? 'active' : '' }}">
+        @endcan
+        @can('permisos.registrar')
+        <li class="{{ isActive('admin.permissions.create') }}">
           <a href="{{ route('admin.permissions.create') }}">Registrar permiso</a>
         </li>
-
+        @endcan
       </ul>
     </li>
-    <li class="mi-menu-toggle" data-mi-color="col-purple">
+    @endcan
+    @can('roles.lista')
+    <li class="mi-menu-toggle @if(request()->is('admin/roles*')) active @endif" data-mi-color="col-purple">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_verified_user"></i>
         <span>Roles</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/roles') ? 'active' : '' }}">
+        @can('roles.lista')
+        <li class="{{ isActive('admin.roles.index') }}">
           <a href="{{ route('admin.roles.index') }}">Lista de roles</a>
         </li>
-        <li class="{{ request()->is('admin/roles/create') ? 'active' : '' }}">
+        @endcan
+        @can('roles.registrar')
+        <li class="{{ isActive('admin.roles.create') }}">
           <a href="{{ route('admin.roles.create') }}">Registrar rol</a>
         </li>
-
+        @endcan
       </ul>
     </li>
-    <li class="mi-menu-toggle" data-mi-color="col-purple">
+    @endcan
+    @can('usuarios.lista')
+    <li class="mi-menu-toggle @if(request()->is('admin/users*')) active @endif" data-mi-color="col-purple">
       <a href="javascript:void(0);">
         <i class="mi mi-icon_people"></i>
         <span>Usuarios</span>
       </a>
       <ul class="mi-menu-sub">
-        <li class="{{ request()->is('admin/users') ? 'active' : '' }}">
+        @can('usuarios.lista')
+        <li class="{{ isActive('admin.users.index') }}">
           <a href="{{ route('admin.users.index') }}">Lista de usuarios</a>
         </li>
-        <li class="{{ request()->is('admin/users/create') ? 'active' : '' }}">
+        @endcan
+        @can('usuarios.registrar')
+        <li class="{{ isActive('admin.users.create') }}">
           <a href="{{ route('admin.users.create') }}">Registrar usuario</a>
         </li>
-
+        @endcan
       </ul>
     </li>
+    @endcan
 
     </ul>
   </div>

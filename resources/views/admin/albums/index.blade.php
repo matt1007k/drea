@@ -31,13 +31,14 @@
       <div class="d-flex justify-content-between align-items-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de álbumes</div> --}}
-
+        @can('albumes.registrar')
         <div class="p-6">
           <a href="{{ route('admin.albums.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mt-0 fas fa-plus"></i>
             Registrar álbum
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -75,14 +76,19 @@
                   @include('admin.albums.partials._publicado')
                 </td>
                 <td>
+                  @can('albumes.ver')
                   <a href="{{ $album->pathAdmin() }}" class="px-2 btn btn-light btn-sm" data-balloon-pos="down"
                     aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('albumes.editar')
                   <a href="{{ route('admin.albums.edit', $album) }}" class="px-2 btn btn-info btn-sm"
                     data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('albumes.eliminar')
                   <button type="button" onclick="onDelete({{ $album->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -92,6 +98,7 @@
                     @method('DELETE')
                     <button type="submit" id="btn-delete-{{ $album->id }}"></button>
                   </form>
+                  @endcan
                 </td>
               </tr>
               @endforeach

@@ -10,11 +10,11 @@ class PermissionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:permissions.index')->only(['index']);
-        $this->middleware('can:permissions.show')->only(['show']);
-        $this->middleware('can:permissions.create')->only(['create', 'store']);
-        $this->middleware('can:permissions.edit')->only(['edit', 'update']);
-        $this->middleware('can:permissions.destroy')->only(['destroy']);
+        $this->middleware('can:permisos.lista')->only(['index']);
+        $this->middleware('can:permisos.ver')->only(['show']);
+        $this->middleware('can:permisos.registrar')->only(['create', 'store']);
+        $this->middleware('can:permisos.editar')->only(['edit', 'update']);
+        $this->middleware('can:permisos.eliminar')->only(['destroy']);
     }
 
     public function index()

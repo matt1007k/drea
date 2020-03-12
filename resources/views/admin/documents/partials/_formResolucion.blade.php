@@ -1,5 +1,5 @@
 @csrf
-<input type="hidden" value="tipo_id" value="{{ $tipo->id }}">
+<input type="hidden" name="tipo_id" value="{{ $tipo->id }}">
 
 <div class="form-group">
   <div class="mi-input @error('titulo') mi-error @enderror">

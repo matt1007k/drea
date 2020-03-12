@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de videos')
+@section('title', 'Lista de vídeos')
 
 @section('content-header')
 <div class="mi-content-header">
@@ -8,13 +8,13 @@
     <div class="mi-card-header bg-green">
       <div class="mi-title">
         <i class="mi mi-icon_list"></i>
-        <span>Lista de videos</span>
+        <span>Lista de vídeos</span>
       </div>
     </div>
   </div>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Lista de videos</li>
+    <li class="breadcrumb-item active" aria-current="page">Lista de vídeos</li>
   </ol>
 </div>
 @endsection
@@ -31,13 +31,14 @@
       <div class="d-flex justify-content-between align-items-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de videos</div> --}}
-
+        @can('videos.registrar')
         <div class="p-6">
           <a href="{{ route('admin.videos.create') }}" class="btn btn-success text-uppercase waves-effect waves-light">
             <i class="mt-0 fas fa-plus"></i>
-            Registrar álbum
+            Registrar vídeo
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -73,14 +74,19 @@
                   @include('admin.videos.partials._publicado')
                 </td>
                 <td>
+                  @can('videos.ver')
                   <a href="{{ route('admin.videos.show', $video) }}" class="px-2 btn btn-light btn-sm"
                     data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('videos.editar')
                   <a href="{{ route('admin.videos.edit', $video) }}" class="px-2 btn btn-info btn-sm"
                     data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('videos.eliminar')
                   <button type="button" onclick="onDelete({{ $video->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -90,6 +96,7 @@
                     @method('DELETE')
                     <button type="submit" id="btn-delete-{{ $video->id }}"></button>
                   </form>
+                  @endcan
                 </td>
               </tr>
               @endforeach

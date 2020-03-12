@@ -10,6 +10,15 @@ use Carbon\Carbon;
 
 class PhotosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:fotos.lista')->only(['index']);
+        $this->middleware('can:fotos.ver')->only(['show']);
+        $this->middleware('can:fotos.registrar')->only(['create', 'store']);
+        $this->middleware('can:fotos.editar')->only(['edit', 'update']);
+        $this->middleware('can:fotos.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $album = request('album') ? request('album') : 'todos';

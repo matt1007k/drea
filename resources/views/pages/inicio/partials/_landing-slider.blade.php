@@ -9,7 +9,7 @@
         <!-- Slide One - Set the background image for this slide in the line below -->
         @foreach ($slideshows as $key => $slide)
         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}"
-            style="background-image: url('{{ $slide->pathImage() }}');background-size:cover;">
+            style="background-image: url('{{ $slide->pathImage() }}');object-fit:cover;">
             <div class="carousel-caption d-none d-md-block">
                 <a href="{{ url($slide->slug) }}"
                     class="h3 text-white  bg-dark px-3 py-2 rounded">{{ $slide->titulo }}</a>

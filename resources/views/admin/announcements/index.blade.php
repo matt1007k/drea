@@ -31,13 +31,14 @@
       <div class="flex justify-between align-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de convocatorias</div> --}}
-
+        @can('convocatorias.registrar')
         <div class="p-6">
           <a href="{{ route('admin.announcements.create') }}" class="btn btn-success text-uppercase waves-effect">
             <i class="mt-0 fas fa-plus"></i>
             Registrar convocatoria
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -76,14 +77,19 @@
                   @include('admin.announcements.partials._estado')
                 </td>
                 <td>
+                  @can('convocatorias.ver')
                   <a href="{{ route('admin.announcements.show', $announcement) }}" class="px-2 btn btn-dark btn-sm"
                     data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('convocatorias.editar')
                   <a href="{{ route('admin.announcements.edit', $announcement) }}" class="px-2 btn btn-info btn-sm"
                     data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('convocatorias.eliminar')
                   <button type="button" onclick="onDelete({{ $announcement->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -93,6 +99,7 @@
                     @method('DELETE')
                     <button type="submit" id="btn-delete-{{ $announcement->id }}"></button>
                   </form>
+                  @endcan
                 </td>
               </tr>
               @endforeach

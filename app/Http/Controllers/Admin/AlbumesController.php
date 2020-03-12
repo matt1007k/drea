@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Album;
 use App\Http\Requests\AlbumCreatedRequest;
 use App\Http\Requests\AlbumUpdatedRequest;
+use App\Models\Album;
+use Carbon\Carbon;
 
 class AlbumesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:albumes.lista')->only(['index']);
+        $this->middleware('can:albumes.ver')->only(['show']);
+        $this->middleware('can:albumes.registrar')->only(['create', 'store']);
+        $this->middleware('can:albumes.editar')->only(['edit', 'update']);
+        $this->middleware('can:albumes.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         $search = request('search') ? request('search') : '';

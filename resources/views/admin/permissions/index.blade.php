@@ -31,7 +31,7 @@
       <div class="flex justify-between mi-card-content align-center">
 
         {{-- <div class="mx-3 h4 white-text">Lista de permissions</div> --}}
-
+        @can('permisos.registrar')
         <div>
           <a href="{{ route('admin.permissions.create') }}"
             class="btn btn-success text-uppercase waves-effect waves-light">
@@ -39,6 +39,7 @@
             Registrar permiso
           </a>
         </div>
+        @endcan
 
       </div>
       <!-- /Card image -->
@@ -71,14 +72,19 @@
                 <td>@include('admin.permissions.partials._slug')</td>
                 <td>{{ $permission->description }}</td>
                 <td>
+                  @can('permisos.ver')
                   <a href="{{ route('admin.permissions.show', $permission) }}" class="px-2 btn btn-light btn-sm"
                     data-balloon-pos="down" aria-label="Ver registro">
                     <i class="mt-0 fas fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('permisos.editar')
                   <a href="{{ route('admin.permissions.edit', $permission) }}" class="px-2 btn btn-info btn-sm"
                     data-balloon-pos="down" aria-label="Editar registro">
                     <i class="mt-0 fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('permisos.eliminar')
                   <button type="button" onclick="onDelete({{ $permission->id }})" class="px-2 btn btn-danger btn-sm"
                     data-balloon-pos="down" aria-label="Eliminar registro">
                     <i class="mt-0 fas fa-eraser"></i>
@@ -88,6 +94,7 @@
                     @method('DELETE')
                     <button type="submit" class="none" id="btn-delete-{{ $permission->id }}"></button>
                   </form>
+                  @endcan
                 </td>
               </tr>
               @endforeach

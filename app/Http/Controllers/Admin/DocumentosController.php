@@ -28,9 +28,7 @@ class DocumentosController extends Controller
             $documents = Document::with('tipo')->byTipo('resolucion')->latest()->get();
             return view(
                 'admin.documents.index',
-                compact(
-                    'documents'
-                )
+                compact('documents')
             );
         } else {
             $tipo = request('tipo') ? request('tipo') : 'todos';
@@ -75,7 +73,7 @@ class DocumentosController extends Controller
     {
         $document = new Document();
         $tipo = TypeDocument::where('nombre', 'Resolución')->first();
-        return view('admin.documents.resolucion.create', compact('document', 'tipo'));
+        return view('admin.documents.resolucionCreate', compact('document', 'tipo'));
     }
 
     public function create()
@@ -104,7 +102,7 @@ class DocumentosController extends Controller
     public function resolucionEdit(Document $document)
     {
         $tipo = TypeDocument::where('nombre', 'Resolución')->first();
-        return view('admin.documents.resolucion.edit', compact('document', 'tipo'));
+        return view('admin.documents.resolucionEdit', compact('document', 'tipo'));
     }
 
     public function edit(Document $document)
