@@ -105,12 +105,12 @@
         </a>
         <ul class="mi-menu-sub">
           @can('anuncios.lista')
-          <li class="{{ isActive('admin.ads.index') }}">
+          <li class="{{ setActive('admin.ads.index') }}">
             <a href="{{ route('admin.ads.index') }}">Lista de anuncios</a>
           </li>
           @endcan
           @can('anuncios.registrar')
-          <li class="{{ isActive('admin.ads.create') }}">
+          <li class="{{ setActive('admin.ads.create') }}">
             <a href="{{ route('admin.ads.create') }}">Registrar anuncio</a>
           </li>
           @endcan
@@ -127,12 +127,12 @@
         </a>
         <ul class="mi-menu-sub">
           @can('grupos.index')
-          <li class="{{ isActive('admin.announcement_groups.index') }}">
+          <li class="{{ setActive('admin.announcement_groups.index') }}">
             <a href="{{ route('admin.announcement_groups.index') }}">Lista de grupos de convocatorias</a>
           </li>
           @endcan
           @can('grupos.create')
-          <li class="{{ isActive('admin.announcement_groups.create') }}">
+          <li class="{{ setActive('admin.announcement_groups.create') }}">
             <a href="{{ route('admin.announcement_groups.create') }}">Registrar grupos de convocatoria</a>
           </li>
           @endcan
@@ -147,12 +147,12 @@
         </a>
         <ul class="mi-menu-sub">
           @can('convocatorias.lista')
-          <li class="{{ isActive('admin.announcements.index') }}">
+          <li class="{{ setActive('admin.announcements.index') }}">
             <a href="{{ route('admin.announcements.index') }}">Lista de convocatorias</a>
           </li>
           @endcan
           @can('convocatorias.registrar')
-          <li class="{{ isActive('admin.announcements.create') }}">
+          <li class="{{ setActive('admin.announcements.create') }}">
             <a href="{{ route('admin.announcements.create') }}">Registrar convocatoria</a>
           </li>
           @endcan
@@ -200,12 +200,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('albumes.lista')
-        <li class="{{ isActive('admin.albums.index') }}">
+        <li class="{{ setActive('admin.albums.index') }}">
           <a href="{{ route('admin.albums.index') }}">Lista de álbumes</a>
         </li>
         @endcan
         @can('albumes.registrar')
-        <li class="{{ isActive('admin.albums.create') }}">
+        <li class="{{ setActive('admin.albums.create') }}">
           <a href="{{ route('admin.albums.create') }}">Registrar álbum</a>
         </li>
         @endcan
@@ -220,12 +220,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('fotos.lista')
-        <li class="{{ isActive('admin.photos.index') }}">
+        <li class="{{ setActive('admin.photos.index') }}">
           <a href="{{ route('admin.photos.index') }}">Lista de fotos</a>
         </li>
         @endcan
         @can('fotos.registrar')
-        <li class="{{ isActive('admin.photos.create') }}">
+        <li class="{{ setActive('admin.photos.create') }}">
           <a href="{{ route('admin.photos.create') }}">Registrar fotos</a>
         </li>
         @endcan
@@ -240,12 +240,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('videos.lista')
-        <li class="{{ isActive('admin.videos.index') }}">
+        <li class="{{ setActive('admin.videos.index') }}">
           <a href="{{ route('admin.videos.index') }}">Lista de vídeos</a>
         </li>
         @endcan
         @can('videos.registrar')
-        <li class="{{ isActive('admin.videos/create') }}">
+        <li class="{{ setActive('admin.videos/create') }}">
           <a href="{{ route('admin.videos.create') }}">Registrar vídeo</a>
         </li>
         @endcan
@@ -261,12 +261,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('slideshows.lista')
-        <li class="{{ isActive('admin.slideshows.index') }}">
+        <li class="{{ setActive('admin.slideshows.index') }}">
           <a href="{{ route('admin.slideshows.index') }}">Lista de slideshows</a>
         </li>
         @endcan
         @can('slideshows.registrar')
-        <li class="{{ isActive('admin.slideshows.create') }}">
+        <li class="{{ setActive('admin.slideshows.create') }}">
           <a href="{{ route('admin.slideshows.create') }}">Registrar slideshow</a>
         </li>
         @endcan
@@ -281,12 +281,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('enlaces.externos.lista')
-        <li class="{{ isActive('admin.external_links.index') }}">
+        <li class="{{ setActive('admin.external_links.index') }}">
           <a href="{{ route('admin.external_links.index') }}">Lista de enlaces externos</a>
         </li>
         @endcan
         @can('enlaces.externos.registrar')
-        <li class="{{ isActive('admin.external_links.create') }}">
+        <li class="{{ setActive('admin.external_links.create') }}">
           <a href="{{ route('admin.external_links.create') }}">Registrar enlace externo</a>
         </li>
         @endcan
@@ -303,12 +303,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('permisos.lista')
-        <li class="{{ isActive('admin.permissions.index') }}">
+        <li class="{{ setActive('admin.permissions.index') }}">
           <a href="{{ route('admin.permissions.index') }}">Lista de permisos</a>
         </li>
         @endcan
         @can('permisos.registrar')
-        <li class="{{ isActive('admin.permissions.create') }}">
+        <li class="{{ setActive('admin.permissions.create') }}">
           <a href="{{ route('admin.permissions.create') }}">Registrar permiso</a>
         </li>
         @endcan
@@ -323,12 +323,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('roles.lista')
-        <li class="{{ isActive('admin.roles.index') }}">
+        <li class="{{ setActive('admin.roles.index') }}">
           <a href="{{ route('admin.roles.index') }}">Lista de roles</a>
         </li>
         @endcan
         @can('roles.registrar')
-        <li class="{{ isActive('admin.roles.create') }}">
+        <li class="{{ setActive('admin.roles.create') }}">
           <a href="{{ route('admin.roles.create') }}">Registrar rol</a>
         </li>
         @endcan
@@ -343,12 +343,12 @@
       </a>
       <ul class="mi-menu-sub">
         @can('usuarios.lista')
-        <li class="{{ isActive('admin.users.index') }}">
+        <li class="{{ setActive('admin.users.index') }}">
           <a href="{{ route('admin.users.index') }}">Lista de usuarios</a>
         </li>
         @endcan
         @can('usuarios.registrar')
-        <li class="{{ isActive('admin.users.create') }}">
+        <li class="{{ setActive('admin.users.create') }}">
           <a href="{{ route('admin.users.create') }}">Registrar usuario</a>
         </li>
         @endcan

@@ -14,7 +14,7 @@
   </div>
   <ol class="breadcrumb bg-white py-2 px-2">
     <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Tablero de resumen</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('admin.albums.index') }}">Lista de álbumes</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('admin.albums.index') }}">Lista de álbumes</a></li>
     <li class="breadcrumb-item active" aria-current="page">Registrar álbum</li>
   </ol>
 </div>

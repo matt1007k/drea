@@ -5,7 +5,8 @@
         <div class="card">
           <div class="card-header">Example Component</div>
 
-          <div class="card-body">{{ text.id }}</div>
+          <div class="card-body" @click="name()">{{ text.id }}</div>
+          <div v-for="(index, item) in items" :key="item.id">{{ item }}</div>
         </div>
       </div>
     </div>
@@ -24,6 +25,7 @@ export default {
   },
   mounted() {
     console.log("Component mounted.");
+    console.log(`${this.text}`);
   },
   methods: {
     name() {

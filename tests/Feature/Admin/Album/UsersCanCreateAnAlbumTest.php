@@ -60,7 +60,7 @@ class UsersCanCreateAnAlbumTest extends TestCase
         Storage::fake('albumes');
 
         $image = UploadedFile::fake()->image('public/img/drea/logo.png');
-        $image_url = 'albumes/' . $image->name();
+        $image_url = 'albumes/' . $image->getClientOriginalName();
 
         $response = $this->actingAs($this->user)
             ->post(route('admin.albums.store'), $this->formData([
