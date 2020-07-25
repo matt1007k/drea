@@ -1,0 +1,8 @@
+.nav-list {
+    li.active {
+        @apply bg-blue-700;
+        a {
+            @apply text-white;
+        }
+    }
+}

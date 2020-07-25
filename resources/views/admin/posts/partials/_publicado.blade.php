@@ -1,5 +1,5 @@
 @if($post->publicado === 1)
-<i class="fa fa-check-circle text-success"></i>
+<span class="badge badge-success uppercase">Si</span>
 @else
-<i class="fa fa-check-circle text-danger"></i>
+<span class="badge badge-danger uppercase">No</span>
 @endif

@@ -1,24 +1,13 @@
 <!-- Top Table UI -->
-<div class="bg-white mb-4 px-3 py-3">
+<div class="mb-4">
   <form action="{{ route('admin.posts.index') }}" method="GET">
 
-    <!-- Grid row -->
-    <div class="row">
-
-      <!-- Grid column -->
-      <div class="col-lg col-md-12">
-
-        <div class="flex">
-          <input class="form-control" type="text" name="search" placeholder="Buscar"
+        <div class="flex w-1/2">
+          <input class="form-control rounded-r-none" type="text" name="search" placeholder="¿Qué estas buscando...?"
             value="{{ $search ? $search : old('search') }}">
-          <button type="submit" class="btn btn-sm btn-primary waves-effect waves-light"><i class="fas fa-search"></i>
+          <button type="submit" class="btn btn-dark rounded-l-none px-8 py-2">Buscar
           </button>
         </div>
-      </div>
-      <!-- Grid column -->
-
-    </div>
-    <!-- Grid row -->
 
   </form>
 </div>

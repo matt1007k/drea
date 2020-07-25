@@ -1,0 +1,13 @@
+.bg-linear-auth {
+    background: linear-gradient(
+        125deg,
+        theme("colors.teal.800"),
+        theme("colors.teal.200")
+    );
+}
+.bg-linear-sidebar {
+    background: linear-gradient(
+        theme("colors.blue.700"),
+        theme("colors.teal.600")
+    );
+}

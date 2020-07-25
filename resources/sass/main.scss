@@ -1,5 +1,13 @@
-@tailwind base;
+@import "tailwindcss/base";
 
-@tailwind components;
+@import "tailwindcss/components";
+@import "./components/_form.scss";
+@import "./components/typography";
+@import "./components/buttons";
+@import "./components/badge";
+@import "./components/list";
 
-@tailwind utilities;
+@import "./helpers/grid-layouts";
+@import "./helpers/background";
+
+@import "tailwindcss/utilities";

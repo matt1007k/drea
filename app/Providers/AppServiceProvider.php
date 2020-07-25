@@ -9,6 +9,7 @@ use App\Models\Slideshow;
 use App\Observers\AlbumObserver;
 use App\Observers\PostObserver;
 use App\Observers\SlideshowObserver;
+use App\Services\NavigationMenuService;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -38,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('partials.pages._nav', function ($view) {
             $menus = Menu::published()->order('ASC')->get();
+            $view->with('menus', $menus);
+        });
+        view()->composer('partials.admin._sidebar', function ($view) {
+            $menus = (new NavigationMenuService)->getMenuItems();
             $view->with('menus', $menus);
         });
 

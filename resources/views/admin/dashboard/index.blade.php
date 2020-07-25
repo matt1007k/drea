@@ -3,66 +3,32 @@
 @section('title', 'Tablero de resumen')
 
 @section('content-header')
-<div class="mi-content-header">
-  <div class="mi-title">
-    <span>Dashboard</span>
+<div class="my-4 mx-8">
+  <div class="heading-1">
+    <span>Tablero de resumen</span>
   </div>
-  <ul class="mi-card-header-tools mi-card-header-filters">
-    <li class="dropdown">
-      <a href="javascript:void(0);" class="dropdown-toggle waves-effect" data-toggle="dropdown">
-        <span class="v-a-middle">Today</span>
-        <i class="mi mi-icon_keyboard_arrow_down v-a-middle"></i>
-      </a>
-      <div class="dropdown-menu pull-right">
-        <div class="mi-card">
-          <div class="mi-card-content mi-menu-list">
-            <a href="javascript:void(0);" class="list-group-item waves-effect">Today</a>
-            <a href="javascript:void(0);" class="list-group-item waves-effect">Yesterday</a>
-            <a href="javascript:void(0);" class="list-group-item waves-effect">This Week</a>
-            <a href="javascript:void(0);" class="list-group-item waves-effect">Last Week</a>
-            <a href="javascript:void(0);" class="list-group-item waves-effect">This Month</a>
-            <a href="javascript:void(0);" class="list-group-item waves-effect">Last Month</a>
-          </div>
-          <div class="mi-card-footer bg-white">
-            <div class="input-group m-b-0">
-              <div class="mi-input">
-                <input value="01/01/2018" class="form-control datepicker">
-              </div>
-            </div>
-            <div class="input-group m-b-5">
-              <div class="mi-input">
-                <input value="01/01/2018" class="form-control datepicker">
-              </div>
-            </div>
-            <a href="javascript:void(0)" class="btn bg-red waves-effect pull-left">Cancel</a>
-            <a href="javascript:void(0)" class="btn bg-cyan waves-effect pull-right">Apply</a>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
 </div>
 @endsection
 
 @section('content')
 
-<!-- ============================================================== -->
-<!-- Stats -->
-<!-- ============================================================== -->
-<div class="row clearfix">
-  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-    <div class="mi-card-visual bg-light-blue zoomIn">
-      <div class="mi-visual-bar">
-        <i class="mi mi-icon_web"></i>
+<div class="mt-6 mb-4 mx-8 grid grid-cols-4 gap-8">
+  <div class="card bg-white p-6 rounded-lg bg-linear-auth shadow-md">
+      <div class="">
+        <i class="eva eva-message-circle eva-2x text-white"></i>
       </div>
-      <div class="mi-visual-content">
-        <div class="mi-visual-title">Visits Today</div>
-        <div class="mi-visual-data">21740</div>
+    <div class="flex items-end justify-between">
+      <div>
+        <div class="text-gray-400 mb-0 mt-3 font-medium font-rubik">Avisos</div>
+        <div class="font-bold text-white text-2xl">217</div>
+      </div>
+      <div>
+        <a href="#" class="text-blue-700 font-medium text-sm hover:underline">Ver Todo</a>
       </div>
     </div>
   </div>
   <!---->
-  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+  <div class="card bg-white p-6 rounded-lg shadow-md">
     <div class="mi-card-visual bg-red zoomIn">
       <div class="mi-visual-bar">
         <i class="mi mi-icon_group_add"></i>
@@ -74,7 +40,7 @@
     </div>
   </div>
   <!---->
-  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+  <div class="card bg-white p-6 rounded-lg bg-linear-sidebar shadow-md">
     <div class="mi-card-visual bg-orange zoomIn">
       <div class="mi-visual-bar">
         <i class="mi mi-icon_shopping_cart"></i>
@@ -86,14 +52,14 @@
     </div>
   </div>
   <!---->
-  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-    <div class="mi-card-visual bg-green zoomIn">
-      <div class="mi-visual-bar">
-        <i class="mi mi-icon_shopping_basket"></i>
+  <div class="card bg-red-200 p-6 rounded-lg shadow-md">
+    <div class="flex flex-col">
+      <div class="bg-red-300 py-2 px-3 h-12 w-12 flex items-center justify-center rounded-full">
+        <i class="eva eva-radio eva-2x text-red-500"></i>
       </div>
-      <div class="mi-visual-content">
-        <div class="mi-visual-title">Total Sales</div>
-        <div class="mi-visual-data">$3540</div>
+      <div class="mt-4">
+        <div class="text-red-500 font-medium font-rubik">Anuncios</div>
+        <div class="text-red-600 text-2xl font-bold">3540</div>
       </div>
     </div>
   </div>

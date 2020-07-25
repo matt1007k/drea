@@ -68,173 +68,21 @@
 
 </nav> --}}
 <!-- Navbar -->
-<div class="mi-sidebar-overlay"></div>
-<!-- ============================================================== -->
-<!-- #Begin# Navbar -->
-<!-- ============================================================== -->
-<nav class="navbar">
-    <div class="container-fluid">
-        <!-- ============================================================== -->
-        <!-- #Begin# Search -->
-        <!-- ============================================================== -->
-        <div class="mi-search-bar">
-            <div class="mi-search-close">
-                <i class="mi mi-icon_arrow_back col-light-blue-900"></i>
-            </div>
-            <input type="text" placeholder="Search..." id="mi_navbar_search_input" autocomplete="off">
-            <div class="mi-search-clear waves-effect" style="display: none;">
-                <i class="mi mi-icon_close col-light-blue-900"></i>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- #End# Search -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- #Begin# Navbar Header -->
-        <!-- ============================================================== -->
-        <div class="navbar-header mi-navbar-toggle-left">
-            <a href="javascript:void(0);" class="navbar-toggle waves-effect" data-toggle="collapse"
-                data-target="#mi_navbar_sub_menu"><i class="mi mi-icon_more_vert"></i></a>
-            <a href="javascript:void(0);" data-searchbar-open="true" class="navbar-toggle waves-effect m-r-0"><i
-                    class="mi mi-icon_search"></i></a>
-            <a href="javascript:void(0);" class="mi-navbar-toggle"></a>
-            <a class="navbar-brand"> </a>
-        </div>
-        <div class="collapse navbar-collapse" id="mi_navbar_sub_menu">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="javascript:void(0);" data-searchbar-open="true" class="waves-effect"><i
-                            class="mi mi-icon_search"></i></a></li>
-
-                <!-- ============================================================== -->
-                <!-- #Begin# Notifications -->
-                <!-- ============================================================== -->
-                <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle waves-effect" data-toggle="dropdown">
-                        <i class="mi mi-icon_notifications"></i>
-                        <span class="badge">5</span>
-                    </a>
-                    <div class="dropdown-menu mi-menu-notifications">
-                        <div class="mi-card">
-                            <div class="mi-card-header bg-pink">
-                                <div class="mi-title">Notificaciones</div>
-                                <ul class="nav nav-tabs mi-nav-tab-right">
-                                    <li><a href="#mi_notification_tab_task" data-toggle="tab"><i
-                                                class="mi mi-icon_assignment_ind"></i></a></li>
-                                    <li class="active"><a href="#mi_notification_tab_notify" data-toggle="tab"><i
-                                                class="mi mi-icon_notifications_active"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="mi-card-content padding-0">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active in" id="mi_notification_tab_notify">
-                                        <div class="mi-tab-pane-content">
-                                            <a href="javascript:void(0)"
-                                                class="media mi-media-notifications waves-effect">
-                                                <div class="media-left">
-                                                    <img src="../assets/images/users/boy.png" class="img-circle">
-                                                </div>
-                                                <div class="media-body">
-                                                    <span class="font-bold col-blue">John Doe </span>
-                                                    <small>Nulla vel metus scelerisque ante sollicitudin
-                                                        commodo</small><br>
-                                                    <small>Just Now</small>
-                                                </div>
-                                            </a>
-
-                                        </div>
-                                        <div class="mi-card-footer text-center">
-                                            <a href="javascript:void(0)">See All Notifications</a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="mi_notification_tab_task">
-                                        <div class="mi-tab-pane-content">
-                                            <a href="apps/taskapp/task_tracking.html"
-                                                class="media mi-media-task waves-effect">
-                                                <div class="media-left">
-                                                    <img src="../assets/images/users/boy.png" class="img-circle">
-                                                </div>
-                                                <div class="media-body">
-                                                    <span class="font-bold">John Doe</span>
-                                                    <div class="mi-media-task-title">Nulla vel metus scelerisque ante
-                                                        sollicitudin commodo</div>
-                                                </div>
-                                                <div class="media-right">
-                                                    <b class="col-pink">Todo</b>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="mi-card-footer text-center">
-                                            <a href="apps/taskapp/task_tracking.html">See All Tasks</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <!-- ============================================================== -->
-                <!-- #End# Notifications -->
-                <!-- ============================================================== -->
-                <li id="mi_right_sidebar_btn"><a href="javascript:void(0);" class="waves-effect"><i
-                            class="mi mi-icon_apps"></i></a></li>
-                <!-- ============================================================== -->
-                <!-- #Begin# User Menu -->
-                <!-- ============================================================== -->
-                <li class="dropdown mi-menu-user">
-                    <a href="javascript:void(0);" class="dropdown-toggle waves-effect waves-circle"
-                        data-toggle="dropdown">
-                        <img src="https://image.flaticon.com/icons/svg/761/761824.svg" class="img-circle">
-                    </a>
-                    <div class="dropdown-menu">
-                        <div class="mi-card">
-                            <div class="mi-card-content padding-0">
-                                <div class="mi-card-user bg-blue">
-                                    <div class="mi-card-user-name">{{ Auth::user()->name }}</div>
-                                    <div class="mi-card-user-surname">{{ Auth::user()->email }}</div>
-                                    <div class="image">
-                                        <img src="https://image.flaticon.com/icons/svg/761/761824.svg" width="48"
-                                            height="48">
-                                    </div>
-                                    <div class="mi-profile-content">
-                                        <div class="name">{{ Auth::user()->name }} </div>
-                                        <div class="email">{{ Auth::user()->email }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mi-card-content mi-menu-list">
-                                <a href="snippets/profile.html" class="list-group-item waves-effect">
-                                    <i class="mi mi-icon_create col-orange"></i>
-                                    <span>Editar perfil</span>
-                                </a>
-                                <a href="snippets/profile.html" class="list-group-item waves-effect">
-                                    <i class="mi mi-icon_settings col-blue-grey"></i>
-                                    <span>Configuraciones</span>
-                                </a>
-                                <hr>
-                                <a class="list-group-item waves-effect" href="{{ route('logout') }}" onclick="event.preventDefault();
-                  document.getElementById('logout-form').submit();">
-                                    <i class="mi mi-icon_power_settings_new col-pink"></i>
-                                    <span>Cerrar sesión</span>
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <!-- ============================================================== -->
-                <!-- #End# User Menu -->
-                <!-- ============================================================== -->
-            </ul>
-        </div>
-        <!-- ============================================================== -->
-        <!-- #End# Navbar Header -->
-        <!-- ============================================================== -->
-    </div>
+<nav class="h-16 px-3 flex items-center">
+    <ul class="ml-auto flex items-center justify-center">
+        <li class="py-2 px-2 ml-4">
+            <button class="btn btn-primary">
+                <i class="eva eva-plus left"></i>
+                Nuevo aviso
+            </button>
+        </li>
+        <li class="py-2 px-2 ml-4">
+            <a href="#" class="text-gray-500 hover:text-gray-700">
+                <i class="eva eva-bell-outline eva-2x"></i>
+            </a>
+        </li>
+        <li class="p-2 ml-4">
+            <img src="https://image.flaticon.com/icons/svg/3048/3048127.svg" alt="avatar" class="h-10 w-10 border-4 border-white bg-gray-500 rounded-full cursor-pointer">
+        </li>
+    </ul>
 </nav>
-<!-- ============================================================== -->
-<!-- #End# Navbar -->
-<!-- ============================================================== -->
